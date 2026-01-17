@@ -4,7 +4,7 @@ This repository contains the complete documentation website for the FluxPay proj
 
 ## Live Documentation
 
-🌐 **Documentation Site**: [View Documentation](https://fluxpay-docs.onrender.com/)
+🌐 **Documentation Site**: [View Documentation](https://serhatsoysal.github.io/fluxpay-docs/)
 
 ## Project Live Demo
 
