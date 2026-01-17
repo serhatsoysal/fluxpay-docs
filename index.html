@@ -1,1 +1,2360 @@
-Hello World
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>FluxPay Docs: API Reference</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#1313ec",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#101022",
+                    },
+                    fontFamily: {
+                        "display": ["Inter", "sans-serif"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+<style>
+        .code-font { font-family: 'JetBrains Mono', 'Fira Code', monospace; }
+        .scrollbar-hide::-webkit-scrollbar { display: none; }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-[#111118] dark:text-white transition-colors duration-200">
+<!-- Top Navigation Bar -->
+<header class="sticky top-0 z-50 flex items-center justify-between whitespace-nowrap border-b border-solid border-gray-200 dark:border-gray-800 bg-white dark:bg-[#101022] px-6 py-3">
+<div class="flex items-center gap-8">
+<div class="flex items-center gap-2 text-[#111118] dark:text-white">
+<img src="./public/logo.png" alt="FluxPay Logo" class="h-8 w-auto object-contain">
+<h2 class="text-lg font-bold leading-tight tracking-tight"><span class="text-[#616189] font-medium">Docs</span></h2>
+<div class="hidden md:flex items-center">
+<div class="px-2 py-1 bg-gray-100 dark:bg-gray-800 rounded text-xs font-semibold text-[#616189]">v1.0.0</div>
+</div>
+</div>
+<label class="flex flex-col min-w-64 !h-10 max-w-md hidden lg:block">
+<div class="flex w-full flex-1 items-stretch rounded-lg h-full border border-gray-200 dark:border-gray-700">
+<div class="text-[#616189] flex bg-white dark:bg-gray-900 items-center justify-center pl-4 rounded-l-lg" data-icon="search">
+<span class="material-symbols-outlined text-lg">search</span>
+</div>
+<input id="search-input" type="text" class="form-input flex w-full min-w-0 flex-1 border-none bg-white dark:bg-gray-900 text-[#111118] dark:text-white focus:ring-0 h-full placeholder:text-[#616189] px-4 rounded-r-lg text-sm font-normal" placeholder="Search documentation... (⌘K)" value=""/>
+</div>
+</label>
+</div>
+<div class="flex flex-1 justify-end gap-6 items-center">
+<nav class="hidden xl:flex items-center gap-6">
+<a class="text-[#111118] dark:text-gray-300 text-sm font-medium hover:text-primary transition-colors" href="#architecture" data-nav="architecture">Architecture</a>
+<a class="text-[#111118] dark:text-gray-300 text-sm font-medium hover:text-primary transition-colors" href="#api-reference" data-nav="api-reference">API Reference</a>
+<a class="text-[#111118] dark:text-gray-300 text-sm font-medium hover:text-primary transition-colors" href="#guides" data-nav="guides">Guides</a>
+</nav>
+<div class="h-6 w-px bg-gray-200 dark:bg-gray-700 mx-2"></div>
+<a href="https://fluxpay-dashboard.onrender.com/" target="_blank" rel="noopener noreferrer" class="flex min-w-[120px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-9 px-4 bg-primary text-white text-sm font-bold transition-opacity hover:opacity-90">
+<span class="truncate">Go to Dashboard</span>
+</a>
+<div class="relative">
+<button id="profile-toggle" class="overflow-hidden rounded-full size-9 border-2 border-gray-200 dark:border-gray-700 hover:ring-2 hover:ring-primary/50 transition-all cursor-pointer flex-shrink-0">
+<img src="./public/developer/serhat_avatar_pp.png" alt="Profile" class="w-full h-full object-cover object-center" style="image-rendering: -webkit-optimize-contrast; image-rendering: crisp-edges;">
+</button>
+<div id="profile-dropdown" class="hidden absolute right-0 mt-2 w-72 bg-white dark:bg-[#161e2c] border border-gray-200 dark:border-gray-800 rounded-lg shadow-xl z-50 overflow-hidden">
+<div class="p-4 border-b border-gray-200 dark:border-gray-800">
+<div class="flex items-center gap-3 mb-3">
+<div class="w-12 h-12 rounded-full border-2 border-gray-200 dark:border-gray-700 overflow-hidden flex-shrink-0">
+<img src="./public/developer/serhat_avatar_pp.png" alt="Serhat Soysal" class="w-full h-full object-cover object-center" style="image-rendering: -webkit-optimize-contrast; image-rendering: crisp-edges;">
+</div>
+<div class="flex-1 min-w-0">
+<h3 class="text-sm font-bold text-[#111118] dark:text-white truncate">Serhat Soysal</h3>
+<p class="text-xs text-[#616189] dark:text-gray-400">Software Engineer</p>
+</div>
+</div>
+</div>
+<div class="p-2">
+<a href="https://serhatsoysal.com" target="_blank" rel="noopener noreferrer" class="flex items-center gap-3 px-3 py-2 rounded-lg text-sm text-[#111118] dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">
+<span class="material-symbols-outlined text-lg">language</span>
+<span>Website</span>
+</a>
+<a href="https://github.com/serhatsoysal" target="_blank" rel="noopener noreferrer" class="flex items-center gap-3 px-3 py-2 rounded-lg text-sm text-[#111118] dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">
+<span class="material-symbols-outlined text-lg">code</span>
+<span>GitHub</span>
+</a>
+<a href="https://www.linkedin.com/in/soysalserhat" target="_blank" rel="noopener noreferrer" class="flex items-center gap-3 px-3 py-2 rounded-lg text-sm text-[#111118] dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">
+<span class="material-symbols-outlined text-lg">work</span>
+<span>LinkedIn</span>
+</a>
+<a href="mailto:serhatsoysalx@gmail.com?subject=Contact from FluxPay Docs" class="flex items-center gap-3 px-3 py-2 rounded-lg text-sm text-[#111118] dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">
+<span class="material-symbols-outlined text-lg">mail</span>
+<span>Email</span>
+</a>
+</div>
+</div>
+</div>
+</div>
+</header>
+<div class="flex h-[calc(100vh-65px)] overflow-hidden">
+<!-- Left Sidebar Navigation -->
+<aside class="w-72 border-r border-gray-200 dark:border-gray-800 bg-white dark:bg-[#101022] overflow-y-auto scrollbar-hide flex-shrink-0">
+<div class="p-6 flex flex-col gap-6">
+<div>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium text-[#111118] dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors" href="#home">
+<span class="material-symbols-outlined text-lg">home</span>
+<span>Home</span>
+</a>
+</div>
+<div>
+<h3 class="text-xs font-bold text-[#616189] uppercase tracking-widest mb-4">Architecture</h3>
+<div class="flex flex-col gap-1">
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium text-[#111118] dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors" href="#backend-architecture">
+<span class="material-symbols-outlined text-lg">storage</span>
+                            Backend Architecture
+                        </a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium text-[#111118] dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors" href="#frontend-architecture">
+<span class="material-symbols-outlined text-lg">devices</span>
+                            Frontend Architecture
+                        </a>
+</div>
+</div>
+<div>
+<h3 class="text-xs font-bold text-[#616189] uppercase tracking-widest mb-4">Backend Documentation</h3>
+<div class="flex flex-col gap-1">
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium text-[#111118] dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors" href="#backend-overview">
+<span class="material-symbols-outlined text-lg">info</span>
+                            Overview
+                        </a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium text-[#111118] dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors" href="#backend-modules">
+<span class="material-symbols-outlined text-lg">account_tree</span>
+                            Module Structure
+                        </a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium text-[#111118] dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors" href="#backend-tech-stack">
+<span class="material-symbols-outlined text-lg">build</span>
+                            Technology Stack
+                        </a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium text-[#111118] dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors" href="#backend-database">
+<span class="material-symbols-outlined text-lg">database</span>
+                            Database Schema
+                        </a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium text-[#111118] dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors" href="#backend-security">
+<span class="material-symbols-outlined text-lg">lock</span>
+                            Security Architecture
+                        </a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium text-[#111118] dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors" href="#backend-api">
+<span class="material-symbols-outlined text-lg">api</span>
+                            API Layer
+                        </a>
+</div>
+</div>
+<div>
+<h3 class="text-xs font-bold text-[#616189] uppercase tracking-widest mb-4">Frontend Documentation</h3>
+<div class="flex flex-col gap-1">
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium text-[#111118] dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors" href="#frontend-overview">
+<span class="material-symbols-outlined text-lg">info</span>
+                            Overview
+                        </a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium text-[#111118] dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors" href="#frontend-architecture-design">
+<span class="material-symbols-outlined text-lg">architecture</span>
+                            Architecture & Design
+                        </a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium text-[#111118] dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors" href="#frontend-state">
+<span class="material-symbols-outlined text-lg">storage</span>
+State Management
+</a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium text-[#111118] dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors" href="#frontend-components">
+<span class="material-symbols-outlined text-lg">widgets</span>
+                            Component Hierarchy
+                        </a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium text-[#111118] dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors" href="#frontend-api">
+<span class="material-symbols-outlined text-lg">cloud</span>
+                            API Integration
+                        </a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium text-[#111118] dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors" href="#frontend-routing">
+<span class="material-symbols-outlined text-lg">route</span>
+                            Routing & Navigation
+                        </a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium text-[#111118] dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors" href="#frontend-tech-stack">
+<span class="material-symbols-outlined text-lg">terminal</span>
+                            Technology Stack
+                        </a>
+</div>
+</div>
+<div>
+<h3 class="text-xs font-bold text-[#616189] uppercase tracking-widest mb-4">API Reference</h3>
+<div class="flex flex-col gap-1">
+<div class="bg-primary/10 rounded-lg">
+<a class="flex items-center gap-3 px-3 py-2 text-sm font-semibold text-primary" href="#api-reference">
+<span class="material-symbols-outlined text-lg" style="font-variation-settings: 'FILL' 1">credit_card</span>
+                                Payments
+                            </a>
+<div class="pl-9 pb-2 flex flex-col gap-1">
+<a class="text-xs py-1.5 text-primary font-medium border-l-2 border-primary pl-4" href="#api-payment-create">Create a Payment</a>
+<a class="text-xs py-1.5 text-[#616189] hover:text-primary pl-4" href="#api-payment-list">List all Payments</a>
+<a class="text-xs py-1.5 text-[#616189] hover:text-primary pl-4" href="#api-payment-retrieve">Retrieve a Payment</a>
+</div>
+</div>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium text-[#111118] dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors" href="#api-reference">
+<span class="material-symbols-outlined text-lg">send_money</span>
+                            Payouts
+                        </a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium text-[#111118] dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors" href="#api-webhooks">
+<span class="material-symbols-outlined text-lg">webhook</span>
+                            Webhooks
+                        </a>
+<a class="flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium text-[#111118] dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors" href="#api-customers">
+<span class="material-symbols-outlined text-lg">group</span>
+                            Customers
+                        </a>
+                    </div>
+</div>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="flex-1 overflow-y-auto bg-white dark:bg-[#101022]">
+<div class="max-w-7xl mx-auto flex flex-col lg:flex-row">
+<!-- Documentation Body -->
+<div class="flex-1 p-8 lg:p-12" id="documentation-content">
+<div class="flex flex-wrap gap-2 mb-6" id="breadcrumb">
+<a class="text-[#616189] text-xs font-semibold uppercase tracking-wider hover:text-primary transition-colors" href="#architecture">Architecture</a>
+<span class="text-[#616189] text-xs">/</span>
+<span class="text-primary text-xs font-semibold uppercase tracking-wider">Documentation</span>
+</div>
+<section id="architecture" class="mb-16 scroll-mt-8 hidden">
+<div class="mb-10">
+<div class="flex items-baseline gap-4 mb-4">
+<h1 class="text-4xl font-extrabold text-[#111118] dark:text-white tracking-tight">Architecture Overview</h1>
+</div>
+<p class="text-lg text-[#616189] dark:text-gray-400 leading-relaxed">
+                            Comprehensive overview of FluxPay's backend and frontend architecture, design patterns, and system components.
+                        </p>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+<div class="p-6 rounded-xl bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-800 hover:border-primary transition-colors cursor-pointer" onclick="showSection('backend-architecture')">
+<h2 class="text-2xl font-bold text-[#111118] dark:text-white mb-3">Backend Architecture</h2>
+<p class="text-[#616189] dark:text-gray-400 mb-4">
+                                Modular monolith architecture built with Java 21 and Spring Boot 3.2. Features multi-tenant support, JWT authentication, and enterprise-grade session management.
+                            </p>
+<ul class="space-y-2 text-sm text-[#616189] dark:text-gray-400">
+<li class="flex items-start gap-2"><span class="text-primary mt-1">•</span><span>8 core modules with clear separation</span></li>
+<li class="flex items-start gap-2"><span class="text-primary mt-1">•</span><span>Domain-Driven Design principles</span></li>
+<li class="flex items-start gap-2"><span class="text-primary mt-1">•</span><span>Layered architecture pattern</span></li>
+<li class="flex items-start gap-2"><span class="text-primary mt-1">•</span><span>PostgreSQL database with Redis caching</span></li>
+</ul>
+</div>
+<div class="p-6 rounded-xl bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-800 hover:border-primary transition-colors cursor-pointer" onclick="showSection('frontend-overview')">
+<h2 class="text-2xl font-bold text-[#111118] dark:text-white mb-3">Frontend Architecture</h2>
+<p class="text-[#616189] dark:text-gray-400 mb-4">
+                                Feature-based modular architecture with React 18.2 and TypeScript. Modern state management with Zustand and React Query.
+                            </p>
+<ul class="space-y-2 text-sm text-[#616189] dark:text-gray-400">
+<li class="flex items-start gap-2"><span class="text-primary mt-1">•</span><span>Feature-based module organization</span></li>
+<li class="flex items-start gap-2"><span class="text-primary mt-1">•</span><span>Container/Presentational pattern</span></li>
+<li class="flex items-start gap-2"><span class="text-primary mt-1">•</span><span>Hybrid state management approach</span></li>
+<li class="flex items-start gap-2"><span class="text-primary mt-1">•</span><span>Tailwind CSS + Radix UI components</span></li>
+</ul>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+<a href="#backend-architecture" class="p-4 rounded-lg bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 hover:border-primary transition-colors">
+<h3 class="font-semibold text-[#111118] dark:text-white mb-2">Backend Overview</h3>
+<p class="text-sm text-[#616189] dark:text-gray-400">System architecture and module structure</p>
+</a>
+<a href="#frontend-overview" class="p-4 rounded-lg bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 hover:border-primary transition-colors">
+<h3 class="font-semibold text-[#111118] dark:text-white mb-2">Frontend Overview</h3>
+<p class="text-sm text-[#616189] dark:text-gray-400">Frontend structure and components</p>
+</a>
+<a href="#backend-modules" class="p-4 rounded-lg bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 hover:border-primary transition-colors">
+<h3 class="font-semibold text-[#111118] dark:text-white mb-2">Module Structure</h3>
+<p class="text-sm text-[#616189] dark:text-gray-400">Backend module organization</p>
+</a>
+</div>
+</section>
+<section id="api-reference" class="mb-16 scroll-mt-8 hidden">
+<div class="mb-10">
+<div class="flex items-baseline gap-4 mb-4">
+<h1 class="text-4xl font-extrabold text-[#111118] dark:text-white tracking-tight">API Reference</h1>
+</div>
+<p class="text-lg text-[#616189] dark:text-gray-400 leading-relaxed">
+                            Complete REST API documentation for FluxPay. All endpoints require JWT authentication and support multi-tenant operations.
+                        </p>
+</div>
+<div class="space-y-8">
+<div class="p-6 rounded-xl bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-800">
+<h2 class="text-2xl font-bold text-[#111118] dark:text-white mb-4">Authentication</h2>
+<p class="text-[#616189] dark:text-gray-400 mb-4">
+                                All API requests require a valid JWT access token in the Authorization header:
+                            </p>
+<div class="bg-gray-900 dark:bg-black rounded-lg p-4 mb-4">
+<pre class="text-sm text-gray-300 font-mono"><code>Authorization: Bearer &lt;access_token&gt;</code></pre>
+</div>
+<p class="text-sm text-[#616189] dark:text-gray-400 mb-4">
+                                For multi-tenant operations, include the tenant ID in the header:
+                            </p>
+<div class="bg-gray-900 dark:bg-black rounded-lg p-4">
+<pre class="text-sm text-gray-300 font-mono"><code>X-Tenant-ID: &lt;tenant_id&gt;</code></pre>
+</div>
+</div>
+<div class="p-6 rounded-xl bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-800">
+<h2 class="text-2xl font-bold text-[#111118] dark:text-white mb-4">Base URL</h2>
+<p class="text-[#616189] dark:text-gray-400 mb-4">
+                                All API endpoints are relative to the base URL:
+                            </p>
+<div class="bg-gray-900 dark:bg-black rounded-lg p-4">
+<pre class="text-sm text-gray-300 font-mono"><code>https://fluxpay-api.onrender.com/api</code></pre>
+</div>
+</div>
+<div class="p-6 rounded-xl bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-800">
+<h2 class="text-2xl font-bold text-[#111118] dark:text-white mb-4">API Endpoints</h2>
+<div class="space-y-8">
+<div>
+<h3 class="text-xl font-semibold text-[#111118] dark:text-white mb-4">Authentication</h3>
+<div class="space-y-4">
+<div class="border border-gray-200 dark:border-gray-800 rounded-lg p-4">
+<p class="font-mono text-sm text-[#111118] dark:text-white mb-2"><span class="text-green-500 font-semibold">POST</span> /api/auth/login</p>
+<p class="text-sm text-[#616189] dark:text-gray-400 mb-3">Authenticate user and receive JWT tokens</p>
+<p class="text-xs text-[#616189] dark:text-gray-400 mb-3"><strong>Authentication:</strong> Not required</p>
+<div class="bg-gray-900 dark:bg-black rounded p-3 mb-3">
+<pre class="text-xs text-gray-300 font-mono overflow-x-auto"><code>{
+  "email": "user@example.com",
+  "password": "password123"
+}</code></pre>
+</div>
+<p class="text-xs text-[#616189] dark:text-gray-400"><strong>Response 200:</strong> Returns token, refreshToken, sessionId, userId, tenantId, role</p>
+</div>
+<div class="border border-gray-200 dark:border-gray-800 rounded-lg p-4">
+<p class="font-mono text-sm text-[#111118] dark:text-white mb-2"><span class="text-green-500 font-semibold">POST</span> /api/auth/refresh</p>
+<p class="text-sm text-[#616189] dark:text-gray-400 mb-3">Get new access token using refresh token</p>
+<p class="text-xs text-[#616189] dark:text-gray-400 mb-3"><strong>Authentication:</strong> Not required</p>
+</div>
+<div class="border border-gray-200 dark:border-gray-800 rounded-lg p-4">
+<p class="font-mono text-sm text-[#111118] dark:text-white mb-2"><span class="text-red-500 font-semibold">POST</span> /api/auth/logout</p>
+<p class="text-sm text-[#616189] dark:text-gray-400 mb-3">Invalidate current session</p>
+<p class="text-xs text-[#616189] dark:text-gray-400"><strong>Authentication:</strong> Required | <strong>Response:</strong> 204 No Content</p>
+</div>
+<div class="border border-gray-200 dark:border-gray-800 rounded-lg p-4">
+<p class="font-mono text-sm text-[#111118] dark:text-white mb-2"><span class="text-red-500 font-semibold">POST</span> /api/auth/logout-all</p>
+<p class="text-sm text-[#616189] dark:text-gray-400 mb-3">Invalidate all user sessions</p>
+<p class="text-xs text-[#616189] dark:text-gray-400"><strong>Authentication:</strong> Required | <strong>Response:</strong> 204 No Content</p>
+</div>
+<div class="border border-gray-200 dark:border-gray-800 rounded-lg p-4">
+<p class="font-mono text-sm text-[#111118] dark:text-white mb-2"><span class="text-blue-500 font-semibold">GET</span> /api/auth/sessions</p>
+<p class="text-sm text-[#616189] dark:text-gray-400 mb-3">Get all active sessions for the current user</p>
+<p class="text-xs text-[#616189] dark:text-gray-400"><strong>Authentication:</strong> Required</p>
+</div>
+</div>
+</div>
+<div>
+<h3 class="text-xl font-semibold text-[#111118] dark:text-white mb-4">Tenants</h3>
+<div class="space-y-4">
+<div class="border border-gray-200 dark:border-gray-800 rounded-lg p-4">
+<p class="font-mono text-sm text-[#111118] dark:text-white mb-2"><span class="text-green-500 font-semibold">POST</span> /api/tenants/register</p>
+<p class="text-sm text-[#616189] dark:text-gray-400 mb-3">Register a new tenant with admin user</p>
+<p class="text-xs text-[#616189] dark:text-gray-400 mb-3"><strong>Authentication:</strong> Not required</p>
+<p class="text-xs text-[#616189] dark:text-gray-400"><strong>Response 201:</strong> Returns tenant details with id, name, slug, status</p>
+</div>
+<div class="border border-gray-200 dark:border-gray-800 rounded-lg p-4">
+<p class="font-mono text-sm text-[#111118] dark:text-white mb-2"><span class="text-blue-500 font-semibold">GET</span> /api/tenants/{id}</p>
+<p class="text-sm text-[#616189] dark:text-gray-400 mb-3">Get tenant by ID</p>
+<p class="text-xs text-[#616189] dark:text-gray-400"><strong>Authentication:</strong> Required</p>
+</div>
+<div class="border border-gray-200 dark:border-gray-800 rounded-lg p-4">
+<p class="font-mono text-sm text-[#111118] dark:text-white mb-2"><span class="text-yellow-500 font-semibold">PUT</span> /api/tenants/{id}</p>
+<p class="text-sm text-[#616189] dark:text-gray-400 mb-3">Update tenant information</p>
+<p class="text-xs text-[#616189] dark:text-gray-400"><strong>Authentication:</strong> Required</p>
+</div>
+</div>
+</div>
+<div>
+<h3 class="text-xl font-semibold text-[#111118] dark:text-white mb-4">Products</h3>
+<div class="space-y-4">
+<div class="border border-gray-200 dark:border-gray-800 rounded-lg p-4">
+<p class="font-mono text-sm text-[#111118] dark:text-white mb-2"><span class="text-green-500 font-semibold">POST</span> /api/products</p>
+<p class="text-sm text-[#616189] dark:text-gray-400 mb-3">Create a new product</p>
+<p class="text-xs text-[#616189] dark:text-gray-400"><strong>Authentication:</strong> Required</p>
+</div>
+<div class="border border-gray-200 dark:border-gray-800 rounded-lg p-4">
+<p class="font-mono text-sm text-[#111118] dark:text-white mb-2"><span class="text-blue-500 font-semibold">GET</span> /api/products</p>
+<p class="text-sm text-[#616189] dark:text-gray-400 mb-3">Get all active products</p>
+<p class="text-xs text-[#616189] dark:text-gray-400"><strong>Authentication:</strong> Required</p>
+</div>
+<div class="border border-gray-200 dark:border-gray-800 rounded-lg p-4">
+<p class="font-mono text-sm text-[#111118] dark:text-white mb-2"><span class="text-blue-500 font-semibold">GET</span> /api/products/{id}</p>
+<p class="text-sm text-[#616189] dark:text-gray-400 mb-3">Get product by ID</p>
+<p class="text-xs text-[#616189] dark:text-gray-400"><strong>Authentication:</strong> Required</p>
+</div>
+<div class="border border-gray-200 dark:border-gray-800 rounded-lg p-4">
+<p class="font-mono text-sm text-[#111118] dark:text-white mb-2"><span class="text-yellow-500 font-semibold">PUT</span> /api/products/{id}</p>
+<p class="text-sm text-[#616189] dark:text-gray-400 mb-3">Update product information</p>
+<p class="text-xs text-[#616189] dark:text-gray-400"><strong>Authentication:</strong> Required</p>
+</div>
+<div class="border border-gray-200 dark:border-gray-800 rounded-lg p-4">
+<p class="font-mono text-sm text-[#111118] dark:text-white mb-2"><span class="text-red-500 font-semibold">DELETE</span> /api/products/{id}</p>
+<p class="text-sm text-[#616189] dark:text-gray-400 mb-3">Delete (soft delete) a product</p>
+<p class="text-xs text-[#616189] dark:text-gray-400"><strong>Authentication:</strong> Required | <strong>Response:</strong> 204 No Content</p>
+</div>
+<div class="border border-gray-200 dark:border-gray-800 rounded-lg p-4">
+<p class="font-mono text-sm text-[#111118] dark:text-white mb-2"><span class="text-green-500 font-semibold">POST</span> /api/products/{productId}/prices</p>
+<p class="text-sm text-[#616189] dark:text-gray-400 mb-3">Create a price for a product</p>
+<p class="text-xs text-[#616189] dark:text-gray-400"><strong>Authentication:</strong> Required</p>
+</div>
+<div class="border border-gray-200 dark:border-gray-800 rounded-lg p-4">
+<p class="font-mono text-sm text-[#111118] dark:text-white mb-2"><span class="text-blue-500 font-semibold">GET</span> /api/products/{productId}/prices</p>
+<p class="text-sm text-[#616189] dark:text-gray-400 mb-3">Get all active prices for a product</p>
+<p class="text-xs text-[#616189] dark:text-gray-400"><strong>Authentication:</strong> Required</p>
+</div>
+</div>
+</div>
+<div>
+<h3 class="text-xl font-semibold text-[#111118] dark:text-white mb-4">Subscriptions</h3>
+<div class="space-y-4">
+<div class="border border-gray-200 dark:border-gray-800 rounded-lg p-4">
+<p class="font-mono text-sm text-[#111118] dark:text-white mb-2"><span class="text-blue-500 font-semibold">GET</span> /api/subscriptions</p>
+<p class="text-sm text-[#616189] dark:text-gray-400 mb-3">Get paginated list of subscriptions</p>
+<p class="text-xs text-[#616189] dark:text-gray-400 mb-2"><strong>Query Parameters:</strong> page (default: 0), size (default: 20), status (optional)</p>
+<p class="text-xs text-[#616189] dark:text-gray-400"><strong>Authentication:</strong> Required</p>
+</div>
+<div class="border border-gray-200 dark:border-gray-800 rounded-lg p-4">
+<p class="font-mono text-sm text-[#111118] dark:text-white mb-2"><span class="text-green-500 font-semibold">POST</span> /api/subscriptions</p>
+<p class="text-sm text-[#616189] dark:text-gray-400 mb-3">Create a new subscription</p>
+<p class="text-xs text-[#616189] dark:text-gray-400"><strong>Authentication:</strong> Required</p>
+</div>
+<div class="border border-gray-200 dark:border-gray-800 rounded-lg p-4">
+<p class="font-mono text-sm text-[#111118] dark:text-white mb-2"><span class="text-blue-500 font-semibold">GET</span> /api/subscriptions/{id}</p>
+<p class="text-sm text-[#616189] dark:text-gray-400 mb-3">Get subscription by ID</p>
+<p class="text-xs text-[#616189] dark:text-gray-400"><strong>Authentication:</strong> Required</p>
+</div>
+<div class="border border-gray-200 dark:border-gray-800 rounded-lg p-4">
+<p class="font-mono text-sm text-[#111118] dark:text-white mb-2"><span class="text-blue-500 font-semibold">GET</span> /api/subscriptions/{id}/items</p>
+<p class="text-sm text-[#616189] dark:text-gray-400 mb-3">Get all items for a subscription</p>
+<p class="text-xs text-[#616189] dark:text-gray-400"><strong>Authentication:</strong> Required</p>
+</div>
+<div class="border border-gray-200 dark:border-gray-800 rounded-lg p-4">
+<p class="font-mono text-sm text-[#111118] dark:text-white mb-2"><span class="text-red-500 font-semibold">POST</span> /api/subscriptions/{id}/cancel</p>
+<p class="text-sm text-[#616189] dark:text-gray-400 mb-3">Cancel a subscription</p>
+<p class="text-xs text-[#616189] dark:text-gray-400 mb-2"><strong>Query Parameters:</strong> immediately (boolean, default: false), reason (optional)</p>
+<p class="text-xs text-[#616189] dark:text-gray-400"><strong>Authentication:</strong> Required</p>
+</div>
+<div class="border border-gray-200 dark:border-gray-800 rounded-lg p-4">
+<p class="font-mono text-sm text-[#111118] dark:text-white mb-2"><span class="text-orange-500 font-semibold">POST</span> /api/subscriptions/{id}/pause</p>
+<p class="text-sm text-[#616189] dark:text-gray-400 mb-3">Pause a subscription</p>
+<p class="text-xs text-[#616189] dark:text-gray-400"><strong>Authentication:</strong> Required</p>
+</div>
+<div class="border border-gray-200 dark:border-gray-800 rounded-lg p-4">
+<p class="font-mono text-sm text-[#111118] dark:text-white mb-2"><span class="text-green-500 font-semibold">POST</span> /api/subscriptions/{id}/resume</p>
+<p class="text-sm text-[#616189] dark:text-gray-400 mb-3">Resume a paused subscription</p>
+<p class="text-xs text-[#616189] dark:text-gray-400"><strong>Authentication:</strong> Required</p>
+</div>
+</div>
+</div>
+<div id="api-payments">
+<h3 class="text-xl font-semibold text-[#111118] dark:text-white mb-4">Invoices</h3>
+<div class="space-y-4">
+<div id="api-payment-create" class="border border-gray-200 dark:border-gray-800 rounded-lg p-4">
+<p class="font-mono text-sm text-[#111118] dark:text-white mb-2"><span class="text-green-500 font-semibold">POST</span> /api/invoices/{id}/finalize</p>
+<p class="text-sm text-[#616189] dark:text-gray-400 mb-3">Finalize a draft invoice (change status to OPEN)</p>
+<p class="text-xs text-[#616189] dark:text-gray-400"><strong>Authentication:</strong> Required</p>
+</div>
+<div id="api-customers" class="border border-gray-200 dark:border-gray-800 rounded-lg p-4">
+<p class="font-mono text-sm text-[#111118] dark:text-white mb-2"><span class="text-blue-500 font-semibold">GET</span> /api/invoices/customer/{customerId}</p>
+<p class="text-sm text-[#616189] dark:text-gray-400 mb-3">Get all invoices for a customer</p>
+<p class="text-xs text-[#616189] dark:text-gray-400"><strong>Authentication:</strong> Required</p>
+</div>
+<div id="api-payment-list" class="border border-gray-200 dark:border-gray-800 rounded-lg p-4">
+<p class="font-mono text-sm text-[#111118] dark:text-white mb-2"><span class="text-blue-500 font-semibold">GET</span> /api/invoices</p>
+<p class="text-sm text-[#616189] dark:text-gray-400 mb-3">List all invoices</p>
+<p class="text-xs text-[#616189] dark:text-gray-400"><strong>Authentication:</strong> Required</p>
+</div>
+<div id="api-payment-retrieve" class="border border-gray-200 dark:border-gray-800 rounded-lg p-4">
+<p class="font-mono text-sm text-[#111118] dark:text-white mb-2"><span class="text-blue-500 font-semibold">GET</span> /api/invoices/{id}</p>
+<p class="text-sm text-[#616189] dark:text-gray-400 mb-3">Get invoice by ID</p>
+<p class="text-xs text-[#616189] dark:text-gray-400"><strong>Authentication:</strong> Required</p>
+</div>
+<div class="border border-gray-200 dark:border-gray-800 rounded-lg p-4">
+<p class="font-mono text-sm text-[#111118] dark:text-white mb-2"><span class="text-blue-500 font-semibold">GET</span> /api/invoices/{id}/items</p>
+<p class="text-sm text-[#616189] dark:text-gray-400 mb-3">Get all items for an invoice</p>
+<p class="text-xs text-[#616189] dark:text-gray-400"><strong>Authentication:</strong> Required</p>
+</div>
+<div class="border border-gray-200 dark:border-gray-800 rounded-lg p-4">
+<p class="font-mono text-sm text-[#111118] dark:text-white mb-2"><span class="text-red-500 font-semibold">POST</span> /api/invoices/{id}/void</p>
+<p class="text-sm text-[#616189] dark:text-gray-400 mb-3">Void an invoice</p>
+<p class="text-xs text-[#616189] dark:text-gray-400"><strong>Authentication:</strong> Required</p>
+</div>
+</div>
+</div>
+<div>
+<h3 class="text-xl font-semibold text-[#111118] dark:text-white mb-4">Notifications</h3>
+<div class="space-y-4">
+<div class="border border-gray-200 dark:border-gray-800 rounded-lg p-4">
+<p class="font-mono text-sm text-[#111118] dark:text-white mb-2"><span class="text-blue-500 font-semibold">GET</span> /api/notifications</p>
+<p class="text-sm text-[#616189] dark:text-gray-400 mb-3">Get paginated list of notifications for the current user</p>
+<p class="text-xs text-[#616189] dark:text-gray-400 mb-2"><strong>Query Parameters:</strong> page (default: 0), size (default: 20)</p>
+<p class="text-xs text-[#616189] dark:text-gray-400"><strong>Authentication:</strong> Required</p>
+</div>
+<div class="border border-gray-200 dark:border-gray-800 rounded-lg p-4">
+<p class="font-mono text-sm text-[#111118] dark:text-white mb-2"><span class="text-blue-500 font-semibold">GET</span> /api/notifications/unread-count</p>
+<p class="text-sm text-[#616189] dark:text-gray-400 mb-3">Get count of unread notifications</p>
+<p class="text-xs text-[#616189] dark:text-gray-400"><strong>Authentication:</strong> Required</p>
+</div>
+<div class="border border-gray-200 dark:border-gray-800 rounded-lg p-4">
+<p class="font-mono text-sm text-[#111118] dark:text-white mb-2"><span class="text-green-500 font-semibold">POST</span> /api/notifications/{id}/read</p>
+<p class="text-sm text-[#616189] dark:text-gray-400 mb-3">Mark a notification as read</p>
+<p class="text-xs text-[#616189] dark:text-gray-400"><strong>Authentication:</strong> Required</p>
+</div>
+<div class="border border-gray-200 dark:border-gray-800 rounded-lg p-4">
+<p class="font-mono text-sm text-[#111118] dark:text-white mb-2"><span class="text-blue-500 font-semibold">GET</span> /api/notifications/{id}</p>
+<p class="text-sm text-[#616189] dark:text-gray-400 mb-3">Get notification by ID</p>
+<p class="text-xs text-[#616189] dark:text-gray-400"><strong>Authentication:</strong> Required</p>
+</div>
+</div>
+</div>
+<div id="api-webhooks">
+<h3 class="text-xl font-semibold text-[#111118] dark:text-white mb-4">Webhooks</h3>
+<div class="space-y-4">
+<div class="border border-gray-200 dark:border-gray-800 rounded-lg p-4">
+<p class="font-mono text-sm text-[#111118] dark:text-white mb-2"><span class="text-green-500 font-semibold">POST</span> /api/webhooks</p>
+<p class="text-sm text-[#616189] dark:text-gray-400 mb-3">Create a new webhook endpoint</p>
+<p class="text-xs text-[#616189] dark:text-gray-400"><strong>Authentication:</strong> Required</p>
+</div>
+<div class="border border-gray-200 dark:border-gray-800 rounded-lg p-4">
+<p class="font-mono text-sm text-[#111118] dark:text-white mb-2"><span class="text-blue-500 font-semibold">GET</span> /api/webhooks</p>
+<p class="text-sm text-[#616189] dark:text-gray-400 mb-3">Get all active webhooks for the current tenant</p>
+<p class="text-xs text-[#616189] dark:text-gray-400"><strong>Authentication:</strong> Required</p>
+</div>
+<div class="border border-gray-200 dark:border-gray-800 rounded-lg p-4">
+<p class="font-mono text-sm text-[#111118] dark:text-white mb-2"><span class="text-blue-500 font-semibold">GET</span> /api/webhooks/{id}</p>
+<p class="text-sm text-[#616189] dark:text-gray-400 mb-3">Get webhook by ID</p>
+<p class="text-xs text-[#616189] dark:text-gray-400"><strong>Authentication:</strong> Required</p>
+</div>
+<div class="border border-gray-200 dark:border-gray-800 rounded-lg p-4">
+<p class="font-mono text-sm text-[#111118] dark:text-white mb-2"><span class="text-red-500 font-semibold">DELETE</span> /api/webhooks/{id}</p>
+<p class="text-sm text-[#616189] dark:text-gray-400 mb-3">Delete (deactivate) a webhook</p>
+<p class="text-xs text-[#616189] dark:text-gray-400"><strong>Authentication:</strong> Required | <strong>Response:</strong> 204 No Content</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="mt-8 p-6 rounded-xl bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-800">
+<h2 class="text-2xl font-bold text-[#111118] dark:text-white mb-4">Data Models</h2>
+<div class="space-y-4">
+<div>
+<h3 class="text-lg font-semibold text-[#111118] dark:text-white mb-3">Enums</h3>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+<div>
+<h4 class="text-sm font-semibold text-[#111118] dark:text-white mb-2">SubscriptionStatus</h4>
+<ul class="text-xs text-[#616189] dark:text-gray-400 space-y-1">
+<li>• INCOMPLETE</li>
+<li>• ACTIVE</li>
+<li>• PAUSED</li>
+<li>• CANCELED</li>
+<li>• PAST_DUE</li>
+<li>• TRIALING</li>
+</ul>
+</div>
+<div>
+<h4 class="text-sm font-semibold text-[#111118] dark:text-white mb-2">InvoiceStatus</h4>
+<ul class="text-xs text-[#616189] dark:text-gray-400 space-y-1">
+<li>• DRAFT</li>
+<li>• OPEN</li>
+<li>• PAID</li>
+<li>• VOID</li>
+<li>• UNCOLLECTIBLE</li>
+</ul>
+</div>
+<div>
+<h4 class="text-sm font-semibold text-[#111118] dark:text-white mb-2">PricingModel</h4>
+<ul class="text-xs text-[#616189] dark:text-gray-400 space-y-1">
+<li>• FLAT_RATE</li>
+<li>• PER_UNIT</li>
+<li>• TIERED</li>
+<li>• VOLUME</li>
+</ul>
+</div>
+<div>
+<h4 class="text-sm font-semibold text-[#111118] dark:text-white mb-2">BillingInterval</h4>
+<ul class="text-xs text-[#616189] dark:text-gray-400 space-y-1">
+<li>• DAILY</li>
+<li>• WEEKLY</li>
+<li>• MONTHLY</li>
+<li>• YEARLY</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="mt-8 p-6 rounded-xl bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-800">
+<h2 class="text-2xl font-bold text-[#111118] dark:text-white mb-4">Additional Information</h2>
+<div class="space-y-4">
+<div>
+<h3 class="text-lg font-semibold text-[#111118] dark:text-white mb-2">Pagination</h3>
+<p class="text-sm text-[#616189] dark:text-gray-400 mb-2">
+                                Paginated endpoints use: <code class="bg-gray-200 dark:bg-gray-800 px-2 py-1 rounded text-xs">page</code> (zero-based), <code class="bg-gray-200 dark:bg-gray-800 px-2 py-1 rounded text-xs">size</code>, <code class="bg-gray-200 dark:bg-gray-800 px-2 py-1 rounded text-xs">content</code>, <code class="bg-gray-200 dark:bg-gray-800 px-2 py-1 rounded text-xs">totalElements</code>, <code class="bg-gray-200 dark:bg-gray-800 px-2 py-1 rounded text-xs">totalPages</code>
+                            </p>
+</div>
+<div>
+<h3 class="text-lg font-semibold text-[#111118] dark:text-white mb-2">Currency</h3>
+<p class="text-sm text-[#616189] dark:text-gray-400">
+                                All monetary amounts are stored as integers representing the smallest currency unit (e.g., cents for USD). $29.99 is represented as 2999.
+                            </p>
+</div>
+<div>
+<h3 class="text-lg font-semibold text-[#111118] dark:text-white mb-2">Rate Limiting</h3>
+<p class="text-sm text-[#616189] dark:text-gray-400">
+                                API requests are rate-limited per tenant. Rate limit headers: <code class="bg-gray-200 dark:bg-gray-800 px-2 py-1 rounded text-xs">X-RateLimit-Limit</code>, <code class="bg-gray-200 dark:bg-gray-800 px-2 py-1 rounded text-xs">X-RateLimit-Remaining</code>, <code class="bg-gray-200 dark:bg-gray-800 px-2 py-1 rounded text-xs">X-RateLimit-Reset</code>
+                            </p>
+</div>
+<div>
+<h3 class="text-lg font-semibold text-[#111118] dark:text-white mb-2">Error Responses</h3>
+<p class="text-sm text-[#616189] dark:text-gray-400 mb-2">
+                                All error responses include: timestamp, status, error, message, path
+                            </p>
+<p class="text-xs text-[#616189] dark:text-gray-400">
+                                Common status codes: 200 OK, 201 Created, 204 No Content, 400 Bad Request, 401 Unauthorized, 403 Forbidden, 404 Not Found, 409 Conflict, 500 Internal Server Error
+                            </p>
+</div>
+</div>
+</div>
+</section>
+<section id="guides" class="mb-16 scroll-mt-8 hidden">
+<div class="mb-10">
+<div class="flex items-baseline gap-4 mb-4">
+<h1 class="text-4xl font-extrabold text-[#111118] dark:text-white tracking-tight">Guides</h1>
+</div>
+<p class="text-lg text-[#616189] dark:text-gray-400 leading-relaxed">
+                            Step-by-step guides to help you get started with FluxPay development and integration.
+                        </p>
+</div>
+<div class="space-y-6">
+<div class="p-6 rounded-xl bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-800">
+<h2 class="text-2xl font-bold text-[#111118] dark:text-white mb-4">Getting Started</h2>
+<div class="space-y-4">
+<div>
+<h3 class="text-lg font-semibold text-[#111118] dark:text-white mb-2">1. Backend Setup</h3>
+<p class="text-[#616189] dark:text-gray-400 mb-2">
+                                    Clone the backend repository and set up the development environment:
+                                </p>
+<ul class="space-y-1 text-sm text-[#616189] dark:text-gray-400 ml-4">
+<li>• Java 21 or higher required</li>
+<li>• PostgreSQL database configured</li>
+<li>• Redis for session management</li>
+<li>• Environment variables configured</li>
+</ul>
+</div>
+<div>
+<h3 class="text-lg font-semibold text-[#111118] dark:text-white mb-2">2. Frontend Setup</h3>
+<p class="text-[#616189] dark:text-gray-400 mb-2">
+                                    Set up the React frontend application:
+                                </p>
+<ul class="space-y-1 text-sm text-[#616189] dark:text-gray-400 ml-4">
+<li>• Node.js 18+ and npm/yarn</li>
+<li>• Configure API base URL</li>
+<li>• Install dependencies</li>
+<li>• Start development server</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="p-6 rounded-xl bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-800">
+<h2 class="text-2xl font-bold text-[#111118] dark:text-white mb-4">Integration Guide</h2>
+<div class="space-y-4">
+<div>
+<h3 class="text-lg font-semibold text-[#111118] dark:text-white mb-2">API Integration</h3>
+<p class="text-[#616189] dark:text-gray-400 mb-2">
+                                    Integrate FluxPay API into your application:
+                                </p>
+<ul class="space-y-1 text-sm text-[#616189] dark:text-gray-400 ml-4">
+<li>• Obtain API credentials</li>
+<li>• Implement authentication flow</li>
+<li>• Configure tenant context</li>
+<li>• Make API requests with proper headers</li>
+</ul>
+</div>
+<div>
+<h3 class="text-lg font-semibold text-[#111118] dark:text-white mb-2">Frontend Integration</h3>
+<p class="text-[#616189] dark:text-gray-400 mb-2">
+                                    Use FluxPay React components in your application:
+                                </p>
+<ul class="space-y-1 text-sm text-[#616189] dark:text-gray-400 ml-4">
+<li>• Install FluxPay React package</li>
+<li>• Configure API client</li>
+<li>• Use provided hooks and components</li>
+<li>• Handle authentication state</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="p-6 rounded-xl bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-800">
+<h2 class="text-2xl font-bold text-[#111118] dark:text-white mb-4">Best Practices</h2>
+<div class="space-y-3 text-sm text-[#616189] dark:text-gray-400">
+<p>• Always validate API responses and handle errors gracefully</p>
+<p>• Use environment variables for configuration</p>
+<p>• Implement proper error handling and retry logic</p>
+<p>• Follow RESTful API conventions</p>
+<p>• Keep API tokens secure and rotate them regularly</p>
+<p>• Monitor API usage and implement rate limiting</p>
+</div>
+</div>
+</div>
+</section>
+<section id="home" class="mb-16 scroll-mt-8">
+<div class="mb-10">
+<div class="flex items-baseline gap-4 mb-4">
+<h1 class="text-4xl font-extrabold text-[#111118] dark:text-white tracking-tight">FluxPay Project</h1>
+</div>
+<p class="text-lg text-[#616189] dark:text-gray-400 leading-relaxed">
+                            Multi-tenant SaaS subscription management and billing orchestration platform with JWT authentication, flexible pricing models, and automated invoicing.
+                        </p>
+<div class="mt-6 flex flex-wrap gap-4">
+<a href="https://fluxpay-dashboard.onrender.com/" target="_blank" rel="noopener noreferrer" class="flex items-center gap-2 px-4 py-2 rounded-lg bg-primary text-white text-sm font-semibold hover:opacity-90 transition-opacity">
+<span class="material-symbols-outlined text-base">open_in_new</span>
+<span>Live Demo</span>
+</a>
+<a href="https://github.com/serhatsoysal/fluxpay-orchestration-engine" target="_blank" rel="noopener noreferrer" class="flex items-center gap-2 px-4 py-2 rounded-lg bg-gray-900 dark:bg-gray-800 text-white text-sm font-semibold hover:bg-gray-800 dark:hover:bg-gray-700 transition-colors">
+<span class="material-symbols-outlined text-base">code</span>
+<span>Backend Repository</span>
+</a>
+<a href="https://github.com/serhatsoysal/fluxpay-dashboard" target="_blank" rel="noopener noreferrer" class="flex items-center gap-2 px-4 py-2 rounded-lg bg-gray-900 dark:bg-gray-800 text-white text-sm font-semibold hover:bg-gray-800 dark:hover:bg-gray-700 transition-colors">
+<span class="material-symbols-outlined text-base">code</span>
+<span>Frontend Repository</span>
+</a>
+</div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<div class="p-6 rounded-xl bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-800">
+<h2 class="text-xl font-bold text-[#111118] dark:text-white mb-3">What is FluxPay?</h2>
+<p class="text-[#616189] dark:text-gray-400">
+                                FluxPay is a subscription management and billing orchestration platform. It helps businesses manage recurring payments, subscriptions, invoices, and customer relationships in one place.
+                            </p>
+</div>
+<div class="p-6 rounded-xl bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-800">
+<h2 class="text-xl font-bold text-[#111118] dark:text-white mb-3">Why FluxPay?</h2>
+<p class="text-[#616189] dark:text-gray-400 mb-3">
+                                Managing subscriptions and billing can be complex. FluxPay simplifies this with:
+                            </p>
+<ul class="space-y-1 text-sm text-[#616189] dark:text-gray-400">
+<li class="flex items-start gap-2"><span class="text-primary mt-1">•</span><span>Automated billing and invoicing</span></li>
+<li class="flex items-start gap-2"><span class="text-primary mt-1">•</span><span>Multi-tenant architecture</span></li>
+<li class="flex items-start gap-2"><span class="text-primary mt-1">•</span><span>Real-time analytics</span></li>
+<li class="flex items-start gap-2"><span class="text-primary mt-1">•</span><span>Secure payment processing</span></li>
+</ul>
+</div>
+<div class="p-6 rounded-xl bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-800">
+<h2 class="text-xl font-bold text-[#111118] dark:text-white mb-3">How Does It Work?</h2>
+<p class="text-[#616189] dark:text-gray-400 mb-3">
+                                Built with modern technologies:
+                            </p>
+<ul class="space-y-1 text-sm text-[#616189] dark:text-gray-400">
+<li class="flex items-start gap-2"><span class="text-primary mt-1">•</span><span><strong>Backend:</strong> Java 21 + Spring Boot</span></li>
+<li class="flex items-start gap-2"><span class="text-primary mt-1">•</span><span><strong>Frontend:</strong> React 18.2 + TypeScript</span></li>
+<li class="flex items-start gap-2"><span class="text-primary mt-1">•</span><span><strong>Database:</strong> PostgreSQL</span></li>
+<li class="flex items-start gap-2"><span class="text-primary mt-1">•</span><span><strong>Security:</strong> JWT authentication</span></li>
+</ul>
+</div>
+<div class="p-6 rounded-xl bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-800">
+<h2 class="text-xl font-bold text-[#111118] dark:text-white mb-3">Where Can You Use It?</h2>
+<p class="text-[#616189] dark:text-gray-400">
+                                Perfect for SaaS companies, e-commerce platforms, digital service providers, and any business that needs recurring payment processing.
+                            </p>
+</div>
+<div class="p-6 rounded-xl bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-800">
+<h2 class="text-xl font-bold text-[#111118] dark:text-white mb-3">When to Use It?</h2>
+<p class="text-[#616189] dark:text-gray-400">
+                                Use FluxPay when you need recurring payment management, automated invoicing, multi-tenant billing, or real-time subscription analytics.
+                            </p>
+</div>
+<div class="p-6 rounded-xl bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-800">
+<h2 class="text-xl font-bold text-[#111118] dark:text-white mb-3">Who Is It For?</h2>
+<p class="text-[#616189] dark:text-gray-400">
+                                Designed for developers, business owners, product teams, and finance teams who need a scalable, secure subscription management solution.
+                            </p>
+</div>
+</div>
+</section>
+<section id="backend-architecture" class="mb-16 scroll-mt-8 hidden">
+<div class="mb-10">
+<div class="flex items-baseline gap-4 mb-4">
+<h1 class="text-4xl font-extrabold text-[#111118] dark:text-white tracking-tight">Backend Architecture</h1>
+</div>
+<p class="text-lg text-[#616189] dark:text-gray-400 leading-relaxed">
+                            Enterprise-grade, multi-tenant SaaS subscription management and billing orchestration platform built with Java 21 and Spring Boot 3.2.
+                        </p>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+<div class="border border-gray-200 dark:border-gray-800 rounded-xl overflow-hidden">
+<img src="./public/backend-architecture/backend-architecture-images/1. Database ER Diagram.png" alt="Database ER Diagram" class="w-full h-auto">
+<div class="p-4 border-t border-gray-200 dark:border-gray-800 bg-gray-50 dark:bg-gray-900/50">
+<p class="text-sm font-semibold text-[#111118] dark:text-white">Database ER Diagram</p>
+<p class="text-xs text-[#616189] dark:text-gray-400 mt-1">Complete database schema and relationships</p>
+</div>
+</div>
+<div class="border border-gray-200 dark:border-gray-800 rounded-xl overflow-hidden">
+<img src="./public/backend-architecture/backend-architecture-images/2. Sistem Mimarisi Diyagramı.png" alt="System Architecture Diagram" class="w-full h-auto">
+<div class="p-4 border-t border-gray-200 dark:border-gray-800 bg-gray-50 dark:bg-gray-900/50">
+<p class="text-sm font-semibold text-[#111118] dark:text-white">System Architecture</p>
+<p class="text-xs text-[#616189] dark:text-gray-400 mt-1">High-level system architecture overview</p>
+</div>
+</div>
+<div class="border border-gray-200 dark:border-gray-800 rounded-xl overflow-hidden">
+<img src="./public/backend-architecture/backend-architecture-images/3. Subscription Lifecycle Flow.png" alt="Subscription Lifecycle Flow" class="w-full h-auto">
+<div class="p-4 border-t border-gray-200 dark:border-gray-800 bg-gray-50 dark:bg-gray-900/50">
+<p class="text-sm font-semibold text-[#111118] dark:text-white">Subscription Lifecycle Flow</p>
+<p class="text-xs text-[#616189] dark:text-gray-400 mt-1">Subscription state management and transitions</p>
+</div>
+</div>
+<div class="border border-gray-200 dark:border-gray-800 rounded-xl overflow-hidden">
+<img src="./public/backend-architecture/backend-architecture-images/4. Authentication Flow.png" alt="Authentication Flow" class="w-full h-auto">
+<div class="p-4 border-t border-gray-200 dark:border-gray-800 bg-gray-50 dark:bg-gray-900/50">
+<p class="text-sm font-semibold text-[#111118] dark:text-white">Authentication Flow</p>
+<p class="text-xs text-[#616189] dark:text-gray-400 mt-1">JWT-based authentication and session management</p>
+</div>
+</div>
+<div class="border border-gray-200 dark:border-gray-800 rounded-xl overflow-hidden">
+<img src="./public/backend-architecture/backend-architecture-images/5. Invoice Generation Flow.png" alt="Invoice Generation Flow" class="w-full h-auto">
+<div class="p-4 border-t border-gray-200 dark:border-gray-800 bg-gray-50 dark:bg-gray-900/50">
+<p class="text-sm font-semibold text-[#111118] dark:text-white">Invoice Generation Flow</p>
+<p class="text-xs text-[#616189] dark:text-gray-400 mt-1">Automated invoice creation and processing workflow</p>
+</div>
+</div>
+<div class="border border-gray-200 dark:border-gray-800 rounded-xl overflow-hidden">
+<img src="./public/backend-architecture/backend-architecture-images/6. Technologies Stacks.png" alt="Technology Stack" class="w-full h-auto">
+<div class="p-4 border-t border-gray-200 dark:border-gray-800 bg-gray-50 dark:bg-gray-900/50">
+<p class="text-sm font-semibold text-[#111118] dark:text-white">Technology Stack</p>
+<p class="text-xs text-[#616189] dark:text-gray-400 mt-1">Backend technologies and frameworks</p>
+</div>
+</div>
+<div class="border border-gray-200 dark:border-gray-800 rounded-xl overflow-hidden lg:col-span-2">
+<img src="./public/backend-architecture/backend-architecture-images/7. Modül Yapısı.png" alt="Module Structure" class="w-full h-auto">
+<div class="p-4 border-t border-gray-200 dark:border-gray-800 bg-gray-50 dark:bg-gray-900/50">
+<p class="text-sm font-semibold text-[#111118] dark:text-white">Module Structure</p>
+<p class="text-xs text-[#616189] dark:text-gray-400 mt-1">Modular monolith architecture with 8 independent modules</p>
+</div>
+</div>
+</div>
+<div class="border-l-4 border-primary bg-primary/5 dark:bg-primary/10 p-5 rounded-r-xl mb-8">
+<div class="flex items-center gap-2 text-primary font-bold mb-2">
+<span class="material-symbols-outlined">description</span>
+                            Complete Documentation
+                        </div>
+<p class="text-sm text-[#111118] dark:text-gray-300">
+                            For detailed backend documentation, see the <a href="./public/backend-architecture/document/back-end.md" target="_blank" class="text-primary hover:underline font-semibold">Backend Documentation</a> file.
+                        </p>
+</div>
+</section>
+<section id="backend-overview" class="mb-16 scroll-mt-8 hidden">
+<div class="mb-10">
+<div class="flex items-baseline gap-4 mb-4">
+<h1 class="text-4xl font-extrabold text-[#111118] dark:text-white tracking-tight">Backend Overview</h1>
+</div>
+<p class="text-lg text-[#616189] dark:text-gray-400 leading-relaxed">
+                            FluxPay Orchestration Engine is an enterprise-grade, multi-tenant SaaS subscription management and billing orchestration platform designed to handle complex subscription business models with flexible pricing strategies, automated invoicing, and comprehensive tenant isolation.
+                        </p>
+</div>
+<div class="space-y-8">
+<div>
+<h2 class="text-2xl font-bold text-[#111118] dark:text-white mb-4">Key Characteristics</h2>
+<ul class="space-y-2 text-[#616189] dark:text-gray-400">
+<li class="flex items-start gap-2"><span class="text-primary mt-1">•</span><span><strong class="text-[#111118] dark:text-white">Modular Monolith Architecture:</strong> 8 independent modules with clear boundaries</span></li>
+<li class="flex items-start gap-2"><span class="text-primary mt-1">•</span><span><strong class="text-[#111118] dark:text-white">Domain-Driven Design (DDD):</strong> Each module represents a bounded context</span></li>
+<li class="flex items-start gap-2"><span class="text-primary mt-1">•</span><span><strong class="text-[#111118] dark:text-white">Multi-Tenant:</strong> Complete tenant isolation with row-level security</span></li>
+<li class="flex items-start gap-2"><span class="text-primary mt-1">•</span><span><strong class="text-[#111118] dark:text-white">Enterprise Security:</strong> JWT authentication, session management, audit logging</span></li>
+<li class="flex items-start gap-2"><span class="text-primary mt-1">•</span><span><strong class="text-[#111118] dark:text-white">Production-Ready:</strong> Comprehensive testing, CI/CD, security scanning</span></li>
+<li class="flex items-start gap-2"><span class="text-primary mt-1">•</span><span><strong class="text-[#111118] dark:text-white">Scalable:</strong> Java 21 virtual threads, Redis caching, optimized queries</span></li>
+</ul>
+</div>
+<div>
+<h2 class="text-2xl font-bold text-[#111118] dark:text-white mb-4">Project Statistics</h2>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+<div class="p-4 rounded-lg bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-800">
+<div class="text-3xl font-bold text-primary mb-1">8</div>
+<div class="text-sm text-[#616189] dark:text-gray-400">Modules</div>
+</div>
+<div class="p-4 rounded-lg bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-800">
+<div class="text-3xl font-bold text-primary mb-1">28</div>
+<div class="text-sm text-[#616189] dark:text-gray-400">Entity Classes</div>
+</div>
+<div class="p-4 rounded-lg bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-800">
+<div class="text-3xl font-bold text-primary mb-1">21</div>
+<div class="text-sm text-[#616189] dark:text-gray-400">Service Classes</div>
+</div>
+<div class="p-4 rounded-lg bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-800">
+<div class="text-3xl font-bold text-primary mb-1">24</div>
+<div class="text-sm text-[#616189] dark:text-gray-400">Repositories</div>
+</div>
+<div class="p-4 rounded-lg bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-800">
+<div class="text-3xl font-bold text-primary mb-1">8+</div>
+<div class="text-sm text-[#616189] dark:text-gray-400">Controllers</div>
+</div>
+<div class="p-4 rounded-lg bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-800">
+<div class="text-3xl font-bold text-primary mb-1">50+</div>
+<div class="text-sm text-[#616189] dark:text-gray-400">Test Files</div>
+</div>
+<div class="p-4 rounded-lg bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-800">
+<div class="text-3xl font-bold text-primary mb-1">70%+</div>
+<div class="text-sm text-[#616189] dark:text-gray-400">Test Coverage</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="backend-modules" class="mb-16 scroll-mt-8 hidden">
+<div class="mb-10">
+<div class="flex items-baseline gap-4 mb-4">
+<h1 class="text-4xl font-extrabold text-[#111118] dark:text-white tracking-tight">Module Structure</h1>
+</div>
+<p class="text-lg text-[#616189] dark:text-gray-400 leading-relaxed">
+                            FluxPay consists of 8 independent modules, each with specific responsibilities following Domain-Driven Design principles.
+                        </p>
+</div>
+<div class="mb-8">
+<img src="./public/backend-architecture/backend-architecture-images/7. Modül Yapısı.png" alt="Module Structure" class="w-full h-auto rounded-xl border border-gray-200 dark:border-gray-800">
+</div>
+<div class="space-y-8">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<div class="p-6 rounded-xl bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-800">
+<h3 class="text-xl font-bold text-[#111118] dark:text-white mb-3">1. fluxpay-common</h3>
+<p class="text-sm text-[#616189] dark:text-gray-400 mb-3"><strong>Purpose:</strong> Shared utilities, base entities, DTOs, enums, and exceptions</p>
+<p class="text-sm font-semibold text-[#111118] dark:text-white mb-2">Key Components:</p>
+<ul class="text-sm text-[#616189] dark:text-gray-400 space-y-1">
+<li>• BaseEntity: Abstract base class with common fields</li>
+<li>• DTOs: Shared data transfer objects</li>
+<li>• Enums: Common enumerations</li>
+<li>• Exceptions: Custom exception hierarchy</li>
+</ul>
+</div>
+<div class="p-6 rounded-xl bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-800">
+<h3 class="text-xl font-bold text-[#111118] dark:text-white mb-3">2. fluxpay-security</h3>
+<p class="text-sm text-[#616189] dark:text-gray-400 mb-3"><strong>Purpose:</strong> Authentication, authorization, session management, and tenant context</p>
+<p class="text-sm font-semibold text-[#111118] dark:text-white mb-2">Key Components:</p>
+<ul class="text-sm text-[#616189] dark:text-gray-400 space-y-1">
+<li>• JwtTokenProvider: JWT token creation and validation</li>
+<li>• SessionService: Enterprise session management</li>
+<li>• TenantContext: ThreadLocal-based tenant isolation</li>
+<li>• RateLimitService: Request rate limiting</li>
+</ul>
+</div>
+<div class="p-6 rounded-xl bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-800">
+<h3 class="text-xl font-bold text-[#111118] dark:text-white mb-3">3. fluxpay-tenant</h3>
+<p class="text-sm text-[#616189] dark:text-gray-400 mb-3"><strong>Purpose:</strong> Tenant and user management</p>
+<p class="text-sm font-semibold text-[#111118] dark:text-white mb-2">Key Components:</p>
+<ul class="text-sm text-[#616189] dark:text-gray-400 space-y-1">
+<li>• Tenant: Tenant entity</li>
+<li>• User: User entity with roles</li>
+<li>• ApiKey: API key management</li>
+<li>• TenantService: Tenant business logic</li>
+</ul>
+</div>
+<div class="p-6 rounded-xl bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-800">
+<h3 class="text-xl font-bold text-[#111118] dark:text-white mb-3">4. fluxpay-product</h3>
+<p class="text-sm text-[#616189] dark:text-gray-400 mb-3"><strong>Purpose:</strong> Product catalog and pricing models</p>
+<p class="text-sm font-semibold text-[#111118] dark:text-white mb-2">Key Components:</p>
+<ul class="text-sm text-[#616189] dark:text-gray-400 space-y-1">
+<li>• Product: Product entity</li>
+<li>• Price: Pricing models (flat-rate, per-unit, tiered)</li>
+<li>• Feature: Product features</li>
+<li>• ProductService: Product management</li>
+</ul>
+</div>
+<div class="p-6 rounded-xl bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-800">
+<h3 class="text-xl font-bold text-[#111118] dark:text-white mb-3">5. fluxpay-subscription</h3>
+<p class="text-sm text-[#616189] dark:text-gray-400 mb-3"><strong>Purpose:</strong> Subscription lifecycle management</p>
+<p class="text-sm font-semibold text-[#111118] dark:text-white mb-2">Key Components:</p>
+<ul class="text-sm text-[#616189] dark:text-gray-400 space-y-1">
+<li>• Subscription: Subscription entity with lifecycle states</li>
+<li>• SubscriptionItem: Subscription line items</li>
+<li>• Customer: Customer entity</li>
+<li>• SubscriptionService: Subscription lifecycle management</li>
+</ul>
+</div>
+<div class="p-6 rounded-xl bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-800">
+<h3 class="text-xl font-bold text-[#111118] dark:text-white mb-3">6. fluxpay-billing</h3>
+<p class="text-sm text-[#616189] dark:text-gray-400 mb-3"><strong>Purpose:</strong> Invoice generation and payment processing</p>
+<p class="text-sm font-semibold text-[#111118] dark:text-white mb-2">Key Components:</p>
+<ul class="text-sm text-[#616189] dark:text-gray-400 space-y-1">
+<li>• Invoice: Invoice entity</li>
+<li>• Payment: Payment transactions</li>
+<li>• InvoiceService: Invoice generation and management</li>
+<li>• PaymentService: Payment processing</li>
+</ul>
+</div>
+<div class="p-6 rounded-xl bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-800">
+<h3 class="text-xl font-bold text-[#111118] dark:text-white mb-3">7. fluxpay-notification</h3>
+<p class="text-sm text-[#616189] dark:text-gray-400 mb-3"><strong>Purpose:</strong> Email and webhook notifications</p>
+<p class="text-sm font-semibold text-[#111118] dark:text-white mb-2">Key Components:</p>
+<ul class="text-sm text-[#616189] dark:text-gray-400 space-y-1">
+<li>• EmailTemplate: Email template management</li>
+<li>• WebhookEndpoint: Webhook endpoint configuration</li>
+<li>• EmailService: Email sending service</li>
+<li>• WebhookService: Webhook delivery service</li>
+</ul>
+</div>
+<div class="p-6 rounded-xl bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-800">
+<h3 class="text-xl font-bold text-[#111118] dark:text-white mb-3">8. fluxpay-api</h3>
+<p class="text-sm text-[#616189] dark:text-gray-400 mb-3"><strong>Purpose:</strong> REST API layer, controllers, and main application</p>
+<p class="text-sm font-semibold text-[#111118] dark:text-white mb-2">Key Components:</p>
+<ul class="text-sm text-[#616189] dark:text-gray-400 space-y-1">
+<li>• AuthController: Authentication endpoints</li>
+<li>• ProductController: Product endpoints</li>
+<li>• SubscriptionController: Subscription endpoints</li>
+<li>• PaymentController: Payment endpoints</li>
+</ul>
+</div>
+</div>
+</div>
+</section>
+<section id="backend-tech-stack" class="mb-16 scroll-mt-8 hidden">
+<div class="mb-10">
+<div class="flex items-baseline gap-4 mb-4">
+<h1 class="text-4xl font-extrabold text-[#111118] dark:text-white tracking-tight">Technology Stack</h1>
+</div>
+<p class="text-lg text-[#616189] dark:text-gray-400 leading-relaxed">
+                            Modern Java-based technology stack leveraging Spring Boot ecosystem and enterprise-grade tools.
+                        </p>
+</div>
+<div class="mb-8">
+<img src="./public/backend-architecture/backend-architecture-images/6. Technologies Stacks.png" alt="Technology Stack" class="w-full h-auto rounded-xl border border-gray-200 dark:border-gray-800">
+</div>
+<div class="space-y-8">
+<div>
+<h2 class="text-2xl font-bold text-[#111118] dark:text-white mb-4">Core Technologies</h2>
+<div class="overflow-x-auto">
+<table class="w-full border-collapse border border-gray-200 dark:border-gray-800 rounded-lg">
+<thead class="bg-gray-50 dark:bg-gray-900">
+<tr>
+<th class="border border-gray-200 dark:border-gray-800 px-4 py-3 text-left text-sm font-bold text-[#111118] dark:text-white">Technology</th>
+<th class="border border-gray-200 dark:border-gray-800 px-4 py-3 text-left text-sm font-bold text-[#111118] dark:text-white">Version</th>
+<th class="border border-gray-200 dark:border-gray-800 px-4 py-3 text-left text-sm font-bold text-[#111118] dark:text-white">Purpose</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-gray-200 dark:divide-gray-800">
+<tr>
+<td class="border border-gray-200 dark:border-gray-800 px-4 py-3 text-sm font-semibold text-[#111118] dark:text-white">Java</td>
+<td class="border border-gray-200 dark:border-gray-800 px-4 py-3 text-sm text-[#616189] dark:text-gray-400">21</td>
+<td class="border border-gray-200 dark:border-gray-800 px-4 py-3 text-sm text-[#616189] dark:text-gray-400">Core programming language with virtual threads</td>
+</tr>
+<tr>
+<td class="border border-gray-200 dark:border-gray-800 px-4 py-3 text-sm font-semibold text-[#111118] dark:text-white">Spring Boot</td>
+<td class="border border-gray-200 dark:border-gray-800 px-4 py-3 text-sm text-[#616189] dark:text-gray-400">3.4.5</td>
+<td class="border border-gray-200 dark:border-gray-800 px-4 py-3 text-sm text-[#616189] dark:text-gray-400">Application framework and dependency injection</td>
+</tr>
+<tr>
+<td class="border border-gray-200 dark:border-gray-800 px-4 py-3 text-sm font-semibold text-[#111118] dark:text-white">PostgreSQL</td>
+<td class="border border-gray-200 dark:border-gray-800 px-4 py-3 text-sm text-[#616189] dark:text-gray-400">16+</td>
+<td class="border border-gray-200 dark:border-gray-800 px-4 py-3 text-sm text-[#616189] dark:text-gray-400">Primary relational database with JSONB support</td>
+</tr>
+<tr>
+<td class="border border-gray-200 dark:border-gray-800 px-4 py-3 text-sm font-semibold text-[#111118] dark:text-white">Redis</td>
+<td class="border border-gray-200 dark:border-gray-800 px-4 py-3 text-sm text-[#616189] dark:text-gray-400">7+</td>
+<td class="border border-gray-200 dark:border-gray-800 px-4 py-3 text-sm text-[#616189] dark:text-gray-400">Session management, rate limiting, caching</td>
+</tr>
+<tr>
+<td class="border border-gray-200 dark:border-gray-800 px-4 py-3 text-sm font-semibold text-[#111118] dark:text-white">Maven</td>
+<td class="border border-gray-200 dark:border-gray-800 px-4 py-3 text-sm text-[#616189] dark:text-gray-400">3.8+</td>
+<td class="border border-gray-200 dark:border-gray-800 px-4 py-3 text-sm text-[#616189] dark:text-gray-400">Dependency management and build automation</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div>
+<h2 class="text-2xl font-bold text-[#111118] dark:text-white mb-4">Spring Ecosystem</h2>
+<div class="overflow-x-auto">
+<table class="w-full border-collapse border border-gray-200 dark:border-gray-800 rounded-lg">
+<thead class="bg-gray-50 dark:bg-gray-900">
+<tr>
+<th class="border border-gray-200 dark:border-gray-800 px-4 py-3 text-left text-sm font-bold text-[#111118] dark:text-white">Component</th>
+<th class="border border-gray-200 dark:border-gray-800 px-4 py-3 text-left text-sm font-bold text-[#111118] dark:text-white">Technology</th>
+<th class="border border-gray-200 dark:border-gray-800 px-4 py-3 text-left text-sm font-bold text-[#111118] dark:text-white">Purpose</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-gray-200 dark:divide-gray-800">
+<tr>
+<td class="border border-gray-200 dark:border-gray-800 px-4 py-3 text-sm font-semibold text-[#111118] dark:text-white">Web</td>
+<td class="border border-gray-200 dark:border-gray-800 px-4 py-3 text-sm text-[#616189] dark:text-gray-400">Spring Web MVC</td>
+<td class="border border-gray-200 dark:border-gray-800 px-4 py-3 text-sm text-[#616189] dark:text-gray-400">RESTful API development</td>
+</tr>
+<tr>
+<td class="border border-gray-200 dark:border-gray-800 px-4 py-3 text-sm font-semibold text-[#111118] dark:text-white">Data</td>
+<td class="border border-gray-200 dark:border-gray-800 px-4 py-3 text-sm text-[#616189] dark:text-gray-400">Spring Data JPA</td>
+<td class="border border-gray-200 dark:border-gray-800 px-4 py-3 text-sm text-[#616189] dark:text-gray-400">Database abstraction and repository pattern</td>
+</tr>
+<tr>
+<td class="border border-gray-200 dark:border-gray-800 px-4 py-3 text-sm font-semibold text-[#111118] dark:text-white">Security</td>
+<td class="border border-gray-200 dark:border-gray-800 px-4 py-3 text-sm text-[#616189] dark:text-gray-400">Spring Security</td>
+<td class="border border-gray-200 dark:border-gray-800 px-4 py-3 text-sm text-[#616189] dark:text-gray-400">Authentication and authorization</td>
+</tr>
+<tr>
+<td class="border border-gray-200 dark:border-gray-800 px-4 py-3 text-sm font-semibold text-[#111118] dark:text-white">Validation</td>
+<td class="border border-gray-200 dark:border-gray-800 px-4 py-3 text-sm text-[#616189] dark:text-gray-400">Bean Validation</td>
+<td class="border border-gray-200 dark:border-gray-800 px-4 py-3 text-sm text-[#616189] dark:text-gray-400">Input validation</td>
+</tr>
+<tr>
+<td class="border border-gray-200 dark:border-gray-800 px-4 py-3 text-sm font-semibold text-[#111118] dark:text-white">Auditing</td>
+<td class="border border-gray-200 dark:border-gray-800 px-4 py-3 text-sm text-[#616189] dark:text-gray-400">JPA Auditing</td>
+<td class="border border-gray-200 dark:border-gray-800 px-4 py-3 text-sm text-[#616189] dark:text-gray-400">Automatic timestamp management</td>
+</tr>
+<tr>
+<td class="border border-gray-200 dark:border-gray-800 px-4 py-3 text-sm font-semibold text-[#111118] dark:text-white">Scheduling</td>
+<td class="border border-gray-200 dark:border-gray-800 px-4 py-3 text-sm text-[#616189] dark:text-gray-400">Spring Scheduler</td>
+<td class="border border-gray-200 dark:border-gray-800 px-4 py-3 text-sm text-[#616189] dark:text-gray-400">Cron-based scheduled tasks</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div>
+<h2 class="text-2xl font-bold text-[#111118] dark:text-white mb-4">Security Technologies</h2>
+<ul class="space-y-2 text-[#616189] dark:text-gray-400">
+<li class="flex items-start gap-2"><span class="text-primary mt-1">•</span><span><strong class="text-[#111118] dark:text-white">JWT (JSON Web Tokens):</strong> Stateless authentication with HS512 algorithm</span></li>
+<li class="flex items-start gap-2"><span class="text-primary mt-1">•</span><span><strong class="text-[#111118] dark:text-white">BCrypt:</strong> Password hashing with automatic salt generation</span></li>
+<li class="flex items-start gap-2"><span class="text-primary mt-1">•</span><span><strong class="text-[#111118] dark:text-white">Redis Session Store:</strong> Enterprise session management</span></li>
+<li class="flex items-start gap-2"><span class="text-primary mt-1">•</span><span><strong class="text-[#111118] dark:text-white">ua-parser:</strong> Device fingerprinting for anomaly detection</span></li>
+<li class="flex items-start gap-2"><span class="text-primary mt-1">•</span><span><strong class="text-[#111118] dark:text-white">Resilience4j:</strong> Circuit breaker and retry patterns</span></li>
+</ul>
+</div>
+</div>
+</section>
+<section id="backend-database" class="mb-16 scroll-mt-8 hidden">
+<div class="mb-10">
+<div class="flex items-baseline gap-4 mb-4">
+<h1 class="text-4xl font-extrabold text-[#111118] dark:text-white tracking-tight">Database Schema</h1>
+</div>
+<p class="text-lg text-[#616189] dark:text-gray-400 leading-relaxed">
+                            PostgreSQL-based relational database schema with multi-tenant support and comprehensive entity relationships.
+                        </p>
+</div>
+<div class="mb-8">
+<img src="./public/backend-architecture/backend-architecture-images/1. Database ER Diagram.png" alt="Database ER Diagram" class="w-full h-auto rounded-xl border border-gray-200 dark:border-gray-800">
+</div>
+<div class="space-y-8">
+<div>
+<h2 class="text-2xl font-bold text-[#111118] dark:text-white mb-4">Database Features</h2>
+<ul class="space-y-2 text-[#616189] dark:text-gray-400">
+<li class="flex items-start gap-2"><span class="text-primary mt-1">•</span><span><strong class="text-[#111118] dark:text-white">UUID Primary Keys:</strong> All entities use UUID for primary keys</span></li>
+<li class="flex items-start gap-2"><span class="text-primary mt-1">•</span><span><strong class="text-[#111118] dark:text-white">JSONB Columns:</strong> Flexible metadata storage (PostgreSQL JSONB)</span></li>
+<li class="flex items-start gap-2"><span class="text-primary mt-1">•</span><span><strong class="text-[#111118] dark:text-white">Soft Delete:</strong> Logical deletion with deleted_at timestamp</span></li>
+<li class="flex items-start gap-2"><span class="text-primary mt-1">•</span><span><strong class="text-[#111118] dark:text-white">Automatic Timestamps:</strong> created_at and updated_at via JPA Auditing</span></li>
+<li class="flex items-start gap-2"><span class="text-primary mt-1">•</span><span><strong class="text-[#111118] dark:text-white">Multi-Tenant Indexes:</strong> Optimized queries with tenant_id indexes</span></li>
+<li class="flex items-start gap-2"><span class="text-primary mt-1">•</span><span><strong class="text-[#111118] dark:text-white">Row-Level Security:</strong> Tenant isolation at database level</span></li>
+<li class="flex items-start gap-2"><span class="text-primary mt-1">•</span><span><strong class="text-[#111118] dark:text-white">Unique Constraints:</strong> Tenant-scoped unique constraints</span></li>
+</ul>
+</div>
+<div>
+<h2 class="text-2xl font-bold text-[#111118] dark:text-white mb-4">Core Entities</h2>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+<div class="p-4 rounded-lg bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-800">
+<h3 class="font-semibold text-[#111118] dark:text-white mb-2">Tenants</h3>
+<p class="text-sm text-[#616189] dark:text-gray-400">Multi-tenant organization management with subscription tiers and billing configuration</p>
+</div>
+<div class="p-4 rounded-lg bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-800">
+<h3 class="font-semibold text-[#111118] dark:text-white mb-2">Users</h3>
+<p class="text-sm text-[#616189] dark:text-gray-400">User accounts with roles, MFA support, and tenant association</p>
+</div>
+<div class="p-4 rounded-lg bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-800">
+<h3 class="font-semibold text-[#111118] dark:text-white mb-2">Products</h3>
+<p class="text-sm text-[#616189] dark:text-gray-400">Product catalog with metadata and active status</p>
+</div>
+<div class="p-4 rounded-lg bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-800">
+<h3 class="font-semibold text-[#111118] dark:text-white mb-2">Prices</h3>
+<p class="text-sm text-[#616189] dark:text-gray-400">Pricing models including flat-rate, per-unit, and tiered pricing</p>
+</div>
+<div class="p-4 rounded-lg bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-800">
+<h3 class="font-semibold text-[#111118] dark:text-white mb-2">Customers</h3>
+<p class="text-sm text-[#616189] dark:text-gray-400">Customer records with billing addresses and payment methods</p>
+</div>
+<div class="p-4 rounded-lg bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-800">
+<h3 class="font-semibold text-[#111118] dark:text-white mb-2">Subscriptions</h3>
+<p class="text-sm text-[#616189] dark:text-gray-400">Subscription lifecycle with trial periods and cancellation tracking</p>
+</div>
+<div class="p-4 rounded-lg bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-800">
+<h3 class="font-semibold text-[#111118] dark:text-white mb-2">Invoices</h3>
+<p class="text-sm text-[#616189] dark:text-gray-400">Invoice generation with line items, taxes, and payment tracking</p>
+</div>
+<div class="p-4 rounded-lg bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-800">
+<h3 class="font-semibold text-[#111118] dark:text-white mb-2">Payments</h3>
+<p class="text-sm text-[#616189] dark:text-gray-400">Payment transactions with refund support and status tracking</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="backend-security" class="mb-16 scroll-mt-8 hidden">
+<div class="mb-10">
+<div class="flex items-baseline gap-4 mb-4">
+<h1 class="text-4xl font-extrabold text-[#111118] dark:text-white tracking-tight">Security Architecture</h1>
+</div>
+<p class="text-lg text-[#616189] dark:text-gray-400 leading-relaxed">
+                            Enterprise-grade security with JWT authentication, session management, and comprehensive security features.
+                        </p>
+</div>
+<div class="mb-8">
+<img src="./public/backend-architecture/backend-architecture-images/4. Authentication Flow.png" alt="Authentication Flow" class="w-full h-auto rounded-xl border border-gray-200 dark:border-gray-800">
+</div>
+<div class="space-y-8">
+<div>
+<h2 class="text-2xl font-bold text-[#111118] dark:text-white mb-4">JWT Token Structure</h2>
+<div class="bg-gray-50 dark:bg-gray-900 rounded-lg p-4 border border-gray-200 dark:border-gray-800">
+<pre class="text-sm text-[#616189] dark:text-gray-400 font-mono"><code>{
+  "sub": "user-uuid",
+  "tenantId": "tenant-uuid",
+  "role": "ADMIN",
+  "sessionId": "session-uuid",
+  "iat": 1704796800,
+  "exp": 1704800400
+}</code></pre>
+</div>
+<p class="text-sm text-[#616189] dark:text-gray-400 mt-3"><strong>Token Configuration:</strong> Algorithm: HS512 | Access Token TTL: 1 hour | Refresh Token TTL: 30 days</p>
+</div>
+<div>
+<h2 class="text-2xl font-bold text-[#111118] dark:text-white mb-4">Security Features</h2>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+<div class="p-4 rounded-lg bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-800">
+<h3 class="font-semibold text-[#111118] dark:text-white mb-2">Password Hashing</h3>
+<p class="text-sm text-[#616189] dark:text-gray-400">BCrypt algorithm with automatic salt generation (10 rounds default)</p>
+</div>
+<div class="p-4 rounded-lg bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-800">
+<h3 class="font-semibold text-[#111118] dark:text-white mb-2">Token Blacklisting</h3>
+<p class="text-sm text-[#616189] dark:text-gray-400">Invalidated tokens stored in Redis with TTL matching token expiration</p>
+</div>
+<div class="p-4 rounded-lg bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-800">
+<h3 class="font-semibold text-[#111118] dark:text-white mb-2">Rate Limiting</h3>
+<p class="text-sm text-[#616189] dark:text-gray-400">Redis-based rate limiting: 5 session creations/min per IP, 1000 API requests/min per session</p>
+</div>
+<div class="p-4 rounded-lg bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-800">
+<h3 class="font-semibold text-[#111118] dark:text-white mb-2">Device Fingerprinting</h3>
+<p class="text-sm text-[#616189] dark:text-gray-400">ua-parser library for device tracking and anomaly detection</p>
+</div>
+<div class="p-4 rounded-lg bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-800">
+<h3 class="font-semibold text-[#111118] dark:text-white mb-2">Concurrent Session Control</h3>
+<p class="text-sm text-[#616189] dark:text-gray-400">Maximum 5 sessions per user with oldest session eviction strategy</p>
+</div>
+<div class="p-4 rounded-lg bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-800">
+<h3 class="font-semibold text-[#111118] dark:text-white mb-2">Anomaly Detection</h3>
+<p class="text-sm text-[#616189] dark:text-gray-400">Tracks suspicious activity, failed attempts, and geographic anomalies</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="backend-api" class="mb-16 scroll-mt-8 hidden">
+<div class="mb-10">
+<div class="flex items-baseline gap-4 mb-4">
+<h1 class="text-4xl font-extrabold text-[#111118] dark:text-white tracking-tight">API Layer</h1>
+</div>
+<p class="text-lg text-[#616189] dark:text-gray-400 leading-relaxed">
+                            RESTful API endpoints organized by domain with comprehensive authentication and error handling.
+                        </p>
+</div>
+<div class="space-y-8">
+<div>
+<h2 class="text-2xl font-bold text-[#111118] dark:text-white mb-4">REST API Structure</h2>
+<p class="text-sm text-[#616189] dark:text-gray-400 mb-4"><strong>Base URL:</strong> <code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded">http://localhost:8080/api</code></p>
+<p class="text-sm text-[#616189] dark:text-gray-400 mb-4">All authenticated endpoints require: <code class="bg-gray-100 dark:bg-gray-800 px-2 py-1 rounded">Authorization: Bearer &lt;JWT_TOKEN&gt;</code></p>
+</div>
+<div>
+<h2 class="text-2xl font-bold text-[#111118] dark:text-white mb-4">Controllers</h2>
+<div class="space-y-6">
+<div class="p-6 rounded-xl bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-800">
+<h3 class="text-xl font-bold text-[#111118] dark:text-white mb-4">AuthController (/api/auth)</h3>
+<div class="overflow-x-auto">
+<table class="w-full border-collapse text-sm">
+<thead>
+<tr class="border-b border-gray-200 dark:border-gray-700">
+<th class="text-left py-2 px-3 font-semibold text-[#111118] dark:text-white">Method</th>
+<th class="text-left py-2 px-3 font-semibold text-[#111118] dark:text-white">Endpoint</th>
+<th class="text-left py-2 px-3 font-semibold text-[#111118] dark:text-white">Description</th>
+<th class="text-left py-2 px-3 font-semibold text-[#111118] dark:text-white">Auth Required</th>
+</tr>
+</thead>
+<tbody class="text-[#616189] dark:text-gray-400">
+<tr class="border-b border-gray-200 dark:border-gray-700">
+<td class="py-2 px-3 font-mono font-semibold">POST</td>
+<td class="py-2 px-3 font-mono">/api/auth/login</td>
+<td class="py-2 px-3">User login</td>
+<td class="py-2 px-3">❌</td>
+</tr>
+<tr class="border-b border-gray-200 dark:border-gray-700">
+<td class="py-2 px-3 font-mono font-semibold">POST</td>
+<td class="py-2 px-3 font-mono">/api/auth/logout</td>
+<td class="py-2 px-3">Logout current session</td>
+<td class="py-2 px-3">✅</td>
+</tr>
+<tr class="border-b border-gray-200 dark:border-gray-700">
+<td class="py-2 px-3 font-mono font-semibold">POST</td>
+<td class="py-2 px-3 font-mono">/api/auth/refresh</td>
+<td class="py-2 px-3">Refresh access token</td>
+<td class="py-2 px-3">❌</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="p-6 rounded-xl bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-800">
+<h3 class="text-xl font-bold text-[#111118] dark:text-white mb-4">ProductController (/api/products)</h3>
+<div class="overflow-x-auto">
+<table class="w-full border-collapse text-sm">
+<thead>
+<tr class="border-b border-gray-200 dark:border-gray-700">
+<th class="text-left py-2 px-3 font-semibold text-[#111118] dark:text-white">Method</th>
+<th class="text-left py-2 px-3 font-semibold text-[#111118] dark:text-white">Endpoint</th>
+<th class="text-left py-2 px-3 font-semibold text-[#111118] dark:text-white">Description</th>
+</tr>
+</thead>
+<tbody class="text-[#616189] dark:text-gray-400">
+<tr class="border-b border-gray-200 dark:border-gray-700">
+<td class="py-2 px-3 font-mono font-semibold">POST</td>
+<td class="py-2 px-3 font-mono">/api/products</td>
+<td class="py-2 px-3">Create product</td>
+</tr>
+<tr class="border-b border-gray-200 dark:border-gray-700">
+<td class="py-2 px-3 font-mono font-semibold">GET</td>
+<td class="py-2 px-3 font-mono">/api/products</td>
+<td class="py-2 px-3">List products</td>
+</tr>
+<tr class="border-b border-gray-200 dark:border-gray-700">
+<td class="py-2 px-3 font-mono font-semibold">GET</td>
+<td class="py-2 px-3 font-mono">/api/products/{id}</td>
+<td class="py-2 px-3">Get product</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="p-6 rounded-xl bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-800">
+<h3 class="text-xl font-bold text-[#111118] dark:text-white mb-4">SubscriptionController (/api/subscriptions)</h3>
+<div class="overflow-x-auto">
+<table class="w-full border-collapse text-sm">
+<thead>
+<tr class="border-b border-gray-200 dark:border-gray-700">
+<th class="text-left py-2 px-3 font-semibold text-[#111118] dark:text-white">Method</th>
+<th class="text-left py-2 px-3 font-semibold text-[#111118] dark:text-white">Endpoint</th>
+<th class="text-left py-2 px-3 font-semibold text-[#111118] dark:text-white">Description</th>
+</tr>
+</thead>
+<tbody class="text-[#616189] dark:text-gray-400">
+<tr class="border-b border-gray-200 dark:border-gray-700">
+<td class="py-2 px-3 font-mono font-semibold">GET</td>
+<td class="py-2 px-3 font-mono">/api/subscriptions</td>
+<td class="py-2 px-3">List subscriptions</td>
+</tr>
+<tr class="border-b border-gray-200 dark:border-gray-700">
+<td class="py-2 px-3 font-mono font-semibold">POST</td>
+<td class="py-2 px-3 font-mono">/api/subscriptions</td>
+<td class="py-2 px-3">Create subscription</td>
+</tr>
+<tr class="border-b border-gray-200 dark:border-gray-700">
+<td class="py-2 px-3 font-mono font-semibold">POST</td>
+<td class="py-2 px-3 font-mono">/api/subscriptions/{id}/cancel</td>
+<td class="py-2 px-3">Cancel subscription</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="p-6 rounded-xl bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-800">
+<h3 class="text-xl font-bold text-[#111118] dark:text-white mb-4">PaymentController (/api/payments)</h3>
+<div class="overflow-x-auto">
+<table class="w-full border-collapse text-sm">
+<thead>
+<tr class="border-b border-gray-200 dark:border-gray-700">
+<th class="text-left py-2 px-3 font-semibold text-[#111118] dark:text-white">Method</th>
+<th class="text-left py-2 px-3 font-semibold text-[#111118] dark:text-white">Endpoint</th>
+<th class="text-left py-2 px-3 font-semibold text-[#111118] dark:text-white">Description</th>
+</tr>
+</thead>
+<tbody class="text-[#616189] dark:text-gray-400">
+<tr class="border-b border-gray-200 dark:border-gray-700">
+<td class="py-2 px-3 font-mono font-semibold">GET</td>
+<td class="py-2 px-3 font-mono">/api/payments</td>
+<td class="py-2 px-3">List payments</td>
+</tr>
+<tr class="border-b border-gray-200 dark:border-gray-700">
+<td class="py-2 px-3 font-mono font-semibold">GET</td>
+<td class="py-2 px-3 font-mono">/api/payments/{id}</td>
+<td class="py-2 px-3">Get payment</td>
+</tr>
+<tr class="border-b border-gray-200 dark:border-gray-700">
+<td class="py-2 px-3 font-mono font-semibold">POST</td>
+<td class="py-2 px-3 font-mono">/api/payments/{id}/refund</td>
+<td class="py-2 px-3">Create refund</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+<div>
+<h2 class="text-2xl font-bold text-[#111118] dark:text-white mb-4">API Response Codes</h2>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+<div class="p-3 rounded-lg border border-green-200 bg-green-50/30 dark:bg-green-900/10 dark:border-green-900/30">
+<div class="flex items-center gap-2 mb-1"><span class="w-2 h-2 rounded-full bg-green-500"></span><span class="font-semibold text-sm">200 OK</span></div>
+<p class="text-xs text-[#616189] dark:text-gray-400">Successful request</p>
+</div>
+<div class="p-3 rounded-lg border border-blue-200 bg-blue-50/30 dark:bg-blue-900/10 dark:border-blue-900/30">
+<div class="flex items-center gap-2 mb-1"><span class="w-2 h-2 rounded-full bg-blue-500"></span><span class="font-semibold text-sm">201 Created</span></div>
+<p class="text-xs text-[#616189] dark:text-gray-400">Resource created successfully</p>
+</div>
+<div class="p-3 rounded-lg border border-red-200 bg-red-50/30 dark:bg-red-900/10 dark:border-red-900/30">
+<div class="flex items-center gap-2 mb-1"><span class="w-2 h-2 rounded-full bg-red-500"></span><span class="font-semibold text-sm">400 Bad Request</span></div>
+<p class="text-xs text-[#616189] dark:text-gray-400">Invalid request parameters</p>
+</div>
+<div class="p-3 rounded-lg border border-orange-200 bg-orange-50/30 dark:bg-orange-900/10 dark:border-orange-900/30">
+<div class="flex items-center gap-2 mb-1"><span class="w-2 h-2 rounded-full bg-orange-500"></span><span class="font-semibold text-sm">401 Unauthorized</span></div>
+<p class="text-xs text-[#616189] dark:text-gray-400">Authentication required</p>
+</div>
+<div class="p-3 rounded-lg border border-purple-200 bg-purple-50/30 dark:bg-purple-900/10 dark:border-purple-900/30">
+<div class="flex items-center gap-2 mb-1"><span class="w-2 h-2 rounded-full bg-purple-500"></span><span class="font-semibold text-sm">403 Forbidden</span></div>
+<p class="text-xs text-[#616189] dark:text-gray-400">Insufficient permissions</p>
+</div>
+<div class="p-3 rounded-lg border border-gray-200 bg-gray-50/30 dark:bg-gray-900/10 dark:border-gray-900/30">
+<div class="flex items-center gap-2 mb-1"><span class="w-2 h-2 rounded-full bg-gray-500"></span><span class="font-semibold text-sm">404 Not Found</span></div>
+<p class="text-xs text-[#616189] dark:text-gray-400">Resource not found</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="frontend-architecture" class="mb-16 scroll-mt-8 hidden">
+<div class="mb-10">
+<div class="flex items-baseline gap-4 mb-4">
+<h1 class="text-4xl font-extrabold text-[#111118] dark:text-white tracking-tight">Frontend Architecture</h1>
+</div>
+<p class="text-lg text-[#616189] dark:text-gray-400 leading-relaxed">
+                            Modern React 18.2 application built with TypeScript 5.3, featuring feature-based modular architecture and comprehensive state management.
+                        </p>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+<div class="border border-gray-200 dark:border-gray-800 rounded-xl overflow-hidden">
+<img src="./public/frontend-architecture/frontend-architecture-images/1. State Management Architecture.png" alt="State Management Architecture" class="w-full h-auto">
+<div class="p-4 border-t border-gray-200 dark:border-gray-800 bg-gray-50 dark:bg-gray-900/50">
+<p class="text-sm font-semibold text-[#111118] dark:text-white">State Management Architecture</p>
+<p class="text-xs text-[#616189] dark:text-gray-400 mt-1">Zustand, React Query, and local state patterns</p>
+</div>
+</div>
+<div class="border border-gray-200 dark:border-gray-800 rounded-xl overflow-hidden">
+<img src="./public/frontend-architecture/frontend-architecture-images/2. Component Hierarchy.png" alt="Component Hierarchy" class="w-full h-auto">
+<div class="p-4 border-t border-gray-200 dark:border-gray-800 bg-gray-50 dark:bg-gray-900/50">
+<p class="text-sm font-semibold text-[#111118] dark:text-white">Component Hierarchy</p>
+<p class="text-xs text-[#616189] dark:text-gray-400 mt-1">Component tree and composition structure</p>
+</div>
+</div>
+<div class="border border-gray-200 dark:border-gray-800 rounded-xl overflow-hidden">
+<img src="./public/frontend-architecture/frontend-architecture-images/3. Data Flow Architecture.png" alt="Data Flow Architecture" class="w-full h-auto">
+<div class="p-4 border-t border-gray-200 dark:border-gray-800 bg-gray-50 dark:bg-gray-900/50">
+<p class="text-sm font-semibold text-[#111118] dark:text-white">Data Flow Architecture</p>
+<p class="text-xs text-[#616189] dark:text-gray-400 mt-1">Unidirectional data flow patterns</p>
+</div>
+</div>
+<div class="border border-gray-200 dark:border-gray-800 rounded-xl overflow-hidden">
+<img src="./public/frontend-architecture/frontend-architecture-images/4. Feature-Based Architecture.png" alt="Feature-Based Architecture" class="w-full h-auto">
+<div class="p-4 border-t border-gray-200 dark:border-gray-800 bg-gray-50 dark:bg-gray-900/50">
+<p class="text-sm font-semibold text-[#111118] dark:text-white">Feature-Based Architecture</p>
+<p class="text-xs text-[#616189] dark:text-gray-400 mt-1">Modular feature organization structure</p>
+</div>
+</div>
+<div class="border border-gray-200 dark:border-gray-800 rounded-xl overflow-hidden">
+<img src="./public/frontend-architecture/frontend-architecture-images/5. Authentication Flow.png" alt="Authentication Flow" class="w-full h-auto">
+<div class="p-4 border-t border-gray-200 dark:border-gray-800 bg-gray-50 dark:bg-gray-900/50">
+<p class="text-sm font-semibold text-[#111118] dark:text-white">Authentication Flow</p>
+<p class="text-xs text-[#616189] dark:text-gray-400 mt-1">JWT authentication and protected routes</p>
+</div>
+</div>
+<div class="border border-gray-200 dark:border-gray-800 rounded-xl overflow-hidden">
+<img src="./public/frontend-architecture/frontend-architecture-images/6. React Query Cache Strategy.png" alt="React Query Cache Strategy" class="w-full h-auto">
+<div class="p-4 border-t border-gray-200 dark:border-gray-800 bg-gray-50 dark:bg-gray-900/50">
+<p class="text-sm font-semibold text-[#111118] dark:text-white">React Query Cache Strategy</p>
+<p class="text-xs text-[#616189] dark:text-gray-400 mt-1">Server state caching and synchronization</p>
+</div>
+</div>
+<div class="border border-gray-200 dark:border-gray-800 rounded-xl overflow-hidden">
+<img src="./public/frontend-architecture/frontend-architecture-images/7. Component Composition Pattern.png" alt="Component Composition Pattern" class="w-full h-auto">
+<div class="p-4 border-t border-gray-200 dark:border-gray-800 bg-gray-50 dark:bg-gray-900/50">
+<p class="text-sm font-semibold text-[#111118] dark:text-white">Component Composition Pattern</p>
+<p class="text-xs text-[#616189] dark:text-gray-400 mt-1">Reusable component patterns</p>
+</div>
+</div>
+<div class="border border-gray-200 dark:border-gray-800 rounded-xl overflow-hidden">
+<img src="./public/frontend-architecture/frontend-architecture-images/8. API Integration Flow.png" alt="API Integration Flow" class="w-full h-auto">
+<div class="p-4 border-t border-gray-200 dark:border-gray-800 bg-gray-50 dark:bg-gray-900/50">
+<p class="text-sm font-semibold text-[#111118] dark:text-white">API Integration Flow</p>
+<p class="text-xs text-[#616189] dark:text-gray-400 mt-1">Axios interceptors and request handling</p>
+</div>
+</div>
+<div class="border border-gray-200 dark:border-gray-800 rounded-xl overflow-hidden">
+<img src="./public/frontend-architecture/frontend-architecture-images/9. Technology Stack Overview.png" alt="Technology Stack Overview" class="w-full h-auto">
+<div class="p-4 border-t border-gray-200 dark:border-gray-800 bg-gray-50 dark:bg-gray-900/50">
+<p class="text-sm font-semibold text-[#111118] dark:text-white">Technology Stack Overview</p>
+<p class="text-xs text-[#616189] dark:text-gray-400 mt-1">Frontend technologies and dependencies</p>
+</div>
+</div>
+<div class="border border-gray-200 dark:border-gray-800 rounded-xl overflow-hidden lg:col-span-2">
+<img src="./public/frontend-architecture/frontend-architecture-images/10. Complete Application Flow.png" alt="Complete Application Flow" class="w-full h-auto">
+<div class="p-4 border-t border-gray-200 dark:border-gray-800 bg-gray-50 dark:bg-gray-900/50">
+<p class="text-sm font-semibold text-[#111118] dark:text-white">Complete Application Flow</p>
+<p class="text-xs text-[#616189] dark:text-gray-400 mt-1">End-to-end application workflow</p>
+</div>
+</div>
+</div>
+<div class="border-l-4 border-primary bg-primary/5 dark:bg-primary/10 p-5 rounded-r-xl mb-8">
+<div class="flex items-center gap-2 text-primary font-bold mb-2">
+<span class="material-symbols-outlined">description</span>
+                            Complete Documentation
+                        </div>
+<p class="text-sm text-[#111118] dark:text-gray-300">
+                            For detailed frontend documentation, see the <a href="./public/frontend-architecture/front-end.md" target="_blank" class="text-primary hover:underline font-semibold">Frontend Documentation</a> file.
+                        </p>
+</div>
+</section>
+<section id="frontend-overview" class="mb-16 scroll-mt-8 hidden">
+<div class="mb-10">
+<div class="flex items-baseline gap-4 mb-4">
+<h1 class="text-4xl font-extrabold text-[#111118] dark:text-white tracking-tight">Frontend Overview</h1>
+</div>
+<p class="text-lg text-[#616189] dark:text-gray-400 leading-relaxed">
+                            FluxPay Dashboard is an enterprise-grade subscription management and billing orchestration platform built with React 18.2 and TypeScript 5.3. It provides a comprehensive solution for managing subscriptions, invoices, customers, products, and payments with real-time analytics and multi-tenant support.
+                        </p>
+</div>
+<div class="space-y-8">
+<div>
+<h2 class="text-2xl font-bold text-[#111118] dark:text-white mb-4">Key Features</h2>
+<ul class="space-y-2 text-[#616189] dark:text-gray-400">
+<li class="flex items-start gap-2"><span class="text-primary mt-1">•</span><span><strong class="text-[#111118] dark:text-white">Subscription Management:</strong> Complete lifecycle management of subscriptions</span></li>
+<li class="flex items-start gap-2"><span class="text-primary mt-1">•</span><span><strong class="text-[#111118] dark:text-white">Invoice Processing:</strong> Automated invoice generation and management</span></li>
+<li class="flex items-start gap-2"><span class="text-primary mt-1">•</span><span><strong class="text-[#111118] dark:text-white">Customer Management:</strong> Centralized customer relationship management</span></li>
+<li class="flex items-start gap-2"><span class="text-primary mt-1">•</span><span><strong class="text-[#111118] dark:text-white">Product Catalog:</strong> Flexible product and pricing management</span></li>
+<li class="flex items-start gap-2"><span class="text-primary mt-1">•</span><span><strong class="text-[#111118] dark:text-white">Real-time Analytics:</strong> Dashboard with key performance indicators</span></li>
+<li class="flex items-start gap-2"><span class="text-primary mt-1">•</span><span><strong class="text-[#111118] dark:text-white">Multi-tenant Architecture:</strong> Isolated tenant data and context</span></li>
+<li class="flex items-start gap-2"><span class="text-primary mt-1">•</span><span><strong class="text-[#111118] dark:text-white">Authentication & Authorization:</strong> JWT-based auth with session management</span></li>
+<li class="flex items-start gap-2"><span class="text-primary mt-1">•</span><span><strong class="text-[#111118] dark:text-white">Webhook Management:</strong> Real-time event notifications</span></li>
+<li class="flex items-start gap-2"><span class="text-primary mt-1">•</span><span><strong class="text-[#111118] dark:text-white">Payment Processing:</strong> Payment tracking and refund management</span></li>
+</ul>
+</div>
+<div>
+<h2 class="text-2xl font-bold text-[#111118] dark:text-white mb-4">Project Structure</h2>
+<div class="bg-gray-50 dark:bg-gray-900 rounded-lg p-4 border border-gray-200 dark:border-gray-800">
+<pre class="text-sm text-[#616189] dark:text-gray-400 font-mono overflow-x-auto"><code>src/
+├── app/                    # Application root configuration
+│   ├── App.tsx             # Root component
+│   ├── AppProviders.tsx    # Context providers wrapper
+│   └── AppRoutes.tsx       # Route definitions
+│
+├── features/               # Feature-based modules
+│   ├── auth/              # Authentication & Authorization
+│   │   ├── api/           # Auth API calls & React Query hooks
+│   │   ├── components/    # Auth-specific components
+│   │   ├── hooks/         # Auth custom hooks
+│   │   ├── pages/         # Auth pages (Login, Register, Sessions)
+│   │   ├── store/         # Zustand auth store
+│   │   ├── types/         # Auth TypeScript types
+│   │   └── utils/         # Auth utilities
+│   │
+│   ├── analytics/         # Dashboard & Analytics
+│   ├── subscriptions/     # Subscription management
+│   ├── customers/         # Customer management
+│   ├── invoices/          # Invoice management
+│   ├── payments/          # Payment management
+│   ├── products/          # Product catalog
+│   ├── webhooks/         # Webhook management
+│   ├── notifications/     # Real-time notifications
+│   ├── settings/          # Settings
+│   ├── landing/           # Landing page
+│   └── legal/             # Legal pages
+│
+└── shared/                 # Shared resources
+    ├── api/               # API client & query client
+    ├── components/         # Reusable UI components
+    │   ├── layout/        # Layout components (Header, Sidebar)
+    │   ├── ui/            # UI primitives (Button, Input, etc.)
+    │   ├── legal/         # Legal content components
+    │   └── cookie/        # Cookie consent banner
+    ├── constants/         # Constants & configuration
+    ├── hooks/             # Shared custom hooks
+    ├── types/             # Shared TypeScript types
+    ├── utils/             # Utility functions
+    └── styles/            # Global styles</code></pre>
+</div>
+</div>
+<div>
+<h2 class="text-2xl font-bold text-[#111118] dark:text-white mb-4">Project Statistics</h2>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+<div class="p-4 rounded-lg bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-800">
+<div class="text-3xl font-bold text-primary mb-1">70+</div>
+<div class="text-sm text-[#616189] dark:text-gray-400">Components</div>
+</div>
+<div class="p-4 rounded-lg bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-800">
+<div class="text-3xl font-bold text-primary mb-1">24</div>
+<div class="text-sm text-[#616189] dark:text-gray-400">Routes</div>
+</div>
+<div class="p-4 rounded-lg bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-800">
+<div class="text-3xl font-bold text-primary mb-1">33+</div>
+<div class="text-sm text-[#616189] dark:text-gray-400">Custom Hooks</div>
+</div>
+<div class="p-4 rounded-lg bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-800">
+<div class="text-3xl font-bold text-primary mb-1">22</div>
+<div class="text-sm text-[#616189] dark:text-gray-400">Pages</div>
+</div>
+<div class="p-4 rounded-lg bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-800">
+<div class="text-3xl font-bold text-primary mb-1">9+</div>
+<div class="text-sm text-[#616189] dark:text-gray-400">Utils</div>
+</div>
+<div class="p-4 rounded-lg bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-800">
+<div class="text-3xl font-bold text-primary mb-1">19</div>
+<div class="text-sm text-[#616189] dark:text-gray-400">Test Files</div>
+</div>
+<div class="p-4 rounded-lg bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-800">
+<div class="text-3xl font-bold text-primary mb-1">100%</div>
+<div class="text-sm text-[#616189] dark:text-gray-400">TypeScript</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="frontend-architecture-design" class="mb-16 scroll-mt-8 hidden">
+<div class="mb-10">
+<div class="flex items-baseline gap-4 mb-4">
+<h1 class="text-4xl font-extrabold text-[#111118] dark:text-white tracking-tight">Architecture & Design</h1>
+</div>
+<p class="text-lg text-[#616189] dark:text-gray-400 leading-relaxed">
+                            The project follows a Feature-Based Modular Architecture with clear separation of concerns, utilizing modern design patterns and component composition.
+                        </p>
+</div>
+<div class="mb-8">
+<img src="./public/frontend-architecture/frontend-architecture-images/4. Feature-Based Architecture.png" alt="Feature-Based Architecture" class="w-full h-auto rounded-xl border border-gray-200 dark:border-gray-800">
+</div>
+<div class="space-y-8">
+<div>
+<h2 class="text-2xl font-bold text-[#111118] dark:text-white mb-4">Architectural Approach</h2>
+<ul class="space-y-2 text-[#616189] dark:text-gray-400">
+<li class="flex items-start gap-2"><span class="text-primary mt-1">•</span><span><strong class="text-[#111118] dark:text-white">Feature Modules:</strong> Each business feature is self-contained</span></li>
+<li class="flex items-start gap-2"><span class="text-primary mt-1">•</span><span><strong class="text-[#111118] dark:text-white">Shared Layer:</strong> Reusable components, utilities, and types</span></li>
+<li class="flex items-start gap-2"><span class="text-primary mt-1">•</span><span><strong class="text-[#111118] dark:text-white">Application Layer:</strong> Root configuration, providers, and routing</span></li>
+</ul>
+</div>
+<div>
+<h2 class="text-2xl font-bold text-[#111118] dark:text-white mb-4">Design Patterns</h2>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+<div class="p-4 rounded-lg bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-800">
+<h3 class="font-semibold text-[#111118] dark:text-white mb-2">1. Feature-Based Organization</h3>
+<p class="text-sm text-[#616189] dark:text-gray-400">Each feature module contains: api/, components/, hooks/, pages/, types/, utils/</p>
+</div>
+<div class="p-4 rounded-lg bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-800">
+<h3 class="font-semibold text-[#111118] dark:text-white mb-2">2. Container/Presentational Pattern</h3>
+<p class="text-sm text-[#616189] dark:text-gray-400">Container components handle data fetching; presentational components focus on UI rendering</p>
+</div>
+<div class="p-4 rounded-lg bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-800">
+<h3 class="font-semibold text-[#111118] dark:text-white mb-2">3. Custom Hooks Pattern</h3>
+<p class="text-sm text-[#616189] dark:text-gray-400">Business logic abstracted into reusable hooks (useAuth, useSubscriptions, useDebounce)</p>
+</div>
+<div class="p-4 rounded-lg bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-800">
+<h3 class="font-semibold text-[#111118] dark:text-white mb-2">4. Provider Pattern</h3>
+<p class="text-sm text-[#616189] dark:text-gray-400">QueryClientProvider and AppProviders wrap application with necessary contexts</p>
+</div>
+<div class="p-4 rounded-lg bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-800">
+<h3 class="font-semibold text-[#111118] dark:text-white mb-2">5. Compound Components Pattern</h3>
+<p class="text-sm text-[#616189] dark:text-gray-400">Radix UI components use compound component pattern for flexible composition</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="frontend-state" class="mb-16 scroll-mt-8 hidden">
+<div class="mb-10">
+<div class="flex items-baseline gap-4 mb-4">
+<h1 class="text-4xl font-extrabold text-[#111118] dark:text-white tracking-tight">State Management</h1>
+</div>
+<p class="text-lg text-[#616189] dark:text-gray-400 leading-relaxed">
+                            Hybrid state management approach with three distinct layers: Global State (Zustand), Server State (React Query), and Local State (React Hooks).
+                        </p>
+</div>
+<div class="mb-8">
+<img src="./public/frontend-architecture/frontend-architecture-images/1. State Management Architecture.png" alt="State Management Architecture" class="w-full h-auto rounded-xl border border-gray-200 dark:border-gray-800">
+</div>
+<div class="mb-8">
+<img src="./public/frontend-architecture/frontend-architecture-images/3. Data Flow Architecture.png" alt="Data Flow Architecture" class="w-full h-auto rounded-xl border border-gray-200 dark:border-gray-800">
+</div>
+<div class="space-y-8">
+<div>
+<h2 class="text-2xl font-bold text-[#111118] dark:text-white mb-4">State Management Layers</h2>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+<div class="p-6 rounded-xl bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-800">
+<h3 class="text-xl font-bold text-[#111118] dark:text-white mb-3">1. Global State (Zustand)</h3>
+<p class="text-sm text-[#616189] dark:text-gray-400 mb-3"><strong>Purpose:</strong> Authentication and user context</p>
+<p class="text-sm font-semibold text-[#111118] dark:text-white mb-2">Features:</p>
+<ul class="text-sm text-[#616189] dark:text-gray-400 space-y-1">
+<li>• Auth store with user info and tenant ID</li>
+<li>• Cross-tab synchronization via BroadcastChannel</li>
+<li>• Token management and localStorage persistence</li>
+<li>• Authentication state initialization</li>
+</ul>
+</div>
+<div class="p-6 rounded-xl bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-800">
+<h3 class="text-xl font-bold text-[#111118] dark:text-white mb-3">2. Server State (React Query)</h3>
+<p class="text-sm text-[#616189] dark:text-gray-400 mb-3"><strong>Purpose:</strong> API data, caching, and synchronization</p>
+<p class="text-sm font-semibold text-[#111118] dark:text-white mb-2">Features:</p>
+<ul class="text-sm text-[#616189] dark:text-gray-400 space-y-1">
+<li>• Automatic caching and background refetching</li>
+<li>• Optimistic updates for better UX</li>
+<li>• Query invalidation and cache management</li>
+<li>• Error handling and retry logic</li>
+</ul>
+</div>
+<div class="p-6 rounded-xl bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-800">
+<h3 class="text-xl font-bold text-[#111118] dark:text-white mb-3">3. Local State (React Hooks)</h3>
+<p class="text-sm text-[#616189] dark:text-gray-400 mb-3"><strong>Purpose:</strong> Component-specific UI state</p>
+<p class="text-sm font-semibold text-[#111118] dark:text-white mb-2">Features:</p>
+<ul class="text-sm text-[#616189] dark:text-gray-400 space-y-1">
+<li>• UI state (modals, dropdowns, toggles)</li>
+<li>• Form state (React Hook Form)</li>
+<li>• Temporary calculations</li>
+<li>• Component-specific preferences</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="mb-8">
+<img src="./public/frontend-architecture/frontend-architecture-images/6. React Query Cache Strategy.png" alt="React Query Cache Strategy" class="w-full h-auto rounded-xl border border-gray-200 dark:border-gray-800">
+</div>
+<div>
+<h2 class="text-2xl font-bold text-[#111118] dark:text-white mb-4">React Query Configuration</h2>
+<div class="bg-gray-50 dark:bg-gray-900 rounded-lg p-4 border border-gray-200 dark:border-gray-800 mb-4">
+<pre class="text-sm text-[#616189] dark:text-gray-400 font-mono overflow-x-auto"><code>defaultOptions: {
+  queries: {
+    staleTime: 30000,        // 30 seconds
+    gcTime: 300000,          // 5 minutes
+    retry: 1,                // Retry once
+    refetchOnWindowFocus: false
+  },
+  mutations: {
+    retry: 0                 // Don't retry mutations
+  }
+}</code></pre>
+</div>
+</div>
+<div class="mb-8">
+<img src="./public/frontend-architecture/frontend-architecture-images/5. Authentication Flow.png" alt="Authentication Flow" class="w-full h-auto rounded-xl border border-gray-200 dark:border-gray-800">
+</div>
+</div>
+</section>
+<section id="frontend-components" class="mb-16 scroll-mt-8 hidden">
+<div class="mb-10">
+<div class="flex items-baseline gap-4 mb-4">
+<h1 class="text-4xl font-extrabold text-[#111118] dark:text-white tracking-tight">Component Hierarchy</h1>
+</div>
+<p class="text-lg text-[#616189] dark:text-gray-400 leading-relaxed">
+                            Well-structured component tree with clear separation between container and presentational components.
+                        </p>
+</div>
+<div class="mb-8">
+<img src="./public/frontend-architecture/frontend-architecture-images/2. Component Hierarchy.png" alt="Component Hierarchy" class="w-full h-auto rounded-xl border border-gray-200 dark:border-gray-800">
+</div>
+<div class="mb-8">
+<img src="./public/frontend-architecture/frontend-architecture-images/7. Component Composition Pattern.png" alt="Component Composition Pattern" class="w-full h-auto rounded-xl border border-gray-200 dark:border-gray-800">
+</div>
+<div class="space-y-8">
+<div>
+<h2 class="text-2xl font-bold text-[#111118] dark:text-white mb-4">Component Categories</h2>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+<div class="p-4 rounded-lg bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-800">
+<h3 class="font-semibold text-[#111118] dark:text-white mb-2">Layout Components</h3>
+<ul class="text-sm text-[#616189] dark:text-gray-400 space-y-1">
+<li>• AppLayout - Main layout wrapper</li>
+<li>• Header - Top navigation bar</li>
+<li>• Sidebar - Side navigation menu</li>
+</ul>
+</div>
+<div class="p-4 rounded-lg bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-800">
+<h3 class="font-semibold text-[#111118] dark:text-white mb-2">Page Components</h3>
+<ul class="text-sm text-[#616189] dark:text-gray-400 space-y-1">
+<li>• DashboardPage</li>
+<li>• SubscriptionsPage</li>
+<li>• CustomersPage</li>
+<li>• InvoicesPage</li>
+</ul>
+</div>
+<div class="p-4 rounded-lg bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-800">
+<h3 class="font-semibold text-[#111118] dark:text-white mb-2">Feature Components</h3>
+<ul class="text-sm text-[#616189] dark:text-gray-400 space-y-1">
+<li>• CreateSubscriptionDialog</li>
+<li>• SubscriptionCard</li>
+<li>• NotificationDropdown</li>
+<li>• RevenueRecognitionChart</li>
+</ul>
+</div>
+<div class="p-4 rounded-lg bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-800">
+<h3 class="font-semibold text-[#111118] dark:text-white mb-2">UI Primitives</h3>
+<ul class="text-sm text-[#616189] dark:text-gray-400 space-y-1">
+<li>• Button, Input, Card, Badge</li>
+<li>• Toast, Dialog, Select, Tabs</li>
+<li>• Radix UI components</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="frontend-api" class="mb-16 scroll-mt-8 hidden">
+<div class="mb-10">
+<div class="flex items-baseline gap-4 mb-4">
+<h1 class="text-4xl font-extrabold text-[#111118] dark:text-white tracking-tight">API Integration</h1>
+</div>
+<p class="text-lg text-[#616189] dark:text-gray-400 leading-relaxed">
+                            Centralized Axios instance with interceptors for automatic token injection, tenant ID headers, and token refresh handling.
+                        </p>
+</div>
+<div class="mb-8">
+<img src="./public/frontend-architecture/frontend-architecture-images/8. API Integration Flow.png" alt="API Integration Flow" class="w-full h-auto rounded-xl border border-gray-200 dark:border-gray-800">
+</div>
+<div class="space-y-8">
+<div>
+<h2 class="text-2xl font-bold text-[#111118] dark:text-white mb-4">API Client Features</h2>
+<ul class="space-y-2 text-[#616189] dark:text-gray-400">
+<li class="flex items-start gap-2"><span class="text-primary mt-1">•</span><span><strong class="text-[#111118] dark:text-white">Automatic Token Injection:</strong> JWT tokens added to all authenticated requests</span></li>
+<li class="flex items-start gap-2"><span class="text-primary mt-1">•</span><span><strong class="text-[#111118] dark:text-white">Tenant ID Header:</strong> Multi-tenant context automatically included</span></li>
+<li class="flex items-start gap-2"><span class="text-primary mt-1">•</span><span><strong class="text-[#111118] dark:text-white">Token Refresh:</strong> Automatic refresh on 401 errors with request queue</span></li>
+<li class="flex items-start gap-2"><span class="text-primary mt-1">•</span><span><strong class="text-[#111118] dark:text-white">Error Handling:</strong> Centralized error transformation and user-friendly messages</span></li>
+</ul>
+</div>
+<div>
+<h2 class="text-2xl font-bold text-[#111118] dark:text-white mb-4">Request Interceptor</h2>
+<div class="bg-gray-50 dark:bg-gray-900 rounded-lg p-4 border border-gray-200 dark:border-gray-800">
+<pre class="text-sm text-[#616189] dark:text-gray-400 font-mono overflow-x-auto"><code>apiClient.interceptors.request.use((config) => {
+  // Add Tenant ID header
+  const tenantId = useAuthStore.getState().tenantId;
+  if (tenantId) {
+    config.headers['X-Tenant-ID'] = tenantId;
+  }
+  
+  // Add Authorization token
+  const token = tokenManager.getToken();
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
+  
+  return config;
+});</code></pre>
+</div>
+</div>
+<div>
+<h2 class="text-2xl font-bold text-[#111118] dark:text-white mb-4">Response Interceptor</h2>
+<p class="text-sm text-[#616189] dark:text-gray-400 mb-4">Handles token refresh on 401 errors:</p>
+<ul class="space-y-2 text-[#616189] dark:text-gray-400">
+<li class="flex items-start gap-2"><span class="text-primary mt-1">•</span><span>Detects 401 Unauthorized responses</span></li>
+<li class="flex items-start gap-2"><span class="text-primary mt-1">•</span><span>Queues failed requests during token refresh</span></li>
+<li class="flex items-start gap-2"><span class="text-primary mt-1">•</span><span>Automatically retries original request after refresh</span></li>
+<li class="flex items-start gap-2"><span class="text-primary mt-1">•</span><span>Logs out user if refresh fails</span></li>
+</ul>
+</div>
+</div>
+</section>
+<section id="frontend-routing" class="mb-16 scroll-mt-8 hidden">
+<div class="mb-10">
+<div class="flex items-baseline gap-4 mb-4">
+<h1 class="text-4xl font-extrabold text-[#111118] dark:text-white tracking-tight">Routing & Navigation</h1>
+</div>
+<p class="text-lg text-[#616189] dark:text-gray-400 leading-relaxed">
+                            React Router v6 with public routes, protected routes, nested routes with layout, and route guards for authentication.
+                        </p>
+</div>
+<div class="space-y-8">
+<div>
+<h2 class="text-2xl font-bold text-[#111118] dark:text-white mb-4">Route Structure</h2>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+<div class="p-4 rounded-lg bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-800">
+<h3 class="font-semibold text-[#111118] dark:text-white mb-2">Public Routes</h3>
+<ul class="text-sm text-[#616189] dark:text-gray-400 space-y-1">
+<li>• / - Landing page</li>
+<li>• /login - Login page</li>
+<li>• /register - Registration</li>
+<li>• /privacy - Privacy policy</li>
+<li>• /terms - Terms of service</li>
+</ul>
+</div>
+<div class="p-4 rounded-lg bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-800">
+<h3 class="font-semibold text-[#111118] dark:text-white mb-2">Protected Routes</h3>
+<ul class="text-sm text-[#616189] dark:text-gray-400 space-y-1">
+<li>• /dashboard - Analytics dashboard</li>
+<li>• /subscriptions - Subscription management</li>
+<li>• /customers - Customer management</li>
+<li>• /invoices - Invoice management</li>
+<li>• /products - Product catalog</li>
+<li>• /webhooks - Webhook management</li>
+<li>• /settings - Application settings</li>
+</ul>
+</div>
+</div>
+</div>
+<div>
+<h2 class="text-2xl font-bold text-[#111118] dark:text-white mb-4">Protected Route Implementation</h2>
+<div class="bg-gray-50 dark:bg-gray-900 rounded-lg p-4 border border-gray-200 dark:border-gray-800 mb-4">
+<pre class="text-sm text-[#616189] dark:text-gray-400 font-mono overflow-x-auto"><code>export const ProtectedRoute: FC = ({ children }) => {
+  const isAuthenticated = useAuthStore((state) => state.isAuthenticated);
+  const isInitialized = useAuthStore((state) => state.isInitialized);
+  const location = useLocation();
+
+  if (!isInitialized) {
+    return <div>Loading...</div>;
+  }
+
+  if (!isAuthenticated) {
+    return <Navigate to={ROUTES.LOGIN} state={{ from: location }} />;
+  }
+
+  return <>{children}</>;
+};</code></pre>
+</div>
+<p class="text-sm text-[#616189] dark:text-gray-400 mb-4">ProtectedRoute component checks authentication state and redirects to login if not authenticated:</p>
+<ul class="space-y-2 text-[#616189] dark:text-gray-400">
+<li class="flex items-start gap-2"><span class="text-primary mt-1">•</span><span>Checks isAuthenticated and isInitialized flags</span></li>
+<li class="flex items-start gap-2"><span class="text-primary mt-1">•</span><span>Shows loading state during initialization</span></li>
+<li class="flex items-start gap-2"><span class="text-primary mt-1">•</span><span>Redirects to login with return URL if not authenticated</span></li>
+</ul>
+</div>
+<div>
+<h2 class="text-2xl font-bold text-[#111118] dark:text-white mb-4">Route Constants</h2>
+<div class="bg-gray-50 dark:bg-gray-900 rounded-lg p-4 border border-gray-200 dark:border-gray-800 mb-4">
+<pre class="text-sm text-[#616189] dark:text-gray-400 font-mono overflow-x-auto"><code>export const ROUTES = {
+  HOME: '/',
+  LOGIN: '/login',
+  REGISTER: '/register',
+  DASHBOARD: '/dashboard',
+  SUBSCRIPTIONS: '/subscriptions',
+  CUSTOMERS: '/customers',
+  INVOICES: '/invoices',
+  PRODUCTS: '/products',
+  WEBHOOKS: '/webhooks',
+  SETTINGS: '/settings',
+  // ... more routes
+};</code></pre>
+</div>
+</div>
+<div>
+<h2 class="text-2xl font-bold text-[#111118] dark:text-white mb-4">Navigation Patterns</h2>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+<div class="p-4 rounded-lg bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-800">
+<h3 class="font-semibold text-[#111118] dark:text-white mb-2">Programmatic Navigation</h3>
+<div class="text-sm text-[#616189] dark:text-gray-400 font-mono bg-gray-900/50 rounded p-2 mb-2">
+<code>navigate(ROUTES.SUBSCRIPTIONS);</code>
+</div>
+<div class="text-sm text-[#616189] dark:text-gray-400 font-mono bg-gray-900/50 rounded p-2">
+<code>navigate(`/subscriptions/${id}`, { state: { subscription } });</code>
+</div>
+</div>
+<div class="p-4 rounded-lg bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-800">
+<h3 class="font-semibold text-[#111118] dark:text-white mb-2">Link Navigation</h3>
+<div class="text-sm text-[#616189] dark:text-gray-400 font-mono bg-gray-900/50 rounded p-2 mb-2">
+<code>&lt;Link to={ROUTES.DASHBOARD}&gt;Dashboard&lt;/Link&gt;</code>
+</div>
+<div class="text-sm text-[#616189] dark:text-gray-400 font-mono bg-gray-900/50 rounded p-2">
+<code>const isActive = location.pathname === ROUTES.DASHBOARD;</code>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="frontend-tech-stack" class="mb-16 scroll-mt-8 hidden">
+<div class="mb-10">
+<div class="flex items-baseline gap-4 mb-4">
+<h1 class="text-4xl font-extrabold text-[#111118] dark:text-white tracking-tight">Technology Stack</h1>
+</div>
+<p class="text-lg text-[#616189] dark:text-gray-400 leading-relaxed">
+                            Modern frontend technology stack with React, TypeScript, and comprehensive tooling for development and production.
+                        </p>
+</div>
+<div class="mb-8">
+<img src="./public/frontend-architecture/frontend-architecture-images/9. Technology Stack Overview.png" alt="Technology Stack Overview" class="w-full h-auto rounded-xl border border-gray-200 dark:border-gray-800">
+</div>
+<div class="mb-8">
+<img src="./public/frontend-architecture/frontend-architecture-images/10. Complete Application Flow.png" alt="Complete Application Flow" class="w-full h-auto rounded-xl border border-gray-200 dark:border-gray-800">
+</div>
+<div class="space-y-8">
+<div>
+<h2 class="text-2xl font-bold text-[#111118] dark:text-white mb-4">Core Technologies</h2>
+<div class="overflow-x-auto">
+<table class="w-full border-collapse border border-gray-200 dark:border-gray-800 rounded-lg">
+<thead class="bg-gray-50 dark:bg-gray-900">
+<tr>
+<th class="border border-gray-200 dark:border-gray-800 px-4 py-3 text-left text-sm font-bold text-[#111118] dark:text-white">Technology</th>
+<th class="border border-gray-200 dark:border-gray-800 px-4 py-3 text-left text-sm font-bold text-[#111118] dark:text-white">Version</th>
+<th class="border border-gray-200 dark:border-gray-800 px-4 py-3 text-left text-sm font-bold text-[#111118] dark:text-white">Purpose</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-gray-200 dark:divide-gray-800">
+<tr>
+<td class="border border-gray-200 dark:border-gray-800 px-4 py-3 text-sm font-semibold text-[#111118] dark:text-white">React</td>
+<td class="border border-gray-200 dark:border-gray-800 px-4 py-3 text-sm text-[#616189] dark:text-gray-400">18.2.0</td>
+<td class="border border-gray-200 dark:border-gray-800 px-4 py-3 text-sm text-[#616189] dark:text-gray-400">UI framework with hooks and functional components</td>
+</tr>
+<tr>
+<td class="border border-gray-200 dark:border-gray-800 px-4 py-3 text-sm font-semibold text-[#111118] dark:text-white">TypeScript</td>
+<td class="border border-gray-200 dark:border-gray-800 px-4 py-3 text-sm text-[#616189] dark:text-gray-400">5.3.3</td>
+<td class="border border-gray-200 dark:border-gray-800 px-4 py-3 text-sm text-[#616189] dark:text-gray-400">Type-safe JavaScript with strict mode</td>
+</tr>
+<tr>
+<td class="border border-gray-200 dark:border-gray-800 px-4 py-3 text-sm font-semibold text-[#111118] dark:text-white">Vite</td>
+<td class="border border-gray-200 dark:border-gray-800 px-4 py-3 text-sm text-[#616189] dark:text-gray-400">5.0.8</td>
+<td class="border border-gray-200 dark:border-gray-800 px-4 py-3 text-sm text-[#616189] dark:text-gray-400">Next-generation build tool and dev server</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div>
+<h2 class="text-2xl font-bold text-[#111118] dark:text-white mb-4">State Management</h2>
+<ul class="space-y-2 text-[#616189] dark:text-gray-400">
+<li class="flex items-start gap-2"><span class="text-primary mt-1">•</span><span><strong class="text-[#111118] dark:text-white">Zustand (4.4.7):</strong> Global state management for auth store</span></li>
+<li class="flex items-start gap-2"><span class="text-primary mt-1">•</span><span><strong class="text-[#111118] dark:text-white">TanStack React Query (5.17.9):</strong> Server state management, caching, and synchronization</span></li>
+<li class="flex items-start gap-2"><span class="text-primary mt-1">•</span><span><strong class="text-[#111118] dark:text-white">React Hook Form (7.48.2):</strong> Performant form state management</span></li>
+</ul>
+</div>
+<div>
+<h2 class="text-2xl font-bold text-[#111118] dark:text-white mb-4">UI Framework & Styling</h2>
+<ul class="space-y-2 text-[#616189] dark:text-gray-400">
+<li class="flex items-start gap-2"><span class="text-primary mt-1">•</span><span><strong class="text-[#111118] dark:text-white">Tailwind CSS (3.4.0):</strong> Utility-first CSS framework</span></li>
+<li class="flex items-start gap-2"><span class="text-primary mt-1">•</span><span><strong class="text-[#111118] dark:text-white">Radix UI:</strong> Unstyled, accessible component primitives</span></li>
+<li class="flex items-start gap-2"><span class="text-primary mt-1">•</span><span><strong class="text-[#111118] dark:text-white">Lucide React (0.300.0):</strong> Icon library</span></li>
+</ul>
+</div>
+<div>
+<h2 class="text-2xl font-bold text-[#111118] dark:text-white mb-4">Routing & HTTP</h2>
+<ul class="space-y-2 text-[#616189] dark:text-gray-400">
+<li class="flex items-start gap-2"><span class="text-primary mt-1">•</span><span><strong class="text-[#111118] dark:text-white">React Router DOM (6.20.1):</strong> Client-side routing with protected routes</span></li>
+<li class="flex items-start gap-2"><span class="text-primary mt-1">•</span><span><strong class="text-[#111118] dark:text-white">Axios (1.6.5):</strong> HTTP client with interceptors</span></li>
+</ul>
+</div>
+<div>
+<h2 class="text-2xl font-bold text-[#111118] dark:text-white mb-4">Validation</h2>
+<ul class="space-y-2 text-[#616189] dark:text-gray-400">
+<li class="flex items-start gap-2"><span class="text-primary mt-1">•</span><span><strong class="text-[#111118] dark:text-white">Zod (3.22.4):</strong> TypeScript-first schema validation</span></li>
+<li class="flex items-start gap-2"><span class="text-primary mt-1">•</span><span><strong class="text-[#111118] dark:text-white">@hookform/resolvers (3.3.3):</strong> React Hook Form + Zod integration</span></li>
+</ul>
+</div>
+<div class="mb-8">
+<img src="./public/frontend-architecture/frontend-architecture-images/10. Complete Application Flow.png" alt="Complete Application Flow" class="w-full h-auto rounded-xl border border-gray-200 dark:border-gray-800">
+</div>
+</div>
+</section>
+</div>
+<!-- Documentation Navigation (Right Column) -->
+<div class="w-full lg:w-[260px] xl:w-[280px] bg-gray-50 dark:bg-gray-900/50 lg:h-[calc(100vh-65px)] lg:sticky lg:top-0 border-l border-gray-200 dark:border-gray-800 p-4 overflow-y-auto">
+<div class="flex flex-col h-full gap-4">
+<div>
+<h3 class="text-xs font-bold text-[#616189] dark:text-gray-400 uppercase tracking-widest mb-3">Quick Links</h3>
+<div class="flex flex-col gap-2">
+<a href="./public/backend-architecture/document/back-end.md" target="_blank" class="flex items-center gap-2 px-3 py-2 rounded-lg text-xs font-medium text-[#111118] dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800/50 transition-colors border border-gray-200 dark:border-gray-800">
+<span class="material-symbols-outlined text-base">storage</span>
+<div class="flex-1">
+<div class="font-semibold text-xs">Backend Documentation</div>
+<div class="text-xs text-[#616189] dark:text-gray-500 mt-0.5">Complete backend guide</div>
+</div>
+<span class="material-symbols-outlined text-xs">open_in_new</span>
+</a>
+<a href="./public/frontend-architecture/document/front-end.md" target="_blank" class="flex items-center gap-2 px-3 py-2 rounded-lg text-xs font-medium text-[#111118] dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800/50 transition-colors border border-gray-200 dark:border-gray-800">
+<span class="material-symbols-outlined text-base">devices</span>
+<div class="flex-1">
+<div class="font-semibold text-xs">Frontend Documentation</div>
+<div class="text-xs text-[#616189] dark:text-gray-500 mt-0.5">Complete frontend guide</div>
+</div>
+<span class="material-symbols-outlined text-xs">open_in_new</span>
+</a>
+</div>
+</div>
+<div>
+<h3 class="text-xs font-bold text-[#616189] dark:text-gray-400 uppercase tracking-widest mb-3">Architecture Overview</h3>
+<div class="space-y-2">
+<div class="p-3 rounded-lg bg-white dark:bg-gray-800/30 border border-gray-200 dark:border-gray-800">
+<h4 class="text-xs font-semibold text-[#111118] dark:text-white mb-1.5">Backend</h4>
+<ul class="text-xs text-[#616189] dark:text-gray-400 space-y-1">
+<li>• Java 21 with Spring Boot</li>
+<li>• Modular Monolith</li>
+<li>• Multi-Tenant</li>
+<li>• JWT Auth</li>
+<li>• PostgreSQL</li>
+</ul>
+</div>
+<div class="p-3 rounded-lg bg-white dark:bg-gray-800/30 border border-gray-200 dark:border-gray-800">
+<h4 class="text-xs font-semibold text-[#111118] dark:text-white mb-1.5">Frontend</h4>
+<ul class="text-xs text-[#616189] dark:text-gray-400 space-y-1">
+<li>• React 18.2 + TypeScript</li>
+<li>• Feature-Based</li>
+<li>• Zustand + React Query</li>
+<li>• Tailwind + Radix UI</li>
+<li>• Vite</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="mt-auto p-3 rounded-lg bg-primary/5 border border-primary/20">
+<p class="text-xs text-primary/80 leading-relaxed">
+<strong>Note:</strong> Architecture diagrams are interactive and can be viewed in full resolution.
+                            </p>
+</div>
+</div>
+</div>
+</div>
+</main>
+</div>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const profileToggle = document.getElementById('profile-toggle');
+    const profileDropdown = document.getElementById('profile-dropdown');
+    
+    if (profileToggle && profileDropdown) {
+        profileToggle.addEventListener('click', function(e) {
+            e.stopPropagation();
+            profileDropdown.classList.toggle('hidden');
+        });
+        
+        document.addEventListener('click', function(e) {
+            if (!profileToggle.contains(e.target) && !profileDropdown.contains(e.target)) {
+                profileDropdown.classList.add('hidden');
+            }
+        });
+    }
+    
+    function updateBreadcrumb(sectionId) {
+        const breadcrumb = document.getElementById('breadcrumb');
+        const titles = {
+            'backend-architecture': 'Backend Architecture',
+            'backend-overview': 'Backend Overview',
+            'backend-modules': 'Module Structure',
+            'backend-tech-stack': 'Technology Stack',
+            'backend-database': 'Database Schema',
+            'backend-security': 'Security Architecture',
+            'backend-api': 'API Layer',
+            'home': 'Home',
+            'architecture': 'Architecture',
+            'api-reference': 'API Reference',
+            'guides': 'Guides',
+            'frontend-architecture': 'Frontend Architecture',
+            'frontend-overview': 'Frontend Overview',
+            'frontend-architecture-design': 'Architecture & Design',
+            'frontend-state': 'State Management',
+            'frontend-components': 'Component Hierarchy',
+            'frontend-api': 'API Integration',
+            'frontend-routing': 'Routing & Navigation',
+            'frontend-tech-stack': 'Technology Stack'
+        };
+        
+        if (breadcrumb) {
+            const title = titles[sectionId] || 'Documentation';
+            let breadcrumbHTML = '';
+            if (sectionId === 'home') {
+                breadcrumbHTML = `<span class="text-primary text-xs font-semibold uppercase tracking-wider">${title}</span>`;
+            } else if (sectionId.startsWith('backend-') || sectionId.startsWith('frontend-') || sectionId === 'backend-architecture' || sectionId === 'frontend-architecture') {
+                breadcrumbHTML = `
+                    <a class="text-[#616189] text-xs font-semibold uppercase tracking-wider hover:text-primary transition-colors" href="#architecture">Architecture</a>
+                    <span class="text-[#616189] text-xs">/</span>
+                    <span class="text-primary text-xs font-semibold uppercase tracking-wider">${title}</span>
+                `;
+            } else {
+                breadcrumbHTML = `<span class="text-primary text-xs font-semibold uppercase tracking-wider">${title}</span>`;
+            }
+            breadcrumb.innerHTML = breadcrumbHTML;
+        }
+    }
+    
+    function showSection(sectionId) {
+        const sections = ['home', 'architecture', 'api-reference', 'guides', 'backend-architecture', 'backend-overview', 'backend-modules', 'backend-tech-stack', 'backend-database', 'backend-security', 'backend-api', 'frontend-architecture', 'frontend-overview', 'frontend-architecture-design', 'frontend-state', 'frontend-components', 'frontend-api', 'frontend-routing', 'frontend-tech-stack'];
+        
+        const sectionRedirects = {};
+        
+        const actualSectionId = sectionRedirects[sectionId] || sectionId;
+        
+        sections.forEach(id => {
+            const section = document.getElementById(id);
+            if (section) {
+                section.classList.add('hidden');
+            }
+        });
+        
+        const targetSection = document.getElementById(actualSectionId);
+        if (targetSection) {
+            targetSection.classList.remove('hidden');
+            updateBreadcrumb(actualSectionId);
+            updateHeaderNav(sectionId);
+            setTimeout(() => {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }, 100);
+        }
+        
+        const sidebarLinks = document.querySelectorAll('aside a[href^="#"]');
+        sidebarLinks.forEach(link => {
+            const linkClasses = link.className.split(' ');
+            if (linkClasses.includes('bg-primary/10')) {
+                link.classList.remove('bg-primary/10', 'text-primary', 'font-semibold');
+                link.classList.add('text-[#111118]', 'dark:text-gray-300', 'font-medium');
+            }
+        });
+        
+        const activeLink = document.querySelector(`aside a[href="#${sectionId}"], aside a[href="#${actualSectionId}"]`);
+        if (activeLink) {
+            activeLink.classList.remove('text-[#111118]', 'dark:text-gray-300', 'font-medium');
+            activeLink.classList.add('bg-primary/10', 'text-primary', 'font-semibold');
+        }
+    }
+    
+    const sidebarLinks = document.querySelectorAll('aside a[href^="#"]');
+    sidebarLinks.forEach(link => {
+        link.addEventListener('click', function(e) {
+            e.preventDefault();
+            const href = this.getAttribute('href').substring(1);
+            
+            const anchorMap = {
+                'api-payments': 'api-reference',
+                'api-payment-create': 'api-reference',
+                'api-payment-list': 'api-reference',
+                'api-payment-retrieve': 'api-reference',
+                'api-webhooks': 'api-reference',
+                'api-customers': 'api-reference'
+            };
+            
+            const sectionId = anchorMap[href] || href;
+            
+            if (sectionId === 'api-reference' && anchorMap[href]) {
+                showSection('api-reference');
+                setTimeout(() => {
+                    const anchor = document.getElementById(href);
+                    if (anchor) {
+                        anchor.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }
+                }, 200);
+            } else {
+                showSection(sectionId);
+            }
+        });
+    });
+    
+    const headerNavLinks = document.querySelectorAll('nav a[href^="#"]');
+    headerNavLinks.forEach(link => {
+        link.addEventListener('click', function(e) {
+            e.preventDefault();
+            const targetId = this.getAttribute('href').substring(1);
+            showSection(targetId);
+            
+            headerNavLinks.forEach(l => {
+                l.classList.remove('text-primary', 'font-semibold', 'border-b-2', 'border-primary', 'py-1');
+                l.classList.add('text-[#111118]', 'dark:text-gray-300', 'font-medium');
+            });
+            this.classList.remove('text-[#111118]', 'dark:text-gray-300', 'font-medium');
+            this.classList.add('text-primary', 'font-semibold', 'border-b-2', 'border-primary', 'py-1');
+        });
+    });
+    
+    function updateHeaderNav(activeSection) {
+        const headerNavLinks = document.querySelectorAll('nav a[href^="#"]');
+        headerNavLinks.forEach(link => {
+            link.classList.remove('text-primary', 'font-semibold', 'border-b-2', 'border-primary', 'py-1');
+            link.classList.add('text-[#111118]', 'dark:text-gray-300', 'font-medium');
+        });
+        
+        if (activeSection === 'architecture' || activeSection === 'api-reference' || activeSection === 'guides') {
+            const activeLink = document.querySelector(`nav a[href="#${activeSection}"]`);
+            if (activeLink) {
+                activeLink.classList.remove('text-[#111118]', 'dark:text-gray-300', 'font-medium');
+                activeLink.classList.add('text-primary', 'font-semibold', 'border-b-2', 'border-primary', 'py-1');
+            }
+        }
+    }
+    
+    if (window.location.hash) {
+        const hash = window.location.hash.substring(1);
+        showSection(hash);
+    } else {
+        showSection('home');
+    }
+    
+    const searchInput = document.getElementById('search-input');
+    if (searchInput) {
+        const allSections = document.querySelectorAll('section[id]');
+        const allSidebarLinks = document.querySelectorAll('aside a[href^="#"]');
+        
+        searchInput.addEventListener('input', function(e) {
+            const query = e.target.value.toLowerCase().trim();
+            
+            if (query === '') {
+                allSections.forEach(section => {
+                    section.classList.add('hidden');
+                });
+                allSidebarLinks.forEach(link => {
+                    link.classList.remove('opacity-50');
+                });
+                showSection('home');
+                return;
+            }
+            
+            let hasResults = false;
+            const matchingSectionIds = new Set();
+            
+            allSections.forEach(section => {
+                const sectionId = section.id;
+                const sectionTitle = section.querySelector('h1')?.textContent?.toLowerCase() || '';
+                const sectionContent = section.textContent?.toLowerCase() || '';
+                const sectionH2 = Array.from(section.querySelectorAll('h2')).map(h => h.textContent?.toLowerCase()).join(' ');
+                
+                const matches = sectionTitle.includes(query) || 
+                               sectionH2.includes(query) || 
+                               sectionContent.includes(query);
+                
+                if (matches) {
+                    matchingSectionIds.add(sectionId);
+                    hasResults = true;
+                }
+            });
+            
+            allSections.forEach(section => {
+                const sectionId = section.id;
+                if (matchingSectionIds.has(sectionId)) {
+                    section.classList.remove('hidden');
+                } else {
+                    section.classList.add('hidden');
+                }
+            });
+            
+            allSidebarLinks.forEach(link => {
+                const href = link.getAttribute('href').substring(1);
+                const linkText = link.textContent?.toLowerCase().trim() || '';
+                
+                if (linkText.includes(query) || matchingSectionIds.has(href)) {
+                    link.classList.remove('opacity-50');
+                } else {
+                    link.classList.add('opacity-50');
+                }
+            });
+            
+            if (hasResults && matchingSectionIds.size > 0) {
+                const firstMatch = Array.from(matchingSectionIds)[0];
+                updateBreadcrumb(firstMatch);
+                const firstSection = document.getElementById(firstMatch);
+                if (firstSection) {
+                    setTimeout(() => {
+                        window.scrollTo({ top: 0, behavior: 'smooth' });
+                    }, 100);
+                }
+            }
+        });
+        
+        document.addEventListener('keydown', function(e) {
+            if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+                e.preventDefault();
+                searchInput.focus();
+                searchInput.select();
+            }
+            
+            if (e.key === 'Escape' && document.activeElement === searchInput) {
+                searchInput.value = '';
+                searchInput.dispatchEvent(new Event('input'));
+                searchInput.blur();
+            }
+        });
+    }
+});
+</script>
+</body></html>
