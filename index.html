@@ -29,80 +29,106 @@
 <style>
         .code-font { font-family: 'JetBrains Mono', 'Fira Code', monospace; }
         .scrollbar-hide::-webkit-scrollbar { display: none; }
+        img { max-width: 100%; height: auto; }
+        @media (max-width: 768px) {
+            #mobile-menu-overlay {
+                position: fixed;
+                inset: 0;
+                background: rgba(0, 0, 0, 0.5);
+                z-index: 40;
+            }
+        }
     </style>
 </head>
 <body class="bg-background-light dark:bg-background-dark font-display text-[#111118] dark:text-white transition-colors duration-200">
 <!-- Top Navigation Bar -->
-<header class="sticky top-0 z-50 flex items-center justify-between whitespace-nowrap border-b border-solid border-gray-200 dark:border-gray-800 bg-white dark:bg-[#101022] px-6 py-3">
-<div class="flex items-center gap-8">
-<div class="flex items-center gap-2 text-[#111118] dark:text-white">
-<img src="./public/logo.png" alt="FluxPay Logo" class="h-8 w-auto object-contain">
-<h2 class="text-lg font-bold leading-tight tracking-tight"><span class="text-[#616189] font-medium">Docs</span></h2>
-<div class="hidden md:flex items-center">
+<header class="sticky top-0 z-50 flex items-center justify-between whitespace-nowrap border-b border-solid border-gray-200 dark:border-gray-800 bg-white dark:bg-[#101022] px-3 sm:px-4 md:px-6 py-2 sm:py-3">
+<div class="flex items-center gap-2 sm:gap-4 md:gap-8 flex-1 min-w-0">
+<button id="mobile-menu-toggle" class="lg:hidden p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors flex-shrink-0" aria-label="Toggle menu">
+<span class="material-symbols-outlined text-xl text-[#111118] dark:text-white">menu</span>
+</button>
+<div class="flex items-center gap-2 text-[#111118] dark:text-white flex-shrink-0">
+<img src="./public/logo.png" alt="FluxPay Logo" class="h-6 sm:h-7 md:h-8 w-auto object-contain max-w-full">
+<h2 class="text-base sm:text-lg font-bold leading-tight tracking-tight hidden xs:block"><span class="text-[#616189] font-medium">Docs</span></h2>
+<div class="hidden sm:flex items-center">
 <div class="px-2 py-1 bg-gray-100 dark:bg-gray-800 rounded text-xs font-semibold text-[#616189]">v1.0.0</div>
 </div>
 </div>
-<label class="flex flex-col min-w-64 !h-10 max-w-md hidden lg:block">
+<label class="flex flex-col w-full max-w-xs !h-9 sm:!h-10 hidden md:block lg:min-w-64 lg:max-w-md">
 <div class="flex w-full flex-1 items-stretch rounded-lg h-full border border-gray-200 dark:border-gray-700">
-<div class="text-[#616189] flex bg-white dark:bg-gray-900 items-center justify-center pl-4 rounded-l-lg" data-icon="search">
-<span class="material-symbols-outlined text-lg">search</span>
+<div class="text-[#616189] flex bg-white dark:bg-gray-900 items-center justify-center pl-3 sm:pl-4 rounded-l-lg" data-icon="search">
+<span class="material-symbols-outlined text-base sm:text-lg">search</span>
 </div>
-<input id="search-input" type="text" class="form-input flex w-full min-w-0 flex-1 border-none bg-white dark:bg-gray-900 text-[#111118] dark:text-white focus:ring-0 h-full placeholder:text-[#616189] px-4 rounded-r-lg text-sm font-normal" placeholder="Search documentation... (⌘K)" value=""/>
+<input id="search-input" type="text" class="form-input flex w-full min-w-0 flex-1 border-none bg-white dark:bg-gray-900 text-[#111118] dark:text-white focus:ring-0 h-full placeholder:text-[#616189] px-3 sm:px-4 rounded-r-lg text-xs sm:text-sm font-normal" placeholder="Search documentation... (⌘K)" value=""/>
 </div>
 </label>
 </div>
-<div class="flex flex-1 justify-end gap-6 items-center">
-<nav class="hidden xl:flex items-center gap-6">
-<a class="text-[#111118] dark:text-gray-300 text-sm font-medium hover:text-primary transition-colors" href="#architecture" data-nav="architecture">Architecture</a>
-<a class="text-[#111118] dark:text-gray-300 text-sm font-medium hover:text-primary transition-colors" href="#api-reference" data-nav="api-reference">API Reference</a>
-<a class="text-[#111118] dark:text-gray-300 text-sm font-medium hover:text-primary transition-colors" href="#guides" data-nav="guides">Guides</a>
+<div class="flex items-center gap-2 sm:gap-4 md:gap-6 flex-shrink-0">
+<button id="mobile-search-toggle" class="md:hidden p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors" aria-label="Toggle search">
+<span class="material-symbols-outlined text-xl text-[#111118] dark:text-white">search</span>
+</button>
+<nav class="hidden lg:flex items-center gap-4 xl:gap-6">
+<a class="text-[#111118] dark:text-gray-300 text-xs sm:text-sm font-medium hover:text-primary transition-colors" href="#architecture" data-nav="architecture">Architecture</a>
+<a class="text-[#111118] dark:text-gray-300 text-xs sm:text-sm font-medium hover:text-primary transition-colors" href="#api-reference" data-nav="api-reference">API Reference</a>
+<a class="text-[#111118] dark:text-gray-300 text-xs sm:text-sm font-medium hover:text-primary transition-colors" href="#guides" data-nav="guides">Guides</a>
 </nav>
-<div class="h-6 w-px bg-gray-200 dark:bg-gray-700 mx-2"></div>
-<a href="https://fluxpay-dashboard.onrender.com/" target="_blank" rel="noopener noreferrer" class="flex min-w-[120px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-9 px-4 bg-primary text-white text-sm font-bold transition-opacity hover:opacity-90">
-<span class="truncate">Go to Dashboard</span>
+<div class="hidden lg:block h-6 w-px bg-gray-200 dark:bg-gray-700 mx-2"></div>
+<a href="https://fluxpay-dashboard.onrender.com/" target="_blank" rel="noopener noreferrer" class="flex min-w-[100px] sm:min-w-[120px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-8 sm:h-9 px-3 sm:px-4 bg-primary text-white text-xs sm:text-sm font-bold transition-opacity hover:opacity-90">
+<span class="truncate hidden sm:inline">Go to Dashboard</span>
+<span class="truncate sm:hidden">Dashboard</span>
 </a>
 <div class="relative">
-<button id="profile-toggle" class="overflow-hidden rounded-full size-9 border-2 border-gray-200 dark:border-gray-700 hover:ring-2 hover:ring-primary/50 transition-all cursor-pointer flex-shrink-0">
-<img src="./public/developer/serhat_avatar_pp.png" alt="Profile" class="w-full h-full object-cover object-center" style="image-rendering: -webkit-optimize-contrast; image-rendering: crisp-edges;">
+<button id="profile-toggle" class="overflow-hidden rounded-full size-8 sm:size-9 border-2 border-gray-200 dark:border-gray-700 hover:ring-2 hover:ring-primary/50 transition-all cursor-pointer flex-shrink-0">
+<img src="./public/developer/serhat_avatar_pp.png" alt="Profile" class="w-full h-full object-cover object-center max-w-full" style="image-rendering: -webkit-optimize-contrast; image-rendering: crisp-edges;">
 </button>
-<div id="profile-dropdown" class="hidden absolute right-0 mt-2 w-72 bg-white dark:bg-[#161e2c] border border-gray-200 dark:border-gray-800 rounded-lg shadow-xl z-50 overflow-hidden">
-<div class="p-4 border-b border-gray-200 dark:border-gray-800">
-<div class="flex items-center gap-3 mb-3">
-<div class="w-12 h-12 rounded-full border-2 border-gray-200 dark:border-gray-700 overflow-hidden flex-shrink-0">
-<img src="./public/developer/serhat_avatar_pp.png" alt="Serhat Soysal" class="w-full h-full object-cover object-center" style="image-rendering: -webkit-optimize-contrast; image-rendering: crisp-edges;">
+<div id="profile-dropdown" class="hidden absolute right-0 mt-2 w-64 sm:w-72 bg-white dark:bg-[#161e2c] border border-gray-200 dark:border-gray-800 rounded-lg shadow-xl z-50 overflow-hidden">
+<div class="p-3 sm:p-4 border-b border-gray-200 dark:border-gray-800">
+<div class="flex items-center gap-2 sm:gap-3 mb-3">
+<div class="w-10 h-10 sm:w-12 sm:h-12 rounded-full border-2 border-gray-200 dark:border-gray-700 overflow-hidden flex-shrink-0">
+<img src="./public/developer/serhat_avatar_pp.png" alt="Serhat Soysal" class="w-full h-full object-cover object-center max-w-full" style="image-rendering: -webkit-optimize-contrast; image-rendering: crisp-edges;">
 </div>
 <div class="flex-1 min-w-0">
-<h3 class="text-sm font-bold text-[#111118] dark:text-white truncate">Serhat Soysal</h3>
+<h3 class="text-xs sm:text-sm font-bold text-[#111118] dark:text-white truncate">Serhat Soysal</h3>
 <p class="text-xs text-[#616189] dark:text-gray-400">Software Engineer</p>
 </div>
 </div>
 </div>
 <div class="p-2">
-<a href="https://serhatsoysal.com" target="_blank" rel="noopener noreferrer" class="flex items-center gap-3 px-3 py-2 rounded-lg text-sm text-[#111118] dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">
-<span class="material-symbols-outlined text-lg">language</span>
+<a href="https://serhatsoysal.com" target="_blank" rel="noopener noreferrer" class="flex items-center gap-2 sm:gap-3 px-3 py-2 rounded-lg text-xs sm:text-sm text-[#111118] dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">
+<span class="material-symbols-outlined text-base sm:text-lg">language</span>
 <span>Website</span>
 </a>
-<a href="https://github.com/serhatsoysal" target="_blank" rel="noopener noreferrer" class="flex items-center gap-3 px-3 py-2 rounded-lg text-sm text-[#111118] dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">
-<span class="material-symbols-outlined text-lg">code</span>
+<a href="https://github.com/serhatsoysal" target="_blank" rel="noopener noreferrer" class="flex items-center gap-2 sm:gap-3 px-3 py-2 rounded-lg text-xs sm:text-sm text-[#111118] dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">
+<span class="material-symbols-outlined text-base sm:text-lg">code</span>
 <span>GitHub</span>
 </a>
-<a href="https://www.linkedin.com/in/soysalserhat" target="_blank" rel="noopener noreferrer" class="flex items-center gap-3 px-3 py-2 rounded-lg text-sm text-[#111118] dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">
-<span class="material-symbols-outlined text-lg">work</span>
+<a href="https://www.linkedin.com/in/soysalserhat" target="_blank" rel="noopener noreferrer" class="flex items-center gap-2 sm:gap-3 px-3 py-2 rounded-lg text-xs sm:text-sm text-[#111118] dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">
+<span class="material-symbols-outlined text-base sm:text-lg">work</span>
 <span>LinkedIn</span>
 </a>
-<a href="mailto:serhatsoysalx@gmail.com?subject=Contact from FluxPay Docs" class="flex items-center gap-3 px-3 py-2 rounded-lg text-sm text-[#111118] dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">
-<span class="material-symbols-outlined text-lg">mail</span>
+<a href="mailto:serhatsoysalx@gmail.com?subject=Contact from FluxPay Docs" class="flex items-center gap-2 sm:gap-3 px-3 py-2 rounded-lg text-xs sm:text-sm text-[#111118] dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors">
+<span class="material-symbols-outlined text-base sm:text-lg">mail</span>
 <span>Email</span>
 </a>
 </div>
 </div>
 </div>
 </div>
+<div id="mobile-search-container" class="hidden md:hidden w-full absolute top-full left-0 right-0 bg-white dark:bg-[#101022] border-b border-gray-200 dark:border-gray-800 p-3 z-40">
+<label class="flex flex-col w-full !h-10">
+<div class="flex w-full flex-1 items-stretch rounded-lg h-full border border-gray-200 dark:border-gray-700">
+<div class="text-[#616189] flex bg-white dark:bg-gray-900 items-center justify-center pl-4 rounded-l-lg">
+<span class="material-symbols-outlined text-lg">search</span>
+</div>
+<input id="mobile-search-input" type="text" class="form-input flex w-full min-w-0 flex-1 border-none bg-white dark:bg-gray-900 text-[#111118] dark:text-white focus:ring-0 h-full placeholder:text-[#616189] px-4 rounded-r-lg text-sm font-normal" placeholder="Search documentation... (⌘K)" value=""/>
+</div>
+</label>
+</div>
 </header>
-<div class="flex h-[calc(100vh-65px)] overflow-hidden">
-<!-- Left Sidebar Navigation -->
-<aside class="w-72 border-r border-gray-200 dark:border-gray-800 bg-white dark:bg-[#101022] overflow-y-auto scrollbar-hide flex-shrink-0">
-<div class="p-6 flex flex-col gap-6">
+<div id="mobile-menu-overlay" class="hidden lg:hidden fixed inset-0 bg-black/50 z-40 transition-opacity"></div>
+<div class="flex h-[calc(100vh-57px)] sm:h-[calc(100vh-61px)] md:h-[calc(100vh-65px)] overflow-hidden relative">
+<aside id="sidebar" class="fixed lg:static inset-y-0 left-0 z-50 lg:z-auto w-72 max-w-[85vw] border-r border-gray-200 dark:border-gray-800 bg-white dark:bg-[#101022] overflow-y-auto scrollbar-hide flex-shrink-0 transform -translate-x-full lg:translate-x-0 transition-transform duration-300 ease-in-out">
+<div class="p-4 sm:p-5 md:p-6 flex flex-col gap-4 sm:gap-5 md:gap-6">
 <div>
 <a class="flex items-center gap-3 px-3 py-2 rounded-lg text-sm font-medium text-[#111118] dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors" href="#home">
 <span class="material-symbols-outlined text-lg">home</span>
@@ -214,44 +240,42 @@ State Management
 </div>
 </div>
 </aside>
-<!-- Main Content Area -->
 <main class="flex-1 overflow-y-auto bg-white dark:bg-[#101022]">
-<div class="max-w-7xl mx-auto flex flex-col lg:flex-row">
-<!-- Documentation Body -->
-<div class="flex-1 p-8 lg:p-12" id="documentation-content">
-<div class="flex flex-wrap gap-2 mb-6" id="breadcrumb">
+<div class="max-w-full lg:max-w-7xl mx-auto flex flex-col lg:flex-row">
+<div class="flex-1 p-4 sm:p-6 md:p-8 lg:p-12 w-full min-w-0" id="documentation-content">
+<div class="flex flex-wrap gap-2 mb-4 sm:mb-6" id="breadcrumb">
 <a class="text-[#616189] text-xs font-semibold uppercase tracking-wider hover:text-primary transition-colors" href="#architecture">Architecture</a>
 <span class="text-[#616189] text-xs">/</span>
 <span class="text-primary text-xs font-semibold uppercase tracking-wider">Documentation</span>
 </div>
-<section id="architecture" class="mb-16 scroll-mt-8 hidden">
-<div class="mb-10">
-<div class="flex items-baseline gap-4 mb-4">
-<h1 class="text-4xl font-extrabold text-[#111118] dark:text-white tracking-tight">Architecture Overview</h1>
+<section id="architecture" class="mb-12 sm:mb-16 scroll-mt-8 hidden">
+<div class="mb-6 sm:mb-8 md:mb-10">
+<div class="flex items-baseline gap-2 sm:gap-4 mb-3 sm:mb-4">
+<h1 class="text-2xl sm:text-3xl md:text-4xl font-extrabold text-[#111118] dark:text-white tracking-tight">Architecture Overview</h1>
 </div>
-<p class="text-lg text-[#616189] dark:text-gray-400 leading-relaxed">
+<p class="text-base sm:text-lg text-[#616189] dark:text-gray-400 leading-relaxed">
                             Comprehensive overview of FluxPay's backend and frontend architecture, design patterns, and system components.
                         </p>
 </div>
-<div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
-<div class="p-6 rounded-xl bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-800 hover:border-primary transition-colors cursor-pointer" onclick="showSection('backend-architecture')">
-<h2 class="text-2xl font-bold text-[#111118] dark:text-white mb-3">Backend Architecture</h2>
-<p class="text-[#616189] dark:text-gray-400 mb-4">
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 mb-6 sm:mb-8">
+<div class="p-4 sm:p-5 md:p-6 rounded-xl bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-800 hover:border-primary transition-colors cursor-pointer" onclick="showSection('backend-architecture')">
+<h2 class="text-xl sm:text-2xl font-bold text-[#111118] dark:text-white mb-2 sm:mb-3">Backend Architecture</h2>
+<p class="text-sm sm:text-base text-[#616189] dark:text-gray-400 mb-3 sm:mb-4">
                                 Modular monolith architecture built with Java 21 and Spring Boot 3.2. Features multi-tenant support, JWT authentication, and enterprise-grade session management.
                             </p>
-<ul class="space-y-2 text-sm text-[#616189] dark:text-gray-400">
+<ul class="space-y-1.5 sm:space-y-2 text-xs sm:text-sm text-[#616189] dark:text-gray-400">
 <li class="flex items-start gap-2"><span class="text-primary mt-1">•</span><span>8 core modules with clear separation</span></li>
 <li class="flex items-start gap-2"><span class="text-primary mt-1">•</span><span>Domain-Driven Design principles</span></li>
 <li class="flex items-start gap-2"><span class="text-primary mt-1">•</span><span>Layered architecture pattern</span></li>
 <li class="flex items-start gap-2"><span class="text-primary mt-1">•</span><span>PostgreSQL database with Redis caching</span></li>
 </ul>
 </div>
-<div class="p-6 rounded-xl bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-800 hover:border-primary transition-colors cursor-pointer" onclick="showSection('frontend-overview')">
-<h2 class="text-2xl font-bold text-[#111118] dark:text-white mb-3">Frontend Architecture</h2>
-<p class="text-[#616189] dark:text-gray-400 mb-4">
+<div class="p-4 sm:p-5 md:p-6 rounded-xl bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-800 hover:border-primary transition-colors cursor-pointer" onclick="showSection('frontend-overview')">
+<h2 class="text-xl sm:text-2xl font-bold text-[#111118] dark:text-white mb-2 sm:mb-3">Frontend Architecture</h2>
+<p class="text-sm sm:text-base text-[#616189] dark:text-gray-400 mb-3 sm:mb-4">
                                 Feature-based modular architecture with React 18.2 and TypeScript. Modern state management with Zustand and React Query.
                             </p>
-<ul class="space-y-2 text-sm text-[#616189] dark:text-gray-400">
+<ul class="space-y-1.5 sm:space-y-2 text-xs sm:text-sm text-[#616189] dark:text-gray-400">
 <li class="flex items-start gap-2"><span class="text-primary mt-1">•</span><span>Feature-based module organization</span></li>
 <li class="flex items-start gap-2"><span class="text-primary mt-1">•</span><span>Container/Presentational pattern</span></li>
 <li class="flex items-start gap-2"><span class="text-primary mt-1">•</span><span>Hybrid state management approach</span></li>
@@ -259,33 +283,33 @@ State Management
 </ul>
 </div>
 </div>
-<div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-<a href="#backend-architecture" class="p-4 rounded-lg bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 hover:border-primary transition-colors">
-<h3 class="font-semibold text-[#111118] dark:text-white mb-2">Backend Overview</h3>
-<p class="text-sm text-[#616189] dark:text-gray-400">System architecture and module structure</p>
+<div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3 sm:gap-4">
+<a href="#backend-architecture" class="p-3 sm:p-4 rounded-lg bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 hover:border-primary transition-colors">
+<h3 class="text-sm sm:text-base font-semibold text-[#111118] dark:text-white mb-1 sm:mb-2">Backend Overview</h3>
+<p class="text-xs sm:text-sm text-[#616189] dark:text-gray-400">System architecture and module structure</p>
 </a>
-<a href="#frontend-overview" class="p-4 rounded-lg bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 hover:border-primary transition-colors">
-<h3 class="font-semibold text-[#111118] dark:text-white mb-2">Frontend Overview</h3>
-<p class="text-sm text-[#616189] dark:text-gray-400">Frontend structure and components</p>
+<a href="#frontend-overview" class="p-3 sm:p-4 rounded-lg bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 hover:border-primary transition-colors">
+<h3 class="text-sm sm:text-base font-semibold text-[#111118] dark:text-white mb-1 sm:mb-2">Frontend Overview</h3>
+<p class="text-xs sm:text-sm text-[#616189] dark:text-gray-400">Frontend structure and components</p>
 </a>
-<a href="#backend-modules" class="p-4 rounded-lg bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 hover:border-primary transition-colors">
-<h3 class="font-semibold text-[#111118] dark:text-white mb-2">Module Structure</h3>
-<p class="text-sm text-[#616189] dark:text-gray-400">Backend module organization</p>
+<a href="#backend-modules" class="p-3 sm:p-4 rounded-lg bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-800 hover:border-primary transition-colors">
+<h3 class="text-sm sm:text-base font-semibold text-[#111118] dark:text-white mb-1 sm:mb-2">Module Structure</h3>
+<p class="text-xs sm:text-sm text-[#616189] dark:text-gray-400">Backend module organization</p>
 </a>
 </div>
 </section>
-<section id="api-reference" class="mb-16 scroll-mt-8 hidden">
-<div class="mb-10">
-<div class="flex items-baseline gap-4 mb-4">
-<h1 class="text-4xl font-extrabold text-[#111118] dark:text-white tracking-tight">API Reference</h1>
+<section id="api-reference" class="mb-12 sm:mb-16 scroll-mt-8 hidden">
+<div class="mb-6 sm:mb-8 md:mb-10">
+<div class="flex items-baseline gap-2 sm:gap-4 mb-3 sm:mb-4">
+<h1 class="text-2xl sm:text-3xl md:text-4xl font-extrabold text-[#111118] dark:text-white tracking-tight">API Reference</h1>
 </div>
-<p class="text-lg text-[#616189] dark:text-gray-400 leading-relaxed">
+<p class="text-base sm:text-lg text-[#616189] dark:text-gray-400 leading-relaxed">
                             Complete REST API documentation for FluxPay. All endpoints require JWT authentication and support multi-tenant operations.
                         </p>
 </div>
-<div class="space-y-8">
-<div class="p-6 rounded-xl bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-800">
-<h2 class="text-2xl font-bold text-[#111118] dark:text-white mb-4">Authentication</h2>
+<div class="space-y-6 sm:space-y-8">
+<div class="p-4 sm:p-5 md:p-6 rounded-xl bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-800">
+<h2 class="text-xl sm:text-2xl font-bold text-[#111118] dark:text-white mb-3 sm:mb-4">Authentication</h2>
 <p class="text-[#616189] dark:text-gray-400 mb-4">
                                 All API requests require a valid JWT access token in the Authorization header:
                             </p>
@@ -299,143 +323,143 @@ State Management
 <pre class="text-sm text-gray-300 font-mono"><code>X-Tenant-ID: &lt;tenant_id&gt;</code></pre>
 </div>
 </div>
-<div class="p-6 rounded-xl bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-800">
-<h2 class="text-2xl font-bold text-[#111118] dark:text-white mb-4">Base URL</h2>
-<p class="text-[#616189] dark:text-gray-400 mb-4">
+<div class="p-4 sm:p-5 md:p-6 rounded-xl bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-800">
+<h2 class="text-xl sm:text-2xl font-bold text-[#111118] dark:text-white mb-3 sm:mb-4">Base URL</h2>
+<p class="text-sm sm:text-base text-[#616189] dark:text-gray-400 mb-3 sm:mb-4">
                                 All API endpoints are relative to the base URL:
                             </p>
-<div class="bg-gray-900 dark:bg-black rounded-lg p-4">
-<pre class="text-sm text-gray-300 font-mono"><code>https://fluxpay-api.onrender.com/api</code></pre>
+<div class="bg-gray-900 dark:bg-black rounded-lg p-3 sm:p-4 overflow-x-auto">
+<pre class="text-xs sm:text-sm text-gray-300 font-mono"><code>https://fluxpay-api.onrender.com/api</code></pre>
 </div>
 </div>
-<div class="p-6 rounded-xl bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-800">
-<h2 class="text-2xl font-bold text-[#111118] dark:text-white mb-4">API Endpoints</h2>
-<div class="space-y-8">
+<div class="p-4 sm:p-5 md:p-6 rounded-xl bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-800">
+<h2 class="text-xl sm:text-2xl font-bold text-[#111118] dark:text-white mb-3 sm:mb-4">API Endpoints</h2>
+<div class="space-y-6 sm:space-y-8">
 <div>
-<h3 class="text-xl font-semibold text-[#111118] dark:text-white mb-4">Authentication</h3>
-<div class="space-y-4">
-<div class="border border-gray-200 dark:border-gray-800 rounded-lg p-4">
-<p class="font-mono text-sm text-[#111118] dark:text-white mb-2"><span class="text-green-500 font-semibold">POST</span> /api/auth/login</p>
-<p class="text-sm text-[#616189] dark:text-gray-400 mb-3">Authenticate user and receive JWT tokens</p>
-<p class="text-xs text-[#616189] dark:text-gray-400 mb-3"><strong>Authentication:</strong> Not required</p>
-<div class="bg-gray-900 dark:bg-black rounded p-3 mb-3">
-<pre class="text-xs text-gray-300 font-mono overflow-x-auto"><code>{
+<h3 class="text-lg sm:text-xl font-semibold text-[#111118] dark:text-white mb-3 sm:mb-4">Authentication</h3>
+<div class="space-y-3 sm:space-y-4">
+<div class="border border-gray-200 dark:border-gray-800 rounded-lg p-3 sm:p-4">
+<p class="font-mono text-xs sm:text-sm text-[#111118] dark:text-white mb-2"><span class="text-green-500 font-semibold">POST</span> /api/auth/login</p>
+<p class="text-xs sm:text-sm text-[#616189] dark:text-gray-400 mb-2 sm:mb-3">Authenticate user and receive JWT tokens</p>
+<p class="text-xs text-[#616189] dark:text-gray-400 mb-2 sm:mb-3"><strong>Authentication:</strong> Not required</p>
+<div class="bg-gray-900 dark:bg-black rounded p-2 sm:p-3 mb-2 sm:mb-3 overflow-x-auto">
+<pre class="text-xs text-gray-300 font-mono"><code>{
   "email": "user@example.com",
   "password": "password123"
 }</code></pre>
 </div>
 <p class="text-xs text-[#616189] dark:text-gray-400"><strong>Response 200:</strong> Returns token, refreshToken, sessionId, userId, tenantId, role</p>
 </div>
-<div class="border border-gray-200 dark:border-gray-800 rounded-lg p-4">
-<p class="font-mono text-sm text-[#111118] dark:text-white mb-2"><span class="text-green-500 font-semibold">POST</span> /api/auth/refresh</p>
-<p class="text-sm text-[#616189] dark:text-gray-400 mb-3">Get new access token using refresh token</p>
-<p class="text-xs text-[#616189] dark:text-gray-400 mb-3"><strong>Authentication:</strong> Not required</p>
+<div class="border border-gray-200 dark:border-gray-800 rounded-lg p-3 sm:p-4">
+<p class="font-mono text-xs sm:text-sm text-[#111118] dark:text-white mb-2"><span class="text-green-500 font-semibold">POST</span> /api/auth/refresh</p>
+<p class="text-xs sm:text-sm text-[#616189] dark:text-gray-400 mb-2 sm:mb-3">Get new access token using refresh token</p>
+<p class="text-xs text-[#616189] dark:text-gray-400 mb-2 sm:mb-3"><strong>Authentication:</strong> Not required</p>
 </div>
-<div class="border border-gray-200 dark:border-gray-800 rounded-lg p-4">
-<p class="font-mono text-sm text-[#111118] dark:text-white mb-2"><span class="text-red-500 font-semibold">POST</span> /api/auth/logout</p>
-<p class="text-sm text-[#616189] dark:text-gray-400 mb-3">Invalidate current session</p>
+<div class="border border-gray-200 dark:border-gray-800 rounded-lg p-3 sm:p-4">
+<p class="font-mono text-xs sm:text-sm text-[#111118] dark:text-white mb-2"><span class="text-red-500 font-semibold">POST</span> /api/auth/logout</p>
+<p class="text-xs sm:text-sm text-[#616189] dark:text-gray-400 mb-2 sm:mb-3">Invalidate current session</p>
 <p class="text-xs text-[#616189] dark:text-gray-400"><strong>Authentication:</strong> Required | <strong>Response:</strong> 204 No Content</p>
 </div>
-<div class="border border-gray-200 dark:border-gray-800 rounded-lg p-4">
-<p class="font-mono text-sm text-[#111118] dark:text-white mb-2"><span class="text-red-500 font-semibold">POST</span> /api/auth/logout-all</p>
-<p class="text-sm text-[#616189] dark:text-gray-400 mb-3">Invalidate all user sessions</p>
+<div class="border border-gray-200 dark:border-gray-800 rounded-lg p-3 sm:p-4">
+<p class="font-mono text-xs sm:text-sm text-[#111118] dark:text-white mb-2"><span class="text-red-500 font-semibold">POST</span> /api/auth/logout-all</p>
+<p class="text-xs sm:text-sm text-[#616189] dark:text-gray-400 mb-2 sm:mb-3">Invalidate all user sessions</p>
 <p class="text-xs text-[#616189] dark:text-gray-400"><strong>Authentication:</strong> Required | <strong>Response:</strong> 204 No Content</p>
 </div>
-<div class="border border-gray-200 dark:border-gray-800 rounded-lg p-4">
-<p class="font-mono text-sm text-[#111118] dark:text-white mb-2"><span class="text-blue-500 font-semibold">GET</span> /api/auth/sessions</p>
+<div class="border border-gray-200 dark:border-gray-800 rounded-lg p-3 sm:p-4">
+<p class="font-mono text-xs sm:text-sm text-[#111118] dark:text-white mb-2"><span class="text-blue-500 font-semibold">GET</span> /api/auth/sessions</p>
 <p class="text-sm text-[#616189] dark:text-gray-400 mb-3">Get all active sessions for the current user</p>
 <p class="text-xs text-[#616189] dark:text-gray-400"><strong>Authentication:</strong> Required</p>
 </div>
 </div>
 </div>
 <div>
-<h3 class="text-xl font-semibold text-[#111118] dark:text-white mb-4">Tenants</h3>
-<div class="space-y-4">
-<div class="border border-gray-200 dark:border-gray-800 rounded-lg p-4">
-<p class="font-mono text-sm text-[#111118] dark:text-white mb-2"><span class="text-green-500 font-semibold">POST</span> /api/tenants/register</p>
-<p class="text-sm text-[#616189] dark:text-gray-400 mb-3">Register a new tenant with admin user</p>
-<p class="text-xs text-[#616189] dark:text-gray-400 mb-3"><strong>Authentication:</strong> Not required</p>
+<h3 class="text-lg sm:text-xl font-semibold text-[#111118] dark:text-white mb-3 sm:mb-4">Tenants</h3>
+<div class="space-y-3 sm:space-y-4">
+<div class="border border-gray-200 dark:border-gray-800 rounded-lg p-3 sm:p-4">
+<p class="font-mono text-xs sm:text-sm text-[#111118] dark:text-white mb-2"><span class="text-green-500 font-semibold">POST</span> /api/tenants/register</p>
+<p class="text-xs sm:text-sm text-[#616189] dark:text-gray-400 mb-2 sm:mb-3">Register a new tenant with admin user</p>
+<p class="text-xs text-[#616189] dark:text-gray-400 mb-2 sm:mb-3"><strong>Authentication:</strong> Not required</p>
 <p class="text-xs text-[#616189] dark:text-gray-400"><strong>Response 201:</strong> Returns tenant details with id, name, slug, status</p>
 </div>
-<div class="border border-gray-200 dark:border-gray-800 rounded-lg p-4">
-<p class="font-mono text-sm text-[#111118] dark:text-white mb-2"><span class="text-blue-500 font-semibold">GET</span> /api/tenants/{id}</p>
-<p class="text-sm text-[#616189] dark:text-gray-400 mb-3">Get tenant by ID</p>
+<div class="border border-gray-200 dark:border-gray-800 rounded-lg p-3 sm:p-4">
+<p class="font-mono text-xs sm:text-sm text-[#111118] dark:text-white mb-2"><span class="text-blue-500 font-semibold">GET</span> /api/tenants/{id}</p>
+<p class="text-xs sm:text-sm text-[#616189] dark:text-gray-400 mb-2 sm:mb-3">Get tenant by ID</p>
 <p class="text-xs text-[#616189] dark:text-gray-400"><strong>Authentication:</strong> Required</p>
 </div>
-<div class="border border-gray-200 dark:border-gray-800 rounded-lg p-4">
-<p class="font-mono text-sm text-[#111118] dark:text-white mb-2"><span class="text-yellow-500 font-semibold">PUT</span> /api/tenants/{id}</p>
-<p class="text-sm text-[#616189] dark:text-gray-400 mb-3">Update tenant information</p>
+<div class="border border-gray-200 dark:border-gray-800 rounded-lg p-3 sm:p-4">
+<p class="font-mono text-xs sm:text-sm text-[#111118] dark:text-white mb-2"><span class="text-yellow-500 font-semibold">PUT</span> /api/tenants/{id}</p>
+<p class="text-xs sm:text-sm text-[#616189] dark:text-gray-400 mb-2 sm:mb-3">Update tenant information</p>
 <p class="text-xs text-[#616189] dark:text-gray-400"><strong>Authentication:</strong> Required</p>
 </div>
 </div>
 </div>
 <div>
-<h3 class="text-xl font-semibold text-[#111118] dark:text-white mb-4">Products</h3>
-<div class="space-y-4">
-<div class="border border-gray-200 dark:border-gray-800 rounded-lg p-4">
-<p class="font-mono text-sm text-[#111118] dark:text-white mb-2"><span class="text-green-500 font-semibold">POST</span> /api/products</p>
-<p class="text-sm text-[#616189] dark:text-gray-400 mb-3">Create a new product</p>
+<h3 class="text-lg sm:text-xl font-semibold text-[#111118] dark:text-white mb-3 sm:mb-4">Products</h3>
+<div class="space-y-3 sm:space-y-4">
+<div class="border border-gray-200 dark:border-gray-800 rounded-lg p-3 sm:p-4">
+<p class="font-mono text-xs sm:text-sm text-[#111118] dark:text-white mb-2"><span class="text-green-500 font-semibold">POST</span> /api/products</p>
+<p class="text-xs sm:text-sm text-[#616189] dark:text-gray-400 mb-2 sm:mb-3">Create a new product</p>
 <p class="text-xs text-[#616189] dark:text-gray-400"><strong>Authentication:</strong> Required</p>
 </div>
-<div class="border border-gray-200 dark:border-gray-800 rounded-lg p-4">
-<p class="font-mono text-sm text-[#111118] dark:text-white mb-2"><span class="text-blue-500 font-semibold">GET</span> /api/products</p>
-<p class="text-sm text-[#616189] dark:text-gray-400 mb-3">Get all active products</p>
+<div class="border border-gray-200 dark:border-gray-800 rounded-lg p-3 sm:p-4">
+<p class="font-mono text-xs sm:text-sm text-[#111118] dark:text-white mb-2"><span class="text-blue-500 font-semibold">GET</span> /api/products</p>
+<p class="text-xs sm:text-sm text-[#616189] dark:text-gray-400 mb-2 sm:mb-3">Get all active products</p>
 <p class="text-xs text-[#616189] dark:text-gray-400"><strong>Authentication:</strong> Required</p>
 </div>
-<div class="border border-gray-200 dark:border-gray-800 rounded-lg p-4">
-<p class="font-mono text-sm text-[#111118] dark:text-white mb-2"><span class="text-blue-500 font-semibold">GET</span> /api/products/{id}</p>
-<p class="text-sm text-[#616189] dark:text-gray-400 mb-3">Get product by ID</p>
+<div class="border border-gray-200 dark:border-gray-800 rounded-lg p-3 sm:p-4">
+<p class="font-mono text-xs sm:text-sm text-[#111118] dark:text-white mb-2"><span class="text-blue-500 font-semibold">GET</span> /api/products/{id}</p>
+<p class="text-xs sm:text-sm text-[#616189] dark:text-gray-400 mb-2 sm:mb-3">Get product by ID</p>
 <p class="text-xs text-[#616189] dark:text-gray-400"><strong>Authentication:</strong> Required</p>
 </div>
-<div class="border border-gray-200 dark:border-gray-800 rounded-lg p-4">
-<p class="font-mono text-sm text-[#111118] dark:text-white mb-2"><span class="text-yellow-500 font-semibold">PUT</span> /api/products/{id}</p>
-<p class="text-sm text-[#616189] dark:text-gray-400 mb-3">Update product information</p>
+<div class="border border-gray-200 dark:border-gray-800 rounded-lg p-3 sm:p-4">
+<p class="font-mono text-xs sm:text-sm text-[#111118] dark:text-white mb-2"><span class="text-yellow-500 font-semibold">PUT</span> /api/products/{id}</p>
+<p class="text-xs sm:text-sm text-[#616189] dark:text-gray-400 mb-2 sm:mb-3">Update product information</p>
 <p class="text-xs text-[#616189] dark:text-gray-400"><strong>Authentication:</strong> Required</p>
 </div>
-<div class="border border-gray-200 dark:border-gray-800 rounded-lg p-4">
-<p class="font-mono text-sm text-[#111118] dark:text-white mb-2"><span class="text-red-500 font-semibold">DELETE</span> /api/products/{id}</p>
-<p class="text-sm text-[#616189] dark:text-gray-400 mb-3">Delete (soft delete) a product</p>
+<div class="border border-gray-200 dark:border-gray-800 rounded-lg p-3 sm:p-4">
+<p class="font-mono text-xs sm:text-sm text-[#111118] dark:text-white mb-2"><span class="text-red-500 font-semibold">DELETE</span> /api/products/{id}</p>
+<p class="text-xs sm:text-sm text-[#616189] dark:text-gray-400 mb-2 sm:mb-3">Delete (soft delete) a product</p>
 <p class="text-xs text-[#616189] dark:text-gray-400"><strong>Authentication:</strong> Required | <strong>Response:</strong> 204 No Content</p>
 </div>
-<div class="border border-gray-200 dark:border-gray-800 rounded-lg p-4">
-<p class="font-mono text-sm text-[#111118] dark:text-white mb-2"><span class="text-green-500 font-semibold">POST</span> /api/products/{productId}/prices</p>
-<p class="text-sm text-[#616189] dark:text-gray-400 mb-3">Create a price for a product</p>
+<div class="border border-gray-200 dark:border-gray-800 rounded-lg p-3 sm:p-4">
+<p class="font-mono text-xs sm:text-sm text-[#111118] dark:text-white mb-2"><span class="text-green-500 font-semibold">POST</span> /api/products/{productId}/prices</p>
+<p class="text-xs sm:text-sm text-[#616189] dark:text-gray-400 mb-2 sm:mb-3">Create a price for a product</p>
 <p class="text-xs text-[#616189] dark:text-gray-400"><strong>Authentication:</strong> Required</p>
 </div>
-<div class="border border-gray-200 dark:border-gray-800 rounded-lg p-4">
-<p class="font-mono text-sm text-[#111118] dark:text-white mb-2"><span class="text-blue-500 font-semibold">GET</span> /api/products/{productId}/prices</p>
-<p class="text-sm text-[#616189] dark:text-gray-400 mb-3">Get all active prices for a product</p>
+<div class="border border-gray-200 dark:border-gray-800 rounded-lg p-3 sm:p-4">
+<p class="font-mono text-xs sm:text-sm text-[#111118] dark:text-white mb-2"><span class="text-blue-500 font-semibold">GET</span> /api/products/{productId}/prices</p>
+<p class="text-xs sm:text-sm text-[#616189] dark:text-gray-400 mb-2 sm:mb-3">Get all active prices for a product</p>
 <p class="text-xs text-[#616189] dark:text-gray-400"><strong>Authentication:</strong> Required</p>
 </div>
 </div>
 </div>
 <div>
-<h3 class="text-xl font-semibold text-[#111118] dark:text-white mb-4">Subscriptions</h3>
-<div class="space-y-4">
-<div class="border border-gray-200 dark:border-gray-800 rounded-lg p-4">
-<p class="font-mono text-sm text-[#111118] dark:text-white mb-2"><span class="text-blue-500 font-semibold">GET</span> /api/subscriptions</p>
-<p class="text-sm text-[#616189] dark:text-gray-400 mb-3">Get paginated list of subscriptions</p>
+<h3 class="text-lg sm:text-xl font-semibold text-[#111118] dark:text-white mb-3 sm:mb-4">Subscriptions</h3>
+<div class="space-y-3 sm:space-y-4">
+<div class="border border-gray-200 dark:border-gray-800 rounded-lg p-3 sm:p-4">
+<p class="font-mono text-xs sm:text-sm text-[#111118] dark:text-white mb-2"><span class="text-blue-500 font-semibold">GET</span> /api/subscriptions</p>
+<p class="text-xs sm:text-sm text-[#616189] dark:text-gray-400 mb-2 sm:mb-3">Get paginated list of subscriptions</p>
 <p class="text-xs text-[#616189] dark:text-gray-400 mb-2"><strong>Query Parameters:</strong> page (default: 0), size (default: 20), status (optional)</p>
 <p class="text-xs text-[#616189] dark:text-gray-400"><strong>Authentication:</strong> Required</p>
 </div>
-<div class="border border-gray-200 dark:border-gray-800 rounded-lg p-4">
-<p class="font-mono text-sm text-[#111118] dark:text-white mb-2"><span class="text-green-500 font-semibold">POST</span> /api/subscriptions</p>
-<p class="text-sm text-[#616189] dark:text-gray-400 mb-3">Create a new subscription</p>
+<div class="border border-gray-200 dark:border-gray-800 rounded-lg p-3 sm:p-4">
+<p class="font-mono text-xs sm:text-sm text-[#111118] dark:text-white mb-2"><span class="text-green-500 font-semibold">POST</span> /api/subscriptions</p>
+<p class="text-xs sm:text-sm text-[#616189] dark:text-gray-400 mb-2 sm:mb-3">Create a new subscription</p>
 <p class="text-xs text-[#616189] dark:text-gray-400"><strong>Authentication:</strong> Required</p>
 </div>
-<div class="border border-gray-200 dark:border-gray-800 rounded-lg p-4">
-<p class="font-mono text-sm text-[#111118] dark:text-white mb-2"><span class="text-blue-500 font-semibold">GET</span> /api/subscriptions/{id}</p>
-<p class="text-sm text-[#616189] dark:text-gray-400 mb-3">Get subscription by ID</p>
+<div class="border border-gray-200 dark:border-gray-800 rounded-lg p-3 sm:p-4">
+<p class="font-mono text-xs sm:text-sm text-[#111118] dark:text-white mb-2"><span class="text-blue-500 font-semibold">GET</span> /api/subscriptions/{id}</p>
+<p class="text-xs sm:text-sm text-[#616189] dark:text-gray-400 mb-2 sm:mb-3">Get subscription by ID</p>
 <p class="text-xs text-[#616189] dark:text-gray-400"><strong>Authentication:</strong> Required</p>
 </div>
-<div class="border border-gray-200 dark:border-gray-800 rounded-lg p-4">
-<p class="font-mono text-sm text-[#111118] dark:text-white mb-2"><span class="text-blue-500 font-semibold">GET</span> /api/subscriptions/{id}/items</p>
-<p class="text-sm text-[#616189] dark:text-gray-400 mb-3">Get all items for a subscription</p>
+<div class="border border-gray-200 dark:border-gray-800 rounded-lg p-3 sm:p-4">
+<p class="font-mono text-xs sm:text-sm text-[#111118] dark:text-white mb-2"><span class="text-blue-500 font-semibold">GET</span> /api/subscriptions/{id}/items</p>
+<p class="text-xs sm:text-sm text-[#616189] dark:text-gray-400 mb-2 sm:mb-3">Get all items for a subscription</p>
 <p class="text-xs text-[#616189] dark:text-gray-400"><strong>Authentication:</strong> Required</p>
 </div>
-<div class="border border-gray-200 dark:border-gray-800 rounded-lg p-4">
-<p class="font-mono text-sm text-[#111118] dark:text-white mb-2"><span class="text-red-500 font-semibold">POST</span> /api/subscriptions/{id}/cancel</p>
-<p class="text-sm text-[#616189] dark:text-gray-400 mb-3">Cancel a subscription</p>
+<div class="border border-gray-200 dark:border-gray-800 rounded-lg p-3 sm:p-4">
+<p class="font-mono text-xs sm:text-sm text-[#111118] dark:text-white mb-2"><span class="text-red-500 font-semibold">POST</span> /api/subscriptions/{id}/cancel</p>
+<p class="text-xs sm:text-sm text-[#616189] dark:text-gray-400 mb-2 sm:mb-3">Cancel a subscription</p>
 <p class="text-xs text-[#616189] dark:text-gray-400 mb-2"><strong>Query Parameters:</strong> immediately (boolean, default: false), reason (optional)</p>
 <p class="text-xs text-[#616189] dark:text-gray-400"><strong>Authentication:</strong> Required</p>
 </div>
@@ -452,9 +476,9 @@ State Management
 </div>
 </div>
 <div id="api-payments">
-<h3 class="text-xl font-semibold text-[#111118] dark:text-white mb-4">Invoices</h3>
-<div class="space-y-4">
-<div id="api-payment-create" class="border border-gray-200 dark:border-gray-800 rounded-lg p-4">
+<h3 class="text-lg sm:text-xl font-semibold text-[#111118] dark:text-white mb-3 sm:mb-4">Invoices</h3>
+<div class="space-y-3 sm:space-y-4">
+<div id="api-payment-create" class="border border-gray-200 dark:border-gray-800 rounded-lg p-3 sm:p-4">
 <p class="font-mono text-sm text-[#111118] dark:text-white mb-2"><span class="text-green-500 font-semibold">POST</span> /api/invoices/{id}/finalize</p>
 <p class="text-sm text-[#616189] dark:text-gray-400 mb-3">Finalize a draft invoice (change status to OPEN)</p>
 <p class="text-xs text-[#616189] dark:text-gray-400"><strong>Authentication:</strong> Required</p>
@@ -487,9 +511,9 @@ State Management
 </div>
 </div>
 <div>
-<h3 class="text-xl font-semibold text-[#111118] dark:text-white mb-4">Notifications</h3>
-<div class="space-y-4">
-<div class="border border-gray-200 dark:border-gray-800 rounded-lg p-4">
+<h3 class="text-lg sm:text-xl font-semibold text-[#111118] dark:text-white mb-3 sm:mb-4">Notifications</h3>
+<div class="space-y-3 sm:space-y-4">
+<div class="border border-gray-200 dark:border-gray-800 rounded-lg p-3 sm:p-4">
 <p class="font-mono text-sm text-[#111118] dark:text-white mb-2"><span class="text-blue-500 font-semibold">GET</span> /api/notifications</p>
 <p class="text-sm text-[#616189] dark:text-gray-400 mb-3">Get paginated list of notifications for the current user</p>
 <p class="text-xs text-[#616189] dark:text-gray-400 mb-2"><strong>Query Parameters:</strong> page (default: 0), size (default: 20)</p>
@@ -513,9 +537,9 @@ State Management
 </div>
 </div>
 <div id="api-webhooks">
-<h3 class="text-xl font-semibold text-[#111118] dark:text-white mb-4">Webhooks</h3>
-<div class="space-y-4">
-<div class="border border-gray-200 dark:border-gray-800 rounded-lg p-4">
+<h3 class="text-lg sm:text-xl font-semibold text-[#111118] dark:text-white mb-3 sm:mb-4">Webhooks</h3>
+<div class="space-y-3 sm:space-y-4">
+<div class="border border-gray-200 dark:border-gray-800 rounded-lg p-3 sm:p-4">
 <p class="font-mono text-sm text-[#111118] dark:text-white mb-2"><span class="text-green-500 font-semibold">POST</span> /api/webhooks</p>
 <p class="text-sm text-[#616189] dark:text-gray-400 mb-3">Create a new webhook endpoint</p>
 <p class="text-xs text-[#616189] dark:text-gray-400"><strong>Authentication:</strong> Required</p>
@@ -540,11 +564,11 @@ State Management
 </div>
 </div>
 </div>
-<div class="mt-8 p-6 rounded-xl bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-800">
-<h2 class="text-2xl font-bold text-[#111118] dark:text-white mb-4">Data Models</h2>
-<div class="space-y-4">
+<div class="mt-6 sm:mt-8 p-4 sm:p-5 md:p-6 rounded-xl bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-800">
+<h2 class="text-xl sm:text-2xl font-bold text-[#111118] dark:text-white mb-3 sm:mb-4">Data Models</h2>
+<div class="space-y-3 sm:space-y-4">
 <div>
-<h3 class="text-lg font-semibold text-[#111118] dark:text-white mb-3">Enums</h3>
+<h3 class="text-base sm:text-lg font-semibold text-[#111118] dark:text-white mb-2 sm:mb-3">Enums</h3>
 <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
 <div>
 <h4 class="text-sm font-semibold text-[#111118] dark:text-white mb-2">SubscriptionStatus</h4>
@@ -589,11 +613,11 @@ State Management
 </div>
 </div>
 </div>
-<div class="mt-8 p-6 rounded-xl bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-800">
-<h2 class="text-2xl font-bold text-[#111118] dark:text-white mb-4">Additional Information</h2>
-<div class="space-y-4">
+<div class="mt-6 sm:mt-8 p-4 sm:p-5 md:p-6 rounded-xl bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-800">
+<h2 class="text-xl sm:text-2xl font-bold text-[#111118] dark:text-white mb-3 sm:mb-4">Additional Information</h2>
+<div class="space-y-3 sm:space-y-4">
 <div>
-<h3 class="text-lg font-semibold text-[#111118] dark:text-white mb-2">Pagination</h3>
+<h3 class="text-base sm:text-lg font-semibold text-[#111118] dark:text-white mb-2">Pagination</h3>
 <p class="text-sm text-[#616189] dark:text-gray-400 mb-2">
                                 Paginated endpoints use: <code class="bg-gray-200 dark:bg-gray-800 px-2 py-1 rounded text-xs">page</code> (zero-based), <code class="bg-gray-200 dark:bg-gray-800 px-2 py-1 rounded text-xs">size</code>, <code class="bg-gray-200 dark:bg-gray-800 px-2 py-1 rounded text-xs">content</code>, <code class="bg-gray-200 dark:bg-gray-800 px-2 py-1 rounded text-xs">totalElements</code>, <code class="bg-gray-200 dark:bg-gray-800 px-2 py-1 rounded text-xs">totalPages</code>
                             </p>
@@ -622,25 +646,25 @@ State Management
 </div>
 </div>
 </section>
-<section id="guides" class="mb-16 scroll-mt-8 hidden">
-<div class="mb-10">
-<div class="flex items-baseline gap-4 mb-4">
-<h1 class="text-4xl font-extrabold text-[#111118] dark:text-white tracking-tight">Guides</h1>
+<section id="guides" class="mb-12 sm:mb-16 scroll-mt-8 hidden">
+<div class="mb-6 sm:mb-8 md:mb-10">
+<div class="flex items-baseline gap-2 sm:gap-4 mb-3 sm:mb-4">
+<h1 class="text-2xl sm:text-3xl md:text-4xl font-extrabold text-[#111118] dark:text-white tracking-tight">Guides</h1>
 </div>
-<p class="text-lg text-[#616189] dark:text-gray-400 leading-relaxed">
+<p class="text-base sm:text-lg text-[#616189] dark:text-gray-400 leading-relaxed">
                             Step-by-step guides to help you get started with FluxPay development and integration.
                         </p>
 </div>
-<div class="space-y-6">
-<div class="p-6 rounded-xl bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-800">
-<h2 class="text-2xl font-bold text-[#111118] dark:text-white mb-4">Getting Started</h2>
-<div class="space-y-4">
+<div class="space-y-4 sm:space-y-6">
+<div class="p-4 sm:p-5 md:p-6 rounded-xl bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-800">
+<h2 class="text-xl sm:text-2xl font-bold text-[#111118] dark:text-white mb-3 sm:mb-4">Getting Started</h2>
+<div class="space-y-3 sm:space-y-4">
 <div>
-<h3 class="text-lg font-semibold text-[#111118] dark:text-white mb-2">1. Backend Setup</h3>
-<p class="text-[#616189] dark:text-gray-400 mb-2">
+<h3 class="text-base sm:text-lg font-semibold text-[#111118] dark:text-white mb-2">1. Backend Setup</h3>
+<p class="text-sm sm:text-base text-[#616189] dark:text-gray-400 mb-2">
                                     Clone the backend repository and set up the development environment:
                                 </p>
-<ul class="space-y-1 text-sm text-[#616189] dark:text-gray-400 ml-4">
+<ul class="space-y-1 text-xs sm:text-sm text-[#616189] dark:text-gray-400 ml-3 sm:ml-4">
 <li>• Java 21 or higher required</li>
 <li>• PostgreSQL database configured</li>
 <li>• Redis for session management</li>
@@ -648,11 +672,11 @@ State Management
 </ul>
 </div>
 <div>
-<h3 class="text-lg font-semibold text-[#111118] dark:text-white mb-2">2. Frontend Setup</h3>
-<p class="text-[#616189] dark:text-gray-400 mb-2">
+<h3 class="text-base sm:text-lg font-semibold text-[#111118] dark:text-white mb-2">2. Frontend Setup</h3>
+<p class="text-sm sm:text-base text-[#616189] dark:text-gray-400 mb-2">
                                     Set up the React frontend application:
                                 </p>
-<ul class="space-y-1 text-sm text-[#616189] dark:text-gray-400 ml-4">
+<ul class="space-y-1 text-xs sm:text-sm text-[#616189] dark:text-gray-400 ml-3 sm:ml-4">
 <li>• Node.js 18+ and npm/yarn</li>
 <li>• Configure API base URL</li>
 <li>• Install dependencies</li>
@@ -661,15 +685,15 @@ State Management
 </div>
 </div>
 </div>
-<div class="p-6 rounded-xl bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-800">
-<h2 class="text-2xl font-bold text-[#111118] dark:text-white mb-4">Integration Guide</h2>
-<div class="space-y-4">
+<div class="p-4 sm:p-5 md:p-6 rounded-xl bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-800">
+<h2 class="text-xl sm:text-2xl font-bold text-[#111118] dark:text-white mb-3 sm:mb-4">Integration Guide</h2>
+<div class="space-y-3 sm:space-y-4">
 <div>
-<h3 class="text-lg font-semibold text-[#111118] dark:text-white mb-2">API Integration</h3>
-<p class="text-[#616189] dark:text-gray-400 mb-2">
+<h3 class="text-base sm:text-lg font-semibold text-[#111118] dark:text-white mb-2">API Integration</h3>
+<p class="text-sm sm:text-base text-[#616189] dark:text-gray-400 mb-2">
                                     Integrate FluxPay API into your application:
                                 </p>
-<ul class="space-y-1 text-sm text-[#616189] dark:text-gray-400 ml-4">
+<ul class="space-y-1 text-xs sm:text-sm text-[#616189] dark:text-gray-400 ml-3 sm:ml-4">
 <li>• Obtain API credentials</li>
 <li>• Implement authentication flow</li>
 <li>• Configure tenant context</li>
@@ -677,11 +701,11 @@ State Management
 </ul>
 </div>
 <div>
-<h3 class="text-lg font-semibold text-[#111118] dark:text-white mb-2">Frontend Integration</h3>
-<p class="text-[#616189] dark:text-gray-400 mb-2">
+<h3 class="text-base sm:text-lg font-semibold text-[#111118] dark:text-white mb-2">Frontend Integration</h3>
+<p class="text-sm sm:text-base text-[#616189] dark:text-gray-400 mb-2">
                                     Use FluxPay React components in your application:
                                 </p>
-<ul class="space-y-1 text-sm text-[#616189] dark:text-gray-400 ml-4">
+<ul class="space-y-1 text-xs sm:text-sm text-[#616189] dark:text-gray-400 ml-3 sm:ml-4">
 <li>• Install FluxPay React package</li>
 <li>• Configure API client</li>
 <li>• Use provided hooks and components</li>
@@ -690,9 +714,9 @@ State Management
 </div>
 </div>
 </div>
-<div class="p-6 rounded-xl bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-800">
-<h2 class="text-2xl font-bold text-[#111118] dark:text-white mb-4">Best Practices</h2>
-<div class="space-y-3 text-sm text-[#616189] dark:text-gray-400">
+<div class="p-4 sm:p-5 md:p-6 rounded-xl bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-800">
+<h2 class="text-xl sm:text-2xl font-bold text-[#111118] dark:text-white mb-3 sm:mb-4">Best Practices</h2>
+<div class="space-y-2 sm:space-y-3 text-xs sm:text-sm text-[#616189] dark:text-gray-400">
 <p>• Always validate API responses and handle errors gracefully</p>
 <p>• Use environment variables for configuration</p>
 <p>• Implement proper error handling and retry logic</p>
@@ -703,12 +727,12 @@ State Management
 </div>
 </div>
 </section>
-<section id="home" class="mb-16 scroll-mt-8">
-<div class="mb-10">
-<div class="flex items-baseline gap-4 mb-4">
-<h1 class="text-4xl font-extrabold text-[#111118] dark:text-white tracking-tight">FluxPay Project</h1>
+<section id="home" class="mb-12 sm:mb-16 scroll-mt-8">
+<div class="mb-6 sm:mb-8 md:mb-10">
+<div class="flex items-baseline gap-2 sm:gap-4 mb-3 sm:mb-4">
+<h1 class="text-2xl sm:text-3xl md:text-4xl font-extrabold text-[#111118] dark:text-white tracking-tight">FluxPay Project</h1>
 </div>
-<p class="text-lg text-[#616189] dark:text-gray-400 leading-relaxed">
+<p class="text-base sm:text-lg text-[#616189] dark:text-gray-400 leading-relaxed">
                             Multi-tenant SaaS subscription management and billing orchestration platform with JWT authentication, flexible pricing models, and automated invoicing.
                         </p>
 <div class="mt-6 flex flex-wrap gap-4">
@@ -726,99 +750,99 @@ State Management
 </a>
 </div>
 </div>
-<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-<div class="p-6 rounded-xl bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-800">
-<h2 class="text-xl font-bold text-[#111118] dark:text-white mb-3">What is FluxPay?</h2>
-<p class="text-[#616189] dark:text-gray-400">
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
+<div class="p-4 sm:p-5 md:p-6 rounded-xl bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-800">
+<h2 class="text-lg sm:text-xl font-bold text-[#111118] dark:text-white mb-2 sm:mb-3">What is FluxPay?</h2>
+<p class="text-sm sm:text-base text-[#616189] dark:text-gray-400">
                                 FluxPay is a subscription management and billing orchestration platform. It helps businesses manage recurring payments, subscriptions, invoices, and customer relationships in one place.
                             </p>
 </div>
-<div class="p-6 rounded-xl bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-800">
-<h2 class="text-xl font-bold text-[#111118] dark:text-white mb-3">Why FluxPay?</h2>
-<p class="text-[#616189] dark:text-gray-400 mb-3">
+<div class="p-4 sm:p-5 md:p-6 rounded-xl bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-800">
+<h2 class="text-lg sm:text-xl font-bold text-[#111118] dark:text-white mb-2 sm:mb-3">Why FluxPay?</h2>
+<p class="text-sm sm:text-base text-[#616189] dark:text-gray-400 mb-2 sm:mb-3">
                                 Managing subscriptions and billing can be complex. FluxPay simplifies this with:
                             </p>
-<ul class="space-y-1 text-sm text-[#616189] dark:text-gray-400">
+<ul class="space-y-1 text-xs sm:text-sm text-[#616189] dark:text-gray-400">
 <li class="flex items-start gap-2"><span class="text-primary mt-1">•</span><span>Automated billing and invoicing</span></li>
 <li class="flex items-start gap-2"><span class="text-primary mt-1">•</span><span>Multi-tenant architecture</span></li>
 <li class="flex items-start gap-2"><span class="text-primary mt-1">•</span><span>Real-time analytics</span></li>
 <li class="flex items-start gap-2"><span class="text-primary mt-1">•</span><span>Secure payment processing</span></li>
 </ul>
 </div>
-<div class="p-6 rounded-xl bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-800">
-<h2 class="text-xl font-bold text-[#111118] dark:text-white mb-3">How Does It Work?</h2>
-<p class="text-[#616189] dark:text-gray-400 mb-3">
+<div class="p-4 sm:p-5 md:p-6 rounded-xl bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-800">
+<h2 class="text-lg sm:text-xl font-bold text-[#111118] dark:text-white mb-2 sm:mb-3">How Does It Work?</h2>
+<p class="text-sm sm:text-base text-[#616189] dark:text-gray-400 mb-2 sm:mb-3">
                                 Built with modern technologies:
                             </p>
-<ul class="space-y-1 text-sm text-[#616189] dark:text-gray-400">
+<ul class="space-y-1 text-xs sm:text-sm text-[#616189] dark:text-gray-400">
 <li class="flex items-start gap-2"><span class="text-primary mt-1">•</span><span><strong>Backend:</strong> Java 21 + Spring Boot</span></li>
 <li class="flex items-start gap-2"><span class="text-primary mt-1">•</span><span><strong>Frontend:</strong> React 18.2 + TypeScript</span></li>
 <li class="flex items-start gap-2"><span class="text-primary mt-1">•</span><span><strong>Database:</strong> PostgreSQL</span></li>
 <li class="flex items-start gap-2"><span class="text-primary mt-1">•</span><span><strong>Security:</strong> JWT authentication</span></li>
 </ul>
 </div>
-<div class="p-6 rounded-xl bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-800">
-<h2 class="text-xl font-bold text-[#111118] dark:text-white mb-3">Where Can You Use It?</h2>
-<p class="text-[#616189] dark:text-gray-400">
+<div class="p-4 sm:p-5 md:p-6 rounded-xl bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-800">
+<h2 class="text-lg sm:text-xl font-bold text-[#111118] dark:text-white mb-2 sm:mb-3">Where Can You Use It?</h2>
+<p class="text-sm sm:text-base text-[#616189] dark:text-gray-400">
                                 Perfect for SaaS companies, e-commerce platforms, digital service providers, and any business that needs recurring payment processing.
                             </p>
 </div>
-<div class="p-6 rounded-xl bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-800">
-<h2 class="text-xl font-bold text-[#111118] dark:text-white mb-3">When to Use It?</h2>
-<p class="text-[#616189] dark:text-gray-400">
+<div class="p-4 sm:p-5 md:p-6 rounded-xl bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-800">
+<h2 class="text-lg sm:text-xl font-bold text-[#111118] dark:text-white mb-2 sm:mb-3">When to Use It?</h2>
+<p class="text-sm sm:text-base text-[#616189] dark:text-gray-400">
                                 Use FluxPay when you need recurring payment management, automated invoicing, multi-tenant billing, or real-time subscription analytics.
                             </p>
 </div>
-<div class="p-6 rounded-xl bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-800">
-<h2 class="text-xl font-bold text-[#111118] dark:text-white mb-3">Who Is It For?</h2>
-<p class="text-[#616189] dark:text-gray-400">
+<div class="p-4 sm:p-5 md:p-6 rounded-xl bg-gray-50 dark:bg-gray-900 border border-gray-200 dark:border-gray-800">
+<h2 class="text-lg sm:text-xl font-bold text-[#111118] dark:text-white mb-2 sm:mb-3">Who Is It For?</h2>
+<p class="text-sm sm:text-base text-[#616189] dark:text-gray-400">
                                 Designed for developers, business owners, product teams, and finance teams who need a scalable, secure subscription management solution.
                             </p>
 </div>
 </div>
 </section>
-<section id="backend-architecture" class="mb-16 scroll-mt-8 hidden">
-<div class="mb-10">
-<div class="flex items-baseline gap-4 mb-4">
-<h1 class="text-4xl font-extrabold text-[#111118] dark:text-white tracking-tight">Backend Architecture</h1>
+<section id="backend-architecture" class="mb-12 sm:mb-16 scroll-mt-8 hidden">
+<div class="mb-6 sm:mb-8 md:mb-10">
+<div class="flex items-baseline gap-2 sm:gap-4 mb-3 sm:mb-4">
+<h1 class="text-2xl sm:text-3xl md:text-4xl font-extrabold text-[#111118] dark:text-white tracking-tight">Backend Architecture</h1>
 </div>
-<p class="text-lg text-[#616189] dark:text-gray-400 leading-relaxed">
+<p class="text-base sm:text-lg text-[#616189] dark:text-gray-400 leading-relaxed">
                             Enterprise-grade, multi-tenant SaaS subscription management and billing orchestration platform built with Java 21 and Spring Boot 3.2.
                         </p>
 </div>
-<div class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 mb-6 sm:mb-8">
 <div class="border border-gray-200 dark:border-gray-800 rounded-xl overflow-hidden">
-<img src="./public/backend-architecture/backend-architecture-images/1. Database ER Diagram.png" alt="Database ER Diagram" class="w-full h-auto">
-<div class="p-4 border-t border-gray-200 dark:border-gray-800 bg-gray-50 dark:bg-gray-900/50">
-<p class="text-sm font-semibold text-[#111118] dark:text-white">Database ER Diagram</p>
+<img src="./public/backend-architecture/backend-architecture-images/1. Database ER Diagram.png" alt="Database ER Diagram" class="w-full h-auto max-w-full">
+<div class="p-3 sm:p-4 border-t border-gray-200 dark:border-gray-800 bg-gray-50 dark:bg-gray-900/50">
+<p class="text-xs sm:text-sm font-semibold text-[#111118] dark:text-white">Database ER Diagram</p>
 <p class="text-xs text-[#616189] dark:text-gray-400 mt-1">Complete database schema and relationships</p>
 </div>
 </div>
 <div class="border border-gray-200 dark:border-gray-800 rounded-xl overflow-hidden">
-<img src="./public/backend-architecture/backend-architecture-images/2. Sistem Mimarisi Diyagramı.png" alt="System Architecture Diagram" class="w-full h-auto">
-<div class="p-4 border-t border-gray-200 dark:border-gray-800 bg-gray-50 dark:bg-gray-900/50">
-<p class="text-sm font-semibold text-[#111118] dark:text-white">System Architecture</p>
+<img src="./public/backend-architecture/backend-architecture-images/2. Sistem Mimarisi Diyagramı.png" alt="System Architecture Diagram" class="w-full h-auto max-w-full">
+<div class="p-3 sm:p-4 border-t border-gray-200 dark:border-gray-800 bg-gray-50 dark:bg-gray-900/50">
+<p class="text-xs sm:text-sm font-semibold text-[#111118] dark:text-white">System Architecture</p>
 <p class="text-xs text-[#616189] dark:text-gray-400 mt-1">High-level system architecture overview</p>
 </div>
 </div>
 <div class="border border-gray-200 dark:border-gray-800 rounded-xl overflow-hidden">
-<img src="./public/backend-architecture/backend-architecture-images/3. Subscription Lifecycle Flow.png" alt="Subscription Lifecycle Flow" class="w-full h-auto">
-<div class="p-4 border-t border-gray-200 dark:border-gray-800 bg-gray-50 dark:bg-gray-900/50">
-<p class="text-sm font-semibold text-[#111118] dark:text-white">Subscription Lifecycle Flow</p>
+<img src="./public/backend-architecture/backend-architecture-images/3. Subscription Lifecycle Flow.png" alt="Subscription Lifecycle Flow" class="w-full h-auto max-w-full">
+<div class="p-3 sm:p-4 border-t border-gray-200 dark:border-gray-800 bg-gray-50 dark:bg-gray-900/50">
+<p class="text-xs sm:text-sm font-semibold text-[#111118] dark:text-white">Subscription Lifecycle Flow</p>
 <p class="text-xs text-[#616189] dark:text-gray-400 mt-1">Subscription state management and transitions</p>
 </div>
 </div>
 <div class="border border-gray-200 dark:border-gray-800 rounded-xl overflow-hidden">
-<img src="./public/backend-architecture/backend-architecture-images/4. Authentication Flow.png" alt="Authentication Flow" class="w-full h-auto">
-<div class="p-4 border-t border-gray-200 dark:border-gray-800 bg-gray-50 dark:bg-gray-900/50">
-<p class="text-sm font-semibold text-[#111118] dark:text-white">Authentication Flow</p>
+<img src="./public/backend-architecture/backend-architecture-images/4. Authentication Flow.png" alt="Authentication Flow" class="w-full h-auto max-w-full">
+<div class="p-3 sm:p-4 border-t border-gray-200 dark:border-gray-800 bg-gray-50 dark:bg-gray-900/50">
+<p class="text-xs sm:text-sm font-semibold text-[#111118] dark:text-white">Authentication Flow</p>
 <p class="text-xs text-[#616189] dark:text-gray-400 mt-1">JWT-based authentication and session management</p>
 </div>
 </div>
 <div class="border border-gray-200 dark:border-gray-800 rounded-xl overflow-hidden">
-<img src="./public/backend-architecture/backend-architecture-images/5. Invoice Generation Flow.png" alt="Invoice Generation Flow" class="w-full h-auto">
-<div class="p-4 border-t border-gray-200 dark:border-gray-800 bg-gray-50 dark:bg-gray-900/50">
-<p class="text-sm font-semibold text-[#111118] dark:text-white">Invoice Generation Flow</p>
+<img src="./public/backend-architecture/backend-architecture-images/5. Invoice Generation Flow.png" alt="Invoice Generation Flow" class="w-full h-auto max-w-full">
+<div class="p-3 sm:p-4 border-t border-gray-200 dark:border-gray-800 bg-gray-50 dark:bg-gray-900/50">
+<p class="text-xs sm:text-sm font-semibold text-[#111118] dark:text-white">Invoice Generation Flow</p>
 <p class="text-xs text-[#616189] dark:text-gray-400 mt-1">Automated invoice creation and processing workflow</p>
 </div>
 </div>
@@ -2103,6 +2127,59 @@ State Management
 </div>
 <script>
 document.addEventListener('DOMContentLoaded', function() {
+    const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
+    const sidebar = document.getElementById('sidebar');
+    const mobileMenuOverlay = document.getElementById('mobile-menu-overlay');
+    const mobileSearchToggle = document.getElementById('mobile-search-toggle');
+    const mobileSearchContainer = document.getElementById('mobile-search-container');
+    const mobileSearchInput = document.getElementById('mobile-search-input');
+    
+    function toggleSidebar() {
+        if (sidebar && mobileMenuOverlay) {
+            const isOpen = !sidebar.classList.contains('-translate-x-full');
+            if (isOpen) {
+                sidebar.classList.add('-translate-x-full');
+                mobileMenuOverlay.classList.add('hidden');
+                document.body.style.overflow = '';
+            } else {
+                sidebar.classList.remove('-translate-x-full');
+                mobileMenuOverlay.classList.remove('hidden');
+                document.body.style.overflow = 'hidden';
+            }
+        }
+    }
+    
+    function closeSidebar() {
+        if (sidebar && mobileMenuOverlay) {
+            sidebar.classList.add('-translate-x-full');
+            mobileMenuOverlay.classList.add('hidden');
+            document.body.style.overflow = '';
+        }
+    }
+    
+    if (mobileMenuToggle) {
+        mobileMenuToggle.addEventListener('click', function(e) {
+            e.stopPropagation();
+            toggleSidebar();
+        });
+    }
+    
+    if (mobileMenuOverlay) {
+        mobileMenuOverlay.addEventListener('click', function() {
+            closeSidebar();
+        });
+    }
+    
+    if (mobileSearchToggle && mobileSearchContainer) {
+        mobileSearchToggle.addEventListener('click', function(e) {
+            e.stopPropagation();
+            mobileSearchContainer.classList.toggle('hidden');
+            if (!mobileSearchContainer.classList.contains('hidden') && mobileSearchInput) {
+                setTimeout(() => mobileSearchInput.focus(), 100);
+            }
+        });
+    }
+    
     const profileToggle = document.getElementById('profile-toggle');
     const profileDropdown = document.getElementById('profile-dropdown');
     
@@ -2118,6 +2195,15 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     }
+    
+    window.addEventListener('resize', function() {
+        if (window.innerWidth >= 1024) {
+            closeSidebar();
+            if (mobileSearchContainer) {
+                mobileSearchContainer.classList.add('hidden');
+            }
+        }
+    });
     
     function updateBreadcrumb(sectionId) {
         const breadcrumb = document.getElementById('breadcrumb');
@@ -2201,11 +2287,15 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
     
-    const sidebarLinks = document.querySelectorAll('aside a[href^="#"]');
+    const sidebarLinks = document.querySelectorAll('#sidebar a[href^="#"]');
     sidebarLinks.forEach(link => {
         link.addEventListener('click', function(e) {
             e.preventDefault();
             const href = this.getAttribute('href').substring(1);
+            
+            if (window.innerWidth < 1024) {
+                closeSidebar();
+            }
             
             const anchorMap = {
                 'api-payments': 'api-reference',
@@ -2272,88 +2362,122 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     
     const searchInput = document.getElementById('search-input');
-    if (searchInput) {
+    
+    function performSearch(query) {
         const allSections = document.querySelectorAll('section[id]');
-        const allSidebarLinks = document.querySelectorAll('aside a[href^="#"]');
+        const allSidebarLinks = document.querySelectorAll('#sidebar a[href^="#"]');
         
+        if (query === '') {
+            allSections.forEach(section => {
+                section.classList.add('hidden');
+            });
+            allSidebarLinks.forEach(link => {
+                link.classList.remove('opacity-50');
+            });
+            showSection('home');
+            return;
+        }
+        
+        let hasResults = false;
+        const matchingSectionIds = new Set();
+        
+        allSections.forEach(section => {
+            const sectionId = section.id;
+            const sectionTitle = section.querySelector('h1')?.textContent?.toLowerCase() || '';
+            const sectionContent = section.textContent?.toLowerCase() || '';
+            const sectionH2 = Array.from(section.querySelectorAll('h2')).map(h => h.textContent?.toLowerCase()).join(' ');
+            
+            const matches = sectionTitle.includes(query) || 
+                           sectionH2.includes(query) || 
+                           sectionContent.includes(query);
+            
+            if (matches) {
+                matchingSectionIds.add(sectionId);
+                hasResults = true;
+            }
+        });
+        
+        allSections.forEach(section => {
+            const sectionId = section.id;
+            if (matchingSectionIds.has(sectionId)) {
+                section.classList.remove('hidden');
+            } else {
+                section.classList.add('hidden');
+            }
+        });
+        
+        allSidebarLinks.forEach(link => {
+            const href = link.getAttribute('href').substring(1);
+            const linkText = link.textContent?.toLowerCase().trim() || '';
+            
+            if (linkText.includes(query) || matchingSectionIds.has(href)) {
+                link.classList.remove('opacity-50');
+            } else {
+                link.classList.add('opacity-50');
+            }
+        });
+        
+        if (hasResults && matchingSectionIds.size > 0) {
+            const firstMatch = Array.from(matchingSectionIds)[0];
+            updateBreadcrumb(firstMatch);
+            const firstSection = document.getElementById(firstMatch);
+            if (firstSection) {
+                setTimeout(() => {
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                }, 100);
+            }
+        }
+    }
+    
+    if (searchInput) {
         searchInput.addEventListener('input', function(e) {
             const query = e.target.value.toLowerCase().trim();
-            
-            if (query === '') {
-                allSections.forEach(section => {
-                    section.classList.add('hidden');
-                });
-                allSidebarLinks.forEach(link => {
-                    link.classList.remove('opacity-50');
-                });
-                showSection('home');
-                return;
+            if (mobileSearchInput) {
+                mobileSearchInput.value = e.target.value;
             }
-            
-            let hasResults = false;
-            const matchingSectionIds = new Set();
-            
-            allSections.forEach(section => {
-                const sectionId = section.id;
-                const sectionTitle = section.querySelector('h1')?.textContent?.toLowerCase() || '';
-                const sectionContent = section.textContent?.toLowerCase() || '';
-                const sectionH2 = Array.from(section.querySelectorAll('h2')).map(h => h.textContent?.toLowerCase()).join(' ');
-                
-                const matches = sectionTitle.includes(query) || 
-                               sectionH2.includes(query) || 
-                               sectionContent.includes(query);
-                
-                if (matches) {
-                    matchingSectionIds.add(sectionId);
-                    hasResults = true;
-                }
-            });
-            
-            allSections.forEach(section => {
-                const sectionId = section.id;
-                if (matchingSectionIds.has(sectionId)) {
-                    section.classList.remove('hidden');
-                } else {
-                    section.classList.add('hidden');
-                }
-            });
-            
-            allSidebarLinks.forEach(link => {
-                const href = link.getAttribute('href').substring(1);
-                const linkText = link.textContent?.toLowerCase().trim() || '';
-                
-                if (linkText.includes(query) || matchingSectionIds.has(href)) {
-                    link.classList.remove('opacity-50');
-                } else {
-                    link.classList.add('opacity-50');
-                }
-            });
-            
-            if (hasResults && matchingSectionIds.size > 0) {
-                const firstMatch = Array.from(matchingSectionIds)[0];
-                updateBreadcrumb(firstMatch);
-                const firstSection = document.getElementById(firstMatch);
-                if (firstSection) {
-                    setTimeout(() => {
-                        window.scrollTo({ top: 0, behavior: 'smooth' });
-                    }, 100);
-                }
-            }
+            performSearch(query);
         });
+    }
+    
+    if (mobileSearchInput) {
+        mobileSearchInput.addEventListener('input', function(e) {
+            const query = e.target.value.toLowerCase().trim();
+            if (searchInput) {
+                searchInput.value = e.target.value;
+            }
+            performSearch(query);
+        });
+    }
+    
+    if (searchInput || mobileSearchInput) {
+        const allSections = document.querySelectorAll('section[id]');
+        const allSidebarLinks = document.querySelectorAll('#sidebar a[href^="#"]');
         
-        document.addEventListener('keydown', function(e) {
+        function handleSearchKeydown(e) {
             if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
                 e.preventDefault();
-                searchInput.focus();
-                searchInput.select();
+                const activeInput = window.innerWidth >= 768 ? searchInput : mobileSearchInput;
+                if (activeInput) {
+                    activeInput.focus();
+                    activeInput.select();
+                }
             }
             
-            if (e.key === 'Escape' && document.activeElement === searchInput) {
-                searchInput.value = '';
-                searchInput.dispatchEvent(new Event('input'));
-                searchInput.blur();
+            if (e.key === 'Escape') {
+                const activeInput = document.activeElement;
+                if (activeInput === searchInput || activeInput === mobileSearchInput) {
+                    if (searchInput) searchInput.value = '';
+                    if (mobileSearchInput) mobileSearchInput.value = '';
+                    performSearch('');
+                    activeInput.blur();
+                    if (mobileSearchContainer) {
+                        mobileSearchContainer.classList.add('hidden');
+                    }
+                }
             }
-        });
+        }
+        
+        document.addEventListener('keydown', handleSearchKeydown);
     }
 });
 </script>
